@@ -1,0 +1,4 @@
+CREATE TABLE status (
+	status_id SERIAL PRIMARY KEY,
+	status_type VARCHAR(20) UNIQUE NOT NULL
+);

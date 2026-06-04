@@ -1,0 +1,5 @@
+CREATE TABLE skills (
+	skill_id SERIAL PRIMARY KEY,
+	skill_name VARCHAR(50) UNIQUE NOT NULL,
+	category VARCHAR(50) NOT NULL
+);
