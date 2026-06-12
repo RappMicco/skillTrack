@@ -31,7 +31,7 @@ export const checkEmployeeId = async (req, res) => {
         message: "Invalid employee ID / password!",
       });
     }
-
+    //create token
     const token = jwt.sign(
       {
         id: employee._id,
@@ -42,8 +42,13 @@ export const checkEmployeeId = async (req, res) => {
         expiresIn: "1d",
       },
     );
-
-    setToken;
+    //create cookies to store token
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
 
     res.status(200).json({
       success: true,
@@ -76,11 +81,22 @@ export const registerEmployee = async (req, res) => {
 
     const user = await Employee.create({
       empId,
-      password,
+      password: hashedPassword,
       firstName,
       lastName,
       empLevel,
       group,
     });
-  } catch (error) {}
+
+    res.status(200).json({
+      success: true,
+      message: `${empId} added successfully!`,
+    });
+  } catch (error) {
+    console.error("Register error: ", error);
+    return res.status(500).json({
+      message: "Server error during registration!",
+      error: error.message,
+    });
+  }
 };
