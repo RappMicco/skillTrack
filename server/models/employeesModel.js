@@ -8,6 +8,11 @@ const employeeSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    password: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     firstName: {
       type: String,
       required: true,
@@ -26,7 +31,13 @@ const employeeSchema = new mongoose.Schema(
     group: {
       type: String,
       required: true,
-      enum: ["smart_local", "smart_outsource", "development", "network"],
+      enum: [
+        "smart_local",
+        "smart_outsource",
+        "development",
+        "network",
+        "admin",
+      ],
     },
     isActive: {
       type: Boolean,
