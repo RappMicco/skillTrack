@@ -13,10 +13,10 @@ const router = express.Router();
 router.get("/login", validateEmployeeId, validateResult, checkEmployeeId);
 router.post(
   "/register",
+  isAuthenticated,
   protect,
   validateRegistration,
   validateResult,
-  isAuthenticated,
   registerEmployee,
 );
 

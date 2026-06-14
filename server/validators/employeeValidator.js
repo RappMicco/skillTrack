@@ -72,3 +72,26 @@ export const validateRegistration = [
 
   body("group").notEmpty().withMessage("Group is required!"),
 ];
+
+export const validateTrainingProvider = [
+  body("trainingName")
+    .customSanitizer(normalizeSpaces)
+    .notEmpty()
+    .withMessage("Training Name is required")
+    .trim(),
+
+  body("trainingProvider")
+    .customSanitizer(normalizeSpaces)
+    .notEmpty()
+    .withMessage("Training provider is required")
+    .trim(),
+];
+
+export const validateSkillCategory = [
+  body("skillName").notEmpty().withMessage("Skill name is required!").trim(),
+  body("category").notEmpty().withMessage("Category is required!").trim(),
+];
+
+export const validateSkillProficiency = [
+  body("description").notEmpty().withMessage("Description is required!").trim(),
+];
