@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
-const skillProficienySchema = new mongoose.Schema({
+const skillProficiencySchema = new mongoose.Schema({
+  sequence: {
+    type: Number,
+    unique: true,
+    default: 0,
+  },
   description: {
     type: String,
     required: true,
@@ -10,5 +15,5 @@ const skillProficienySchema = new mongoose.Schema({
 
 export const SkillProficiency = mongoose.model(
   "SkillProficiency",
-  skillProficienySchema,
+  skillProficiencySchema,
 );
