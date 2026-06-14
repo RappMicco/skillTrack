@@ -1,6 +1,5 @@
 import { body } from "express-validator";
 import { Employee } from "../models/employeesModel.js";
-import { SkillProficiency } from "../models/skillProficiencyModel.js";
 
 const normalizeSpaces = (value) => {
   return value.trim().replace(/\s+/g, " ");
