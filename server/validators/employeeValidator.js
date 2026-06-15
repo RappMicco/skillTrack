@@ -95,3 +95,47 @@ export const validateSkillCategory = [
 export const validateSkillProficiency = [
   body("description").notEmpty().withMessage("Description is required!").trim(),
 ];
+
+export const validateSkillMatrix = [
+  body("empId").notEmpty().withMessage("Employee id is required!"),
+
+  body("skill")
+    .notEmpty()
+    .withMessage("Skill is required! Please select skill."),
+
+  body("proficiency").notEmpty().withMessage("Proficiency is required!"),
+];
+
+export const validateAssignTraining = [
+  body("empId").notEmpty().withMessage("Employee name is required!"),
+
+  body("trainingId").notEmpty().withMessage("Training name is required!"),
+
+  body("startDate")
+    .notEmpty()
+    .withMessage("Start date is required!")
+    .custom((value, { req }) => {
+      const startDate = new Date(value);
+      const endDate = new Date(req.body.endDate);
+
+      if (req.body.endDate && startDate > endDate) {
+        throw new Error("Start Date cannot be greater than end date!");
+      }
+
+      return true;
+    }),
+
+  body("endDate")
+    .notEmpty()
+    .withMessage("End date is required!")
+    .custom((value, { req }) => {
+      const endDate = new Date(value);
+      const startDate = new Date(req.body.startDate);
+
+      if (req.body.startDate && endDate < startDate) {
+        throw new Error("End Date cannot be less than start date!");
+      }
+
+      return true;
+    }),
+];
