@@ -95,3 +95,13 @@ export const validateSkillCategory = [
 export const validateSkillProficiency = [
   body("description").notEmpty().withMessage("Description is required!").trim(),
 ];
+
+export const validateSkillMatrix = [
+  body("empId").notEmpty().withMessage("Employee id is required!"),
+
+  body("skill")
+    .notEmpty()
+    .withMessage("Skill is required! Please select skill."),
+
+  body("proficiency").notEmpty().withMessage("Proficiency is required!"),
+];
