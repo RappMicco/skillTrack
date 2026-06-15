@@ -100,3 +100,34 @@ export const registerEmployee = async (req, res) => {
     });
   }
 };
+
+export const updateEmployeeData = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedEmployee = await Employee.findByIdAndUpdate(id, req.body, {
+      returnDocument: "after",
+      runValidators: true,
+    });
+
+    if (!updatedEmployee) {
+      return res.status(400).json({
+        success: false,
+        message: "Employee not found!",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "employee details updated successfully!",
+      data: updatedEmployee,
+    });
+  } catch (error) {
+    console.error("Update error: ", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error during updating employee data!",
+      error: error.message,
+    });
+  }
+};
