@@ -3,6 +3,7 @@ import { createTraining } from "../controllers/trainingProviderController.js";
 import { skillCategory } from "../controllers/skillController.js";
 import { skillProficiency } from "../controllers/skillProficiency.js";
 import { skillMatrix } from "../controllers/skillMatrixController.js";
+import { assignTraining } from "../controllers/assignTraining.js";
 import { protect } from "../middlewares/protectMiddleware.js";
 import { isAuthenticated } from "../middlewares/authMiddleware.js";
 import { validateResult } from "../middlewares/validateRequest.js";
@@ -11,6 +12,7 @@ import {
   validateSkillCategory,
   validateSkillProficiency,
   validateSkillMatrix,
+  validateAssignTraining,
 } from "../validators/employeeValidator.js";
 
 const router = express.Router();
@@ -48,6 +50,15 @@ router.post(
   validateSkillMatrix,
   validateResult,
   skillMatrix,
+);
+
+router.post(
+  "/assign-training",
+  isAuthenticated,
+  protect,
+  validateAssignTraining,
+  validateResult,
+  assignTraining,
 );
 
 export default router;
