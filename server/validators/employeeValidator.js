@@ -73,6 +73,51 @@ export const validateRegistration = [
   body("group").notEmpty().withMessage("Group is required!"),
 ];
 
+export const validateUpdateEmployee = [
+  body("empId")
+    .notEmpty()
+    .withMessage("Employee ID is required!")
+    .trim()
+    .isLength({ min: 6, max: 6 })
+    .withMessage("Employee ID must be 6 characters!")
+    .matches(/^SP\d{4}$/)
+    .withMessage("Invalid Employee ID format!"),
+
+  body("password")
+    .notEmpty()
+    .withMessage("Password is required!")
+    .isLength({ min: 6 })
+    .withMessage("Password must be atleast 6 characters!")
+    .matches(/[A-Z]/)
+    .withMessage("Password must contain at least one uppercase letter!")
+    .matches(/[0-9]/)
+    .withMessage("Password must contain at least one number!"),
+
+  body("firstName")
+    .customSanitizer(normalizeSpaces)
+    .notEmpty()
+    .withMessage("First name is required!")
+    .matches(/[A-Z]/)
+    .withMessage("First name must contain at least one uppercase letter!"),
+
+  body("lastName")
+    .customSanitizer(normalizeSpaces)
+    .notEmpty()
+    .withMessage("First name is required!")
+    .matches(/[A-Z]/)
+    .withMessage("Last name must contain at least one uppercase letter!"),
+
+  body("empLevel")
+    .notEmpty()
+    .withMessage("Employee level is required!")
+    .matches(/[A-Z]/)
+    .withMessage("Employee level must contain at least one uppercase letter!")
+    .matches(/[0-9]/)
+    .withMessage("Employee level must contain at least one number!"),
+
+  body("group").notEmpty().withMessage("Group is required!"),
+];
+
 export const validateTrainingProvider = [
   body("trainingName")
     .customSanitizer(normalizeSpaces)
