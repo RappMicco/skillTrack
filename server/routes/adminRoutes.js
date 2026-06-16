@@ -1,9 +1,24 @@
 import express from "express";
-import { createTraining } from "../controllers/trainingProviderController.js";
-import { skillCategory } from "../controllers/skillController.js";
-import { skillProficiency } from "../controllers/skillProficiency.js";
-import { skillMatrix } from "../controllers/skillMatrixController.js";
-import { assignTraining } from "../controllers/assignTraining.js";
+import {
+  createTraining,
+  updateTrainingProvider,
+} from "../controllers/trainingProviderController.js";
+import {
+  skillCategory,
+  updateSkillCategory,
+} from "../controllers/skillController.js";
+import {
+  skillProficiency,
+  updateSkillProficiency,
+} from "../controllers/skillProficiency.js";
+import {
+  skillMatrix,
+  updateSkillMatrix,
+} from "../controllers/skillMatrixController.js";
+import {
+  assignTraining,
+  updateAssignTraining,
+} from "../controllers/assignTraining.js";
 import { protect } from "../middlewares/protectMiddleware.js";
 import { isAuthenticated } from "../middlewares/authMiddleware.js";
 import { validateResult } from "../middlewares/validateRequest.js";
@@ -59,6 +74,51 @@ router.post(
   validateAssignTraining,
   validateResult,
   assignTraining,
+);
+
+router.put(
+  "/update-skill-category/:id",
+  isAuthenticated,
+  protect,
+  validateSkillCategory,
+  validateResult,
+  updateSkillCategory,
+);
+
+router.put(
+  "/update-skill-matrix/:id",
+  isAuthenticated,
+  protect,
+  validateSkillMatrix,
+  validateResult,
+  updateSkillMatrix,
+);
+
+router.put(
+  "/update-skill-proficiency/:id",
+  isAuthenticated,
+  protect,
+  validateSkillProficiency,
+  validateResult,
+  updateSkillProficiency,
+);
+
+router.put(
+  "/update-training-provider/:id",
+  isAuthenticated,
+  protect,
+  validateTrainingProvider,
+  validateResult,
+  updateTrainingProvider,
+);
+
+router.put(
+  "/update-assigned-training/:id",
+  isAuthenticated,
+  protect,
+  validateAssignTraining,
+  validateResult,
+  updateAssignTraining,
 );
 
 export default router;
