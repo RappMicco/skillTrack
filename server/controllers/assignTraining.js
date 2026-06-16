@@ -5,8 +5,15 @@ import { Training } from "../models/trainingModel.js";
 
 export const assignTraining = async (req, res) => {
   try {
-    const { empId, trainingId, startDate, endDate, progress, remarks } =
-      req.body;
+    const {
+      empId,
+      trainingId,
+      statusId,
+      startDate,
+      endDate,
+      progress,
+      remarks,
+    } = req.body;
 
     const empName = await Employee.findById(empId);
     const trainingName = await Training.findById(trainingId);
@@ -41,6 +48,7 @@ export const assignTraining = async (req, res) => {
       empId,
       trainingId,
       startDate,
+      statusId,
       endDate,
       progress,
       remarks,
