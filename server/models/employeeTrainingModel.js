@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { Status } from "./statusModel.js";
 
 const employeeTrainingSchema = new mongoose.Schema(
   {
@@ -10,6 +11,11 @@ const employeeTrainingSchema = new mongoose.Schema(
     trainingId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Training",
+      required: true,
+    },
+    statusId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Status",
       required: true,
     },
     startDate: {

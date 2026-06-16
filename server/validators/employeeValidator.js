@@ -183,4 +183,6 @@ export const validateAssignTraining = [
 
       return true;
     }),
+
+  body("statusId").notEmpty().withMessage("Status is required!"),
 ];
