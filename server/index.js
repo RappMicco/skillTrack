@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import { connectDB } from "./configs/db.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import summaryRoutes from "./routes/summaryRoutes.js";
 
 dotEnv.config();
 
@@ -18,6 +19,7 @@ app.use(cookieParser());
 
 app.use("/api", employeeRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/dashboard", summaryRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
