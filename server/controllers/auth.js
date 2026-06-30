@@ -88,7 +88,7 @@ export const registerEmployee = async (req, res) => {
       group,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       success: true,
       message: `${empId} added successfully!`,
     });
@@ -111,7 +111,7 @@ export const updateEmployeeData = async (req, res) => {
     });
 
     if (!updatedEmployee) {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         message: "Employee not found!",
       });
@@ -119,7 +119,7 @@ export const updateEmployeeData = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "employee details updated successfully!",
+      message: "Employee details updated successfully!",
       data: updatedEmployee,
     });
   } catch (error) {
