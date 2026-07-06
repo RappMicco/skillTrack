@@ -5,26 +5,33 @@ import {
   ClipboardList,
   ChevronRight,
 } from "lucide-react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router";
 
 export const Sidebar = () => {
   const { user } = useSelector((state) => state.auth);
   const admin = user?.group === "admin";
+  const [activeBtn, setActiveBtn] = useState("Dashboard");
+  const Navigate = useNavigate();
   const sidebarBtn = [
     {
       id: 1,
       title: "Dashboard",
       icon: LayoutDashboard,
+      path: "/skill-track/dashboard",
     },
     {
       id: 2,
       title: "Skill Matrix",
       icon: Grid3X3,
+      path: "/skill-track/skillMatrix",
     },
     {
       id: 3,
       title: "Insight",
       icon: ChartColumn,
+      path: "/skill-track/insight",
     },
     // admin condition
     ...(admin
@@ -33,10 +40,12 @@ export const Sidebar = () => {
             id: 4,
             title: "Assign Training",
             icon: ClipboardList,
+            path: "/skill-track/assign-training",
           },
         ]
       : []),
   ];
+
   return (
     <>
       <div className="flex items-center gap-3 px-6 py-6 border-b border-[#FFFFFF]/10">
@@ -56,8 +65,12 @@ export const Sidebar = () => {
           return (
             <button
               key={item.id}
+              onClick={() => {
+                setActiveBtn(item.title);
+                Navigate(item.path);
+              }}
               className={`w-full flex items-center px-4 py-3 rounded-xl transition-all duration-200
-                          text-[#E6E1E1]/69 hover:text-slate-200 hover:bg-white/5`}
+                          ${activeBtn === item.title ? "text-[#E6E1E1]/69 bg-[#7F96E0]/" : "text-[#E6E1E1]/69 hover:text-slate-200 hover:bg-white/5"}`}
             >
               <Icon size={16} />
               <span className="ml-3 flex-1 text-left whitespace-nowrap">

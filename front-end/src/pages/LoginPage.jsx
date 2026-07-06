@@ -12,7 +12,7 @@ export const LoginPage = () => {
   });
   const { loading, message, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-  const Navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -30,7 +30,9 @@ export const LoginPage = () => {
     e.preventDefault();
     try {
       await dispatch(loginUser(credentials)).unwrap();
-      Navigate("/dashboard");
+      setTimeout(() => {
+        navigate("/skill-track");
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
