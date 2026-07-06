@@ -7,7 +7,7 @@ export const checkEmployeeId = async (req, res) => {
   try {
     const { empId, password } = req.body;
 
-    const employee = await Employee.findOne({ empId });
+    const employee = await Employee.findOne({ empId }).select("+password");
 
     if (!employee) {
       return res.status(404).json({
@@ -22,6 +22,10 @@ export const checkEmployeeId = async (req, res) => {
         message: "Invalid employee id!",
       });
     }
+
+    const employeeData = await Employee.findById(employee._id).select(
+      "-password",
+    );
 
     const isMatch = await bcrypt.compare(password, employee.password);
 
@@ -54,7 +58,7 @@ export const checkEmployeeId = async (req, res) => {
       success: true,
       message: "Login successful!",
       token,
-      data: employee,
+      data: employeeData,
     });
   } catch (error) {
     return res.status(500).json({
