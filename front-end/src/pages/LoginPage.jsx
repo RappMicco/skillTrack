@@ -1,17 +1,18 @@
 import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../features/auth/authThunk.js";
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useDispatch();
-  const { loading, message, user, error } = useSelector((state) => state.auth);
-
   const [credentials, setCredentials] = useState({
     empId: "",
     password: "",
   });
+  const { loading, message, error } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const Navigate = useNavigate();
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -28,10 +29,8 @@ export const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const data = await dispatch(loginUser(credentials)).unwrap();
-      console.log(data);
-      console.log(message);
-      console.log(user);
+      await dispatch(loginUser(credentials)).unwrap();
+      Navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }

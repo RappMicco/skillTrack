@@ -7,6 +7,7 @@ const initialState = {
   loading: false,
   error: null,
   message: null,
+  success: false,
 };
 
 const authSlice = createSlice({
@@ -27,6 +28,7 @@ const authSlice = createSlice({
         state.user = action.payload.data;
         state.isAuthenticated = true;
         state.message = action.payload.message;
+        state.success = action.payload.success;
       })
 
       .addCase(loginUser.rejected, (state, action) => {
@@ -34,6 +36,7 @@ const authSlice = createSlice({
         state.error = action.payload;
         state.isAuthenticated = false;
         state.message = null;
+        state.success = false;
       });
 
     //LOGOUT
