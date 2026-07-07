@@ -6,7 +6,10 @@ export const SkillTrackLayout = () => {
   return (
     <div className="flex min-h-screen">
       {/* Sidebar container */}
-      <aside className="fixed lg:static inset-y-0 left-0 z-40 w-60 flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0">
+      <aside
+        className="fixed lg:static inset-y-0 left-0 z-40 w-60 flex flex-col transition-transform duration-300 -translate-x-full lg:translate-x-0
+                        bg-[linear-gradient(to_bottom,#111827_67%,#001159_100%)] border border-[#06B6D4]/20"
+      >
         <Sidebar />
       </aside>
 

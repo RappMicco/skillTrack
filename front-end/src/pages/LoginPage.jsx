@@ -1,13 +1,41 @@
 import { Mail, Lock, Eye, EyeOff, LogIn } from "lucide-react";
-import { useState, useContext } from "react";
-import { AppContext } from "../context/AppContext.js";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../features/auth/authThunk.js";
 
 export const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const { loading } = useContext(AppContext);
+  const [credentials, setCredentials] = useState({
+    empId: "",
+    password: "",
+  });
+  const { loading, message, error } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleChange = (e) => {
+    setCredentials((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  //submit
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await dispatch(loginUser(credentials)).unwrap();
+      setTimeout(() => {
+        navigate("/skill-track");
+      }, 1000);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -38,7 +66,7 @@ export const LoginPage = () => {
           </p>
         </div>
         {/* Login Form */}
-        <form className="space-y-4">
+        <form className="space-y-4" onSubmit={handleSubmit}>
           {/* Employee ID */}
           <div>
             <label
@@ -55,6 +83,9 @@ export const LoginPage = () => {
               <input
                 id="employeeId"
                 type="text"
+                name="empId"
+                value={credentials.empId}
+                onChange={handleChange}
                 placeholder="Ex. SP1234"
                 className="w-full pl-10 pr-4 py-3 text-sm text-slate-200/70 placeholder-[#cad2d363] rounded-xl bg-white/3 border 
                     border-white/10 backdrop-blur-2xl focus:outline-none focus:ring-1 focus:ring-[#34c8e26b] transition-all duration-200 cursor-pointer"
@@ -78,6 +109,9 @@ export const LoginPage = () => {
               <input
                 id="password"
                 type={showPassword ? "text" : "password"}
+                name="password"
+                value={credentials.password}
+                onChange={handleChange}
                 placeholder="••••••••"
                 className="w-full pl-10 pr-11 py-3 text-sm text-slate-200/70 placeholder-[#cad2d363] rounded-xl bg-white/3 border 
                     border-white/10 backdrop-blur-2xl focus:outline-none focus:ring-1 focus:ring-[#34c8e26b] transition-all duration-200 cursor-pointer"
@@ -101,6 +135,18 @@ export const LoginPage = () => {
             <LogIn size={17} />
             {loading ? "Signing in..." : "Sign in"}
           </button>
+
+          {message && (
+            <div className="flex items-center justify-center mt-3 rounded bg-green-200 p-2 text-green-700 border-green-300">
+              {message}
+            </div>
+          )}
+
+          {error && (
+            <div className="flex item-center justify-center mt-3 rounded bg-red-200 p-2 text-red-700 border-red-300">
+              {error}
+            </div>
+          )}
         </form>
       </div>
     </div>
