@@ -135,3 +135,20 @@ export const updateEmployeeData = async (req, res) => {
     });
   }
 };
+
+export const getMe = async (req, res) => {
+  try {
+    return res.status(200).json({
+      success: true,
+      message: "Current user retrieved successfully!",
+      data: req.user,
+    });
+  } catch (error) {
+    console.error("Fetch error: ", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error during fecthing of user data!",
+      error: error.message,
+    });
+  }
+};
