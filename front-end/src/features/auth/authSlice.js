@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { loginUser } from "./authThunk";
+import { loginUser, getCurrentUser } from "./authThunk";
 
 const initialState = {
   user: null,
@@ -36,6 +36,21 @@ const authSlice = createSlice({
         state.error = action.payload || action.error.message;
         state.isAuthenticated = false;
         state.message = null;
+        state.success = false;
+      })
+
+      //GET CURRENT USER
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload.data;
+        state.isAuthenticated = true;
+        state.success = true;
+      })
+
+      .addCase(getCurrentUser.rejected, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.isAuthenticated = false;
         state.success = false;
       });
 
