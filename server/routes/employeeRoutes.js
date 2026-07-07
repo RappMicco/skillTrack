@@ -3,6 +3,7 @@ import {
   checkEmployeeId,
   registerEmployee,
   updateEmployeeData,
+  getMe,
 } from "../controllers/auth.js";
 import {
   validateEmployeeId,
@@ -24,6 +25,7 @@ router.post(
   validateResult,
   registerEmployee,
 );
+router.get("/getMe", protect, getMe);
 router.put(
   "/update/:id",
   isAuthenticated,
