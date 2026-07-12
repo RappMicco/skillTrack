@@ -20,7 +20,7 @@ export const login = async (credentials) => {
 };
 
 export const getMe = async () => {
-  const response = await fetch(`${VITE_API_URL}/auth/me`, {
+  const response = await fetch(`${VITE_API_URL}/getMe`, {
     method: "GET",
     credentials: "include",
   });
