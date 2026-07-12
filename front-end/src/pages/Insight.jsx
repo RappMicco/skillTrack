@@ -1,7 +1,7 @@
 export const Insight = () => {
   return (
     <div>
-      <h1>Insight</h1>
+      <h1 className="text-white">Insight</h1>
     </div>
   );
 };
