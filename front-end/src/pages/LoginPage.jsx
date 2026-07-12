@@ -30,9 +30,7 @@ export const LoginPage = () => {
     e.preventDefault();
     try {
       await dispatch(loginUser(credentials)).unwrap();
-      setTimeout(() => {
-        navigate("/skill-track");
-      }, 1000);
+      navigate("/skill-track");
     } catch (error) {
       console.log(error);
     }
