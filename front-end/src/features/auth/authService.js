@@ -33,3 +33,16 @@ export const getMe = async () => {
 
   return data;
 };
+
+export const logOutUser = async () => {
+  const response = await fetch(`${VITE_API_URL}/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+
+  if (!response.ok) {
+    throw new Error(`Logout failed: ${response.message}`);
+  }
+
+  return response.json();
+};
