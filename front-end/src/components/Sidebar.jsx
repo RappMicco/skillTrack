@@ -138,10 +138,10 @@ export const Sidebar = () => {
           </div>
           <div
             onClick={() => handleLogOut()}
-            className="flex gap-6 items-center group cursor-pointer"
+            className="flex items-center flex-1 group cursor-pointer"
           >
             {/* name and group */}
-            <div>
+            <div className="flex-1">
               <p className="text-xs font-semibold text-white">{userName}</p>
               <p className="text-[11px] text-white/50 transition-colors duration-300 group-hover:text-white">
                 Logout
