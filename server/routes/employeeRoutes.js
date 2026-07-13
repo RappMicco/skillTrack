@@ -4,6 +4,7 @@ import {
   registerEmployee,
   updateEmployeeData,
   getMe,
+  logOutUser,
 } from "../controllers/auth.js";
 import {
   validateEmployeeId,
@@ -34,5 +35,6 @@ router.put(
   validateResult,
   updateEmployeeData,
 );
+router.post("/logout", logOutUser);
 
 export default router;
