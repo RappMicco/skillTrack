@@ -7,7 +7,7 @@ export const Header = () => {
   const { user } = useSelector((state) => state.auth);
   const group = user?.group;
   // concat name
-  const userName = user?.firstName + " " + user?.lastName;
+  const userName = (user?.firstName || "") + " " + (user?.lastName || "");
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-[#FFFFFF]/7 shrink-0">
       <div className="flex items-center">
