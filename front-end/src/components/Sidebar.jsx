@@ -7,18 +7,21 @@ import {
   WrenchOff,
   LogOut,
 } from "lucide-react";
-import { useSelector } from "react-redux";
-import { useContext } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { PageContext } from "../context/PageContext.js";
+import { logoutUser } from "../features/auth/authThunk.js";
 
 export const Sidebar = () => {
   const { setActiveDesc } = useContext(PageContext);
+  const dispatch = useDispatch();
   //get user
   const { user, loading } = useSelector((state) => state.auth);
   const admin = user?.group === "admin";
-  const userName = user?.firstName + " " + user?.lastName;
-  const initials = user?.firstName?.charAt(0) + user?.lastName?.charAt(0);
+  const userName = (user?.firstName || "") + " " + (user?.lastName || "");
+  const initials =
+    (user?.firstName?.charAt(0) || "") + (user?.lastName?.charAt(0) || "");
   //navigate path and current location
   const Navigate = useNavigate();
   const location = useLocation();
@@ -70,6 +73,25 @@ export const Sidebar = () => {
       : []),
   ];
 
+  //logout
+  const handleLogOut = async () => {
+    try {
+      await dispatch(logoutUser());
+      setActiveDesc(null);
+      Navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    const ActiveItem = sidebarBtn.find(
+      (item) => item.path == location.pathname,
+    );
+
+    setActiveDesc(ActiveItem?.description || "");
+  }, [location.pathname]);
+
   return (
     <>
       {loading && <div>Loading...</div>}
@@ -114,7 +136,10 @@ export const Sidebar = () => {
           <div className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
             {initials}
           </div>
-          <div className="flex gap-6 items-center group cursor-pointer">
+          <div
+            onClick={() => handleLogOut()}
+            className="flex gap-6 items-center group cursor-pointer"
+          >
             {/* name and group */}
             <div>
               <p className="text-xs font-semibold text-white">{userName}</p>
@@ -125,6 +150,7 @@ export const Sidebar = () => {
             {/* logout icon */}
             <div>
               <LogOut
+                onClick={() => handleLogOut()}
                 size={19}
                 className="text-white/80 group-hover:text-white group-hover:scale-110 transition-all duration-300"
               />
