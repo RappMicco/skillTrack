@@ -12,7 +12,7 @@ import {
   validateUpdateEmployee,
 } from "../validators/employeeValidator.js";
 import { validateResult } from "../middlewares/validateRequest.js";
-import { protect } from "../middlewares/protectMiddleware.js";
+import { protect, protectUser } from "../middlewares/protectMiddleware.js";
 import { isAuthenticated } from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
@@ -26,7 +26,7 @@ router.post(
   validateResult,
   registerEmployee,
 );
-router.get("/getMe", protect, getMe);
+router.get("/getMe", protectUser, getMe);
 router.put(
   "/update/:id",
   isAuthenticated,
