@@ -68,6 +68,7 @@ const authSlice = createSlice({
         state.isAuthenticated = false;
         state.success = false;
         state.token = null;
+        state.message = null;
       });
   },
 });
