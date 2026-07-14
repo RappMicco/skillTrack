@@ -10,10 +10,10 @@ export const login = async (credentials) => {
     body: JSON.stringify(credentials),
   });
 
-  const data = response.json();
+  const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || "Login Failed.");
+    throw { response: { data } };
   }
 
   return data;
