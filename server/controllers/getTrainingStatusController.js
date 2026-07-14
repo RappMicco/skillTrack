@@ -470,3 +470,103 @@ export const completedSummary = async (req, res) => {
     });
   }
 };
+
+export const getRecentTrainingSummary = async (req, res) => {
+  try {
+    const recentTrainings = await EmployeeTraining.aggregate([
+      {
+        $lookup: {
+          from: "employees",
+          localField: "empId",
+          foreignField: "_id",
+          as: "employee",
+        },
+      },
+      {
+        $unwind: {
+          path: "$employee",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "trainings",
+          localField: "trainingId",
+          foreignField: "_id",
+          as: "training",
+        },
+      },
+      {
+        $unwind: {
+          path: "$training",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "status",
+          localField: "statusId",
+          foreignField: "_id",
+          as: "status",
+        },
+      },
+      {
+        $unwind: {
+          path: "$status",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          "status.status": "completed",
+        },
+      },
+      {
+        $sort: {
+          endDate: -1,
+        },
+      },
+      {
+        $limit: 3,
+      },
+      {
+        $project: {
+          empId: "$employee.empId",
+          fullName: {
+            $trim: {
+              input: {
+                $concat: [
+                  { $ifNull: ["$employee.firstName", ""] },
+                  " ",
+                  { $ifNull: ["$employee.lastName", ""] },
+                ],
+              },
+            },
+          },
+          trainingName: "$training.trainingName",
+          trainingProvider: "$training.trainingProvider",
+          endDate: -1,
+        },
+      },
+    ]);
+
+    if (recentTrainings.length === 0) {
+      return res.status(500).json({
+        success: true,
+        message: "No recent trainings found!",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      summary: recentTrainings,
+    });
+  } catch (error) {
+    console.error("Fetching error: ", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error during fetching of recent training summary!",
+      error: error.message,
+    });
+  }
+};

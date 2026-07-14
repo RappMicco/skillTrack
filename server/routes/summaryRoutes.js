@@ -14,6 +14,7 @@ import {
   pendingSummary,
   ongoingSummary,
   completedSummary,
+  getRecentTrainingSummary,
 } from "../controllers/getTrainingStatusController.js";
 
 const router = express.Router();
@@ -30,5 +31,10 @@ router.get("/get-upcoming-training", isAuthenticated, upcomingSummary);
 router.get("/get-pending-training", isAuthenticated, pendingSummary);
 router.get("/get-ongoing-training", isAuthenticated, ongoingSummary);
 router.get("/get-completed-training", isAuthenticated, completedSummary);
+router.get(
+  "/get-recent-completed-trainings",
+  isAuthenticated,
+  getRecentTrainingSummary,
+);
 
 export default router;
