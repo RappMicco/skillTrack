@@ -95,7 +95,7 @@ export const Sidebar = () => {
   return (
     <>
       {loading && <div>Loading...</div>}
-      <div className="flex items-center gap-3 px-6 py-6 border-b border-[#FFFFFF]/10">
+      <div className="flex items-center gap-3 px-6 py-5 border-b border-[#FFFFFF]/10">
         <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
           <span className="text-white text-sm font-bold tracking-tight">
             ST
@@ -138,10 +138,10 @@ export const Sidebar = () => {
           </div>
           <div
             onClick={() => handleLogOut()}
-            className="flex gap-6 items-center group cursor-pointer"
+            className="flex items-center flex-1 group cursor-pointer"
           >
             {/* name and group */}
-            <div>
+            <div className="flex-1">
               <p className="text-xs font-semibold text-white">{userName}</p>
               <p className="text-[11px] text-white/50 transition-colors duration-300 group-hover:text-white">
                 Logout
