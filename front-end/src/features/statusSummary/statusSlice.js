@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchTrainingSummary } from "./statusThunk.js";
+import { fetchTrainingSummary, fetchRecentTrainings } from "./statusThunk.js";
 
 const initialState = {
   success: false,
@@ -9,6 +9,7 @@ const initialState = {
     ongoing: 0,
     pending: 0,
   },
+  recentTrainings: [],
   loading: false,
   error: null,
 };
@@ -31,6 +32,23 @@ const trainingSlice = createSlice({
       })
 
       .addCase(fetchTrainingSummary.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      //recent training
+      .addCase(fetchRecentTrainings.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(fetchRecentTrainings.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = action.payload.success;
+        state.recentTrainings = action.payload.summary;
+      })
+
+      .addCase(fetchRecentTrainings.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
