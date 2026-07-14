@@ -17,3 +17,21 @@ export const getTrainingSummary = async () => {
 
   return data;
 };
+
+export const getRecenTrainingSummary = async () => {
+  const response = await fetch(
+    `${VITE_API_URL}/dashboard/get-recent-completed-trainings`,
+    {
+      method: "GET",
+      credentials: "include",
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
