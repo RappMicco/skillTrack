@@ -9,7 +9,7 @@ const initialState = {
     ongoing: 0,
     pending: 0,
   },
-  loading: 0,
+  loading: false,
   error: null,
 };
 
@@ -26,8 +26,8 @@ const trainingSlice = createSlice({
 
       .addCase(fetchTrainingSummary.fulfilled, (state, action) => {
         state.loading = false;
-        state.success = action.payload.sucess;
-        state.statusSummary = action.payload.summary;
+        state.success = action.payload.success;
+        state.summary = action.payload.summary;
       })
 
       .addCase(fetchTrainingSummary.rejected, (state, action) => {
