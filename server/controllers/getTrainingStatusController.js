@@ -527,7 +527,7 @@ export const getRecentTrainingSummary = async (req, res) => {
         },
       },
       {
-        $limit: 3,
+        $limit: 5,
       },
       {
         $project: {
@@ -545,15 +545,42 @@ export const getRecentTrainingSummary = async (req, res) => {
           },
           trainingName: "$training.trainingName",
           trainingProvider: "$training.trainingProvider",
-          endDate: -1,
+          date: {
+            $concat: [
+              {
+                $ifNull: [
+                  {
+                    $dateToString: {
+                      format: "%m/%d/%Y",
+                      date: "$startDate",
+                    },
+                  },
+                  "",
+                ],
+              },
+              " ~ ",
+              {
+                $ifNull: [
+                  {
+                    $dateToString: {
+                      format: "%m/%d/%Y",
+                      date: "$endDate",
+                    },
+                  },
+                  "",
+                ],
+              },
+            ],
+          },
         },
       },
     ]);
 
     if (recentTrainings.length === 0) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: true,
         message: "No recent trainings found!",
+        summary: [],
       });
     }
 
