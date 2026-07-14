@@ -1,6 +1,11 @@
 import { Grid3X3, ChartColumn, Award } from "lucide-react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchRecentTrainings } from "../features/statusSummary/statusThunk.js";
+import { RecentTrainingCard } from "./RecentTrainingCard.jsx";
 
 export const OverviewCard = () => {
+  const dispatch = useDispatch();
   const overview = [
     {
       id: 1,
@@ -22,8 +27,22 @@ export const OverviewCard = () => {
       btnTitle: "View Insight",
       bgColor: "bg-emerald-500/15",
       icon: <Award className="text-emerald-400" size={15} />,
+      card: <RecentTrainingCard />,
     },
   ];
+
+  useEffect(() => {
+    const getRecentTrainings = async () => {
+      try {
+        await dispatch(fetchRecentTrainings());
+      } catch (error) {
+        console.log(error.message);
+        alert(error.message);
+      }
+    };
+
+    getRecentTrainings();
+  }, [dispatch]);
   return (
     <>
       {overview.map((item) => {
@@ -43,6 +62,9 @@ export const OverviewCard = () => {
                 {item.title}
               </h3>
             </div>
+
+            {/* details */}
+            <div className="flex-1 space-y-3">{item.card}</div>
           </div>
         );
       })}
