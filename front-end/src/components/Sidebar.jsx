@@ -133,7 +133,7 @@ export const Sidebar = () => {
       {/* logout container */}
       <div className="px-4 py-5 border-t border-[#FFFFFF]/10">
         <div className="flex items-center gap-3">
-          <div className="w-11 h-11 rounded-full flex items-center justify-center text-sm font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
+          <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
             {initials}
           </div>
           <div

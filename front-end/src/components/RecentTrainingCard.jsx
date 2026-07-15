@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Trophy, Medal, CircleStar } from "lucide-react";
+import { Trophy, Medal, CircleStar, Award, MoonStar } from "lucide-react";
 
 export const RecentTrainingCard = () => {
   const { recentTrainings } = useSelector((state) => state.training);
@@ -15,7 +15,15 @@ export const RecentTrainingCard = () => {
     },
     {
       id: 3,
+      icon: <Award className="text-yellow-500" size={15} />,
+    },
+    {
+      id: 4,
       icon: <CircleStar className="text-yellow-500" size={15} />,
+    },
+    {
+      id: 5,
+      icon: <MoonStar className="text-yellow-500" size={15} />,
     },
   ];
 
@@ -41,6 +49,8 @@ export const RecentTrainingCard = () => {
               <p className="text-[10px] text-slate-500 truncate">
                 {`${item.trainingName} - ${item.trainingProvider}`}
               </p>
+              {/* Schedule Date */}
+              <p className="text-[8px] text-slate-500 truncate">{item.date}</p>
             </div>
 
             {/* emoji */}
