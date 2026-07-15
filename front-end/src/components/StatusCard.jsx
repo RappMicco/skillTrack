@@ -10,7 +10,7 @@ export const StatusCard = () => {
     {
       id: 1,
       status: "upcoming",
-      firstContainterColor: "border border-cyan-600/20 shadow-blue-500/20",
+      firstContainerColor: "border border-cyan-600/20 shadow-blue-500/20",
       secondContainerColor: "from-blue-500 to-cyan-400",
       iconColor: "from-blue-500 to-cyan-400 shadow-lg shadow-blue-500/20",
       icon: <Clock5 className="text-white" />,
@@ -18,7 +18,7 @@ export const StatusCard = () => {
     {
       id: 2,
       status: "pending",
-      firstContainterColor: "border border-orange-600/20 shadow-amber-500/20",
+      firstContainerColor: "border border-orange-600/20 shadow-amber-500/20",
       secondContainerColor: "from-amber-500 to-orange-400",
       iconColor: "from-amber-500 to-orange-400 shadow-lg shadow-amber-500/20",
       icon: <ClipboardPen className="text-white" />,
@@ -26,7 +26,7 @@ export const StatusCard = () => {
     {
       id: 3,
       status: "ongoing",
-      firstContainterColor: "border border-purple-600/20 shadow-purple-500/20",
+      firstContainerColor: "border border-purple-600/20 shadow-purple-500/20",
       secondContainerColor: "from-purple-500 to-violet-400",
       iconColor: "from-purple-500 to-violet-400 shadow-lg shadow-purple-500/20",
       icon: <TrendingUp className="text-white" />,
@@ -34,8 +34,7 @@ export const StatusCard = () => {
     {
       id: 4,
       status: "completed",
-      firstContainterColor:
-        "border border-emerald-600/20 shadow-emerald-500/20",
+      firstContainerColor: "border border-emerald-600/20 shadow-emerald-500/20",
       secondContainerColor: "from-emerald-500 to-green-400",
       iconColor:
         "from-emerald-500 to-green-400 shadow-lg shadow-emerald-500/20",
@@ -61,7 +60,7 @@ export const StatusCard = () => {
         return (
           <div
             key={item.id}
-            className={`relative rounded-2xl p-5 overflow-hidden cursor-pointer group transition-all duration-300 hover:-translate-y-1 shadow-lg bg-[#EFE9E9]/5 ${item.firstContainterColor}`}
+            className={`relative rounded-2xl p-5 overflow-hidden cursor-pointer group transition-all duration-300 hover:-translate-y-1 shadow-lg bg-[#EFE9E9]/5 ${item.firstContainerColor}`}
           >
             <div
               className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-linear-to-br ${item.secondContainerColor}`}
