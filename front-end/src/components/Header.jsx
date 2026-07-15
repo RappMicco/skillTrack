@@ -31,7 +31,7 @@ export const Header = () => {
           </p>
         </div>
         {/* OSS */}
-        <div className="w-9 h-9 shrink-0 rounded-full flex items-center justify-center text-xs font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
+        <div className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-xs font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
           OSS
         </div>
       </div>
