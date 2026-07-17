@@ -16,7 +16,7 @@ import {
   completedSummary,
   getRecentTrainingSummary,
 } from "../controllers/getTrainingStatusController.js";
-import { getTopFiveSkills } from "../controllers/skillMatrixController.js";
+import { getTopFiveExpertSkills } from "../controllers/skillMatrixController.js";
 
 const router = express.Router();
 
@@ -37,6 +37,6 @@ router.get(
   isAuthenticated,
   getRecentTrainingSummary,
 );
-router.get("/get-top-skills", isAuthenticated, getTopFiveSkills);
+router.get("/get-top-skills", isAuthenticated, getTopFiveExpertSkills);
 
 export default router;
