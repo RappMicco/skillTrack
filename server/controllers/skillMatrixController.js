@@ -98,3 +98,88 @@ export const updateSkillMatrix = async (req, res) => {
     });
   }
 };
+
+export const getTopFiveSkills = async (req, res) => {
+  try {
+    const topSkills = await SkillMatrix.aggregate([
+      {
+        $lookup: {
+          from: "skills",
+          localField: "skill",
+          foreignField: "_id",
+          as: "skillDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$skillDetails",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "skillproficiencies",
+          localField: "proficiency",
+          foreignField: "_id",
+          as: "proficiencyDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$proficiencyDetails",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: "$skill",
+          skillName: {
+            $first: "$skillDetails.skillName",
+          },
+          totalEmployees: {
+            $addToSet: "empId",
+          },
+          averageProficiency: {
+            $avg: "$proficiencyDetails.sequence",
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          skillId: "$_id",
+          skillName: 1,
+          employeeCount: {
+            $size: "$totalEmployees",
+          },
+          averageProficiency: {
+            $round: ["$averageProficiency", 1],
+          },
+        },
+      },
+
+      {
+        $sort: {
+          employeeCount: -1,
+          averageProficiency: -1,
+        },
+      },
+      {
+        $limit: 5,
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      count: topSkills.length,
+      data: topSkills,
+    });
+  } catch (error) {
+    console.error("Fetching error: ", error);
+    return res.status(500).json({
+      success: false,
+      message: "Failed to retrieve top skills!",
+      error: error.message,
+    });
+  }
+};
