@@ -99,9 +99,36 @@ export const updateSkillMatrix = async (req, res) => {
   }
 };
 
-export const getTopFiveSkills = async (req, res) => {
+export const getTopFiveExpertSkills = async (req, res) => {
   try {
     const topSkills = await SkillMatrix.aggregate([
+      // Get employee details
+      {
+        $lookup: {
+          from: "employees",
+          localField: "empId",
+          foreignField: "_id",
+          as: "employeeDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$employeeDetails",
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+
+      // Include only active employees and exclude admins
+      {
+        $match: {
+          "employeeDetails.isActive": true,
+          "employeeDetails.group": {
+            $ne: "admin",
+          },
+        },
+      },
+
+      // Get skill details
       {
         $lookup: {
           from: "skills",
@@ -113,9 +140,11 @@ export const getTopFiveSkills = async (req, res) => {
       {
         $unwind: {
           path: "$skillDetails",
-          preserveNullAndEmptyArrays: true,
+          preserveNullAndEmptyArrays: false,
         },
       },
+
+      // Get proficiency details
       {
         $lookup: {
           from: "skillproficiencies",
@@ -127,59 +156,153 @@ export const getTopFiveSkills = async (req, res) => {
       {
         $unwind: {
           path: "$proficiencyDetails",
-          preserveNullAndEmptyArrays: true,
+          preserveNullAndEmptyArrays: false,
         },
       },
+
+      /*
+       * Group by employee and skill first.
+       */
+      /*
+       * Group by employee and skill first.
+       * This prevents duplicate records for the same employee and skill.
+       */
       {
         $group: {
-          _id: "$skill",
+          _id: {
+            skillId: "$skill",
+            employeeId: "$empId",
+          },
+
           skillName: {
             $first: "$skillDetails.skillName",
           },
-          totalEmployees: {
-            $addToSet: "empId",
+
+          employee: {
+            $first: {
+              _id: "$employeeDetails._id",
+              empId: "$employeeDetails.empId",
+              firstName: "$employeeDetails.firstName",
+              lastName: "$employeeDetails.lastName",
+            },
           },
-          averageProficiency: {
-            $avg: "$proficiencyDetails.sequence",
+
+          proficiencyLevel: {
+            $max: "$proficiencyDetails.sequence",
           },
         },
       },
+
+      // Group all unique employees under each skill
+      {
+        $group: {
+          _id: "$_id.skillId",
+
+          skillName: {
+            $first: "$skillName",
+          },
+
+          employees: {
+            $addToSet: {
+              _id: "$employee._id",
+              empId: "$employee.empId",
+              fullName: {
+                $trim: {
+                  input: {
+                    $concat: [
+                      {
+                        $ifNull: ["$employee.firstName", ""],
+                      },
+                      " ",
+                      {
+                        $ifNull: ["$employee.lastName", ""],
+                      },
+                    ],
+                  },
+                },
+              },
+            },
+          },
+
+          totalProficiency: {
+            $sum: "$proficiencyLevel",
+          },
+
+          averageProficiency: {
+            $avg: "$proficiencyLevel",
+          },
+
+          highestProficiency: {
+            $max: "$proficiencyLevel",
+          },
+        },
+      },
+
+      {
+        $addFields: {
+          employeeCount: {
+            $size: "$employees",
+          },
+        },
+      },
+
+      // Calculate the average proficiency percentage
       {
         $project: {
           _id: 0,
           skillId: "$_id",
           skillName: 1,
-          employeeCount: {
-            $size: "$totalEmployees",
-          },
+          employeeCount: 1,
+          employees: 1,
+          totalProficiency: 1,
+          highestProficiency: 1,
+
           averageProficiency: {
-            $round: ["$averageProficiency", 1],
+            $round: ["$averageProficiency", 2],
+          },
+
+          expertisePercentage: {
+            $round: [
+              {
+                $multiply: [
+                  {
+                    $divide: ["$averageProficiency", 5],
+                  },
+                  100,
+                ],
+              },
+              1,
+            ],
           },
         },
       },
 
+      // Highest expertise percentage first
       {
         $sort: {
+          expertisePercentage: -1,
           employeeCount: -1,
-          averageProficiency: -1,
         },
       },
+
+      // Get only the top five
       {
         $limit: 5,
       },
     ]);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       count: topSkills.length,
       data: topSkills,
     });
   } catch (error) {
-    console.error("Fetching error: ", error);
+    console.error("Fetching top expert skills error:", error);
+
     return res.status(500).json({
       success: false,
-      message: "Failed to retrieve top skills!",
-      error: error.message,
+      message: "Failed to retrieve top expert skills!",
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 };
