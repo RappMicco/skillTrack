@@ -1,9 +1,11 @@
 import { Clock5, ClipboardPen, TrendingUp, CircleCheck } from "lucide-react";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchTrainingSummary } from "../features/statusSummary/statusThunk.js";
 
 export const StatusCard = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { summary } = useSelector((state) => state.training);
   const statusSummary = [
@@ -49,11 +51,12 @@ export const StatusCard = () => {
       } catch (error) {
         console.log(error.message);
         alert(error.message);
+        navigate("/");
       }
     };
 
     getTrainingSummary();
-  }, [dispatch]);
+  }, [dispatch, navigate]);
   return (
     <>
       {statusSummary.map((item) => {

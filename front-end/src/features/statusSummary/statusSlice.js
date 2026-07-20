@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchTrainingSummary, fetchRecentTrainings } from "./statusThunk.js";
+import {
+  fetchTrainingSummary,
+  fetchRecentTrainings,
+  fetchTopFiveExpertSkills,
+} from "./statusThunk.js";
 
 const initialState = {
   success: false,
@@ -10,6 +14,8 @@ const initialState = {
     pending: 0,
   },
   recentTrainings: [],
+  topFiveSkill: [],
+  count: 0,
   loading: false,
   error: null,
 };
@@ -49,6 +55,24 @@ const trainingSlice = createSlice({
       })
 
       .addCase(fetchRecentTrainings.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // get top five exper skills
+      .addCase(fetchTopFiveExpertSkills.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(fetchTopFiveExpertSkills.fulfilled, (state, action) => {
+        state.loading = false;
+        state.success = true;
+        state.count = action.payload.count;
+        state.topFiveSkill = action.payload.data;
+      })
+
+      .addCase(fetchTopFiveExpertSkills.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       });
