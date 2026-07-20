@@ -35,3 +35,18 @@ export const getRecenTrainingSummary = async () => {
 
   return data;
 };
+
+export const getTopFiveSkills = async () => {
+  const response = await fetch(`${VITE_API_URL}/dashboard/get-top-skills`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
