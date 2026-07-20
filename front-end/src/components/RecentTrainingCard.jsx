@@ -31,7 +31,7 @@ export const RecentTrainingCard = () => {
     <>
       {recentTrainings.map((item, index) => {
         return (
-          <div key={item.id} className="flex items-center gap-4">
+          <div key={index} className="flex items-center gap-4">
             {/* name initials */}
             <div
               className="w-8 h-8 rounded-full bg-emerald-500 flex items-center justify-center text-sm font-semibold

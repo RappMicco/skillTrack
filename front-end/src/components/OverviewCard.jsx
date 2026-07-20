@@ -1,10 +1,13 @@
 import { Grid3X3, ChartColumn, Award } from "lucide-react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router";
 import { fetchRecentTrainings } from "../features/statusSummary/statusThunk.js";
 import { RecentTrainingCard } from "./RecentTrainingCard.jsx";
+import { RadarChartCard } from "./RadarChartCard.jsx";
 
 export const OverviewCard = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const overview = [
     {
@@ -13,6 +16,7 @@ export const OverviewCard = () => {
       btnTitle: "View Skill Matrix",
       bgColor: "bg-blue-500/15",
       icon: <Grid3X3 className="text-blue-400" size={15} />,
+      card: <RadarChartCard />,
     },
     {
       id: 2,
@@ -36,13 +40,14 @@ export const OverviewCard = () => {
       try {
         await dispatch(fetchRecentTrainings());
       } catch (error) {
-        console.log(error.message);
-        alert(error.message);
+        alert(error);
+        console.log(error);
+        navigate("/");
       }
     };
 
     getRecentTrainings();
-  }, [dispatch]);
+  }, [dispatch, navigate]);
   return (
     <>
       {overview.map((item) => {
