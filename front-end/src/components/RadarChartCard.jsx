@@ -1,17 +1,36 @@
 import {
-  RadarChart,
-  Radar,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  ResponsiveContainer,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
   Tooltip,
+  ResponsiveContainer,
 } from "recharts";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { fetchTopFiveExpertSkills } from "../features/statusSummary/statusThunk.js";
+
+const CustomTooltip = ({ active, payload }) => {
+  if (!active || !payload?.length) return null;
+
+  const item = payload[0].payload;
+
+  return (
+    <div className="rounded-xl border border-cyan-400/50 bg-[#020617] p-3 text-[10px] text-white shadow-[0_0_10px_rgba(34,211,238,0.25)]">
+      <p className=" text-white font-semibold">{item.skillName}</p>
+      <p className="text-cyan-400">
+        Expertise Percentage: {item.expertisePercentage}%
+      </p>
+
+      <p className="text-cyan-400">
+        Average Proficiency: {item.averageProficiency}
+      </p>
+
+      <p className="text-cyan-400">Employee Count: {item.employeeCount}</p>
+    </div>
+  );
+};
 
 export const RadarChartCard = () => {
   const navigate = useNavigate();
@@ -33,99 +52,120 @@ export const RadarChartCard = () => {
   }, [dispatch, navigate]);
   return (
     <>
-      <div className="flex-1">
-        {/* rechart container */}
-        <div className="w-full h-full min-w-0">
-          {/* rechard wrapper */}
-          <div className="relative cursor-default w-full h-60">
-            <ResponsiveContainer width="100%" height="100%">
-              <RadarChart data={topFiveSkill} outerRadius="72%">
-                <defs>
-                  <linearGradient
-                    id="neonRadarFill"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                  >
-                    <stop offset="0%" stopColor="#00E5FF" stopOpacity={0.65} />
-                    <stop
-                      offset="100%"
-                      stopColor="#0099FF"
-                      stopOpacity={0.15}
-                    />
-                  </linearGradient>
+      <div className="w-full h-64">
+        <ResponsiveContainer width="100%" height="100%">
+          <AreaChart
+            data={topFiveSkill}
+            margin={{
+              top: 15,
+              right: 15,
+              left: 0,
+              bottom: 10,
+            }}
+          >
+            <defs>
+              <linearGradient id="skillGradient" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#22D3EE" stopOpacity={0.55} />
+                <stop offset="95%" stopColor="#22D3EE" stopOpacity={0.02} />
+              </linearGradient>
+            </defs>
 
-                  <linearGradient
-                    id="neonRadarStroke"
-                    x1="0"
-                    y1="0"
-                    x2="1"
-                    y2="1"
-                  >
-                    <stop offset="0%" stopColor="#22D3EE" />
-                    <stop offset="100%" stopColor="#0EA5E9" />
-                  </linearGradient>
+            <XAxis
+              dataKey="skillName"
+              padding={{ left: 25, right: 25 }}
+              tick={{
+                fill: "#94A3B8",
+                fontSize: 12,
+              }}
+              axisLine={{
+                stroke: "#22D3EE",
+                strokeWidth: 0.1,
+              }}
+              tickLine={{
+                stroke: "#22D3EE",
+                strokeWidth: 0.1,
+              }}
+              tickMargin={10}
+            />
 
-                  <filter id="neonGlow">
-                    <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                    <feMerge>
-                      <feMergeNode in="coloredBlur" />
-                      <feMergeNode in="SourceGraphic" />
-                    </feMerge>
-                  </filter>
-                </defs>
+            <YAxis
+              width={35}
+              tick={{
+                fill: "#94A3B8",
+                fontSize: 11,
+              }}
+              axisLine={{
+                stroke: "#22D3EE",
+                strokeWidth: 0.1,
+              }}
+              tickLine={{
+                stroke: "#22D3EE",
+                strokeWidth: 0.1,
+              }}
+            />
 
-                <PolarGrid stroke="#1E3A5F" />
+            {/* <Tooltip
+              cursor={{
+                stroke: "#22D3EE",
+                strokeOpacity: 0.1,
+              }}
+              formatter={(value, name) => {
+                if (name === "Expertise Percentage") {
+                  return [`${value}%`, name];
+                }
+                return [value, name];
+              }}
+              labelStyle={{ display: "none" }}
+              contentStyle={{
+                backgroundColor: "#020617",
+                border: "1px solid rgba(34, 211, 238, 0.5)",
+                borderRadius: "12px",
+                color: "#fff",
+                boxShadow: "0 0 10px rgba(34, 211, 238, 0.25)",
+                fontSize: "9px",
+              }}
+            /> */}
 
-                <PolarAngleAxis
-                  dataKey="skillName"
-                  tick={{
-                    fill: "#93C5FD",
-                    fontSize: 12,
-                    fontWeight: 500,
-                  }}
-                />
+            <Tooltip
+              cursor={{
+                stroke: "#22D3EE",
+                strokeOpacity: 0.1,
+              }}
+              content={<CustomTooltip />}
+            />
 
-                <PolarRadiusAxis
-                  domain={[0, 100]}
-                  tick={false}
-                  axisLine={false}
-                />
+            {/* Glow layer */}
+            <Area
+              type="monotone"
+              stroke="#22D3EE"
+              strokeWidth={8}
+              strokeOpacity={0.08}
+              fill="none"
+            />
 
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "#020817",
-                    border: "1px solid #22D3EE",
-                    borderRadius: "12px",
-                    color: "#fff",
-                    boxShadow: "0 0 15px rgba(34,211,238,.35)",
-                  }}
-                />
-
-                {/* Glow layer */}
-                <Radar
-                  dataKey="expertisePercentage"
-                  stroke="#22D3EE"
-                  fill="none"
-                  strokeWidth={6}
-                  strokeOpacity={0.15}
-                  filter="url(#neonGlow)"
-                />
-
-                {/* Main layer */}
-                <Radar
-                  name="Expertise"
-                  dataKey="expertisePercentage"
-                  stroke="url(#neonRadarStroke)"
-                  fill="url(#neonRadarFill)"
-                  fillOpacity={0.5}
-                  strokeWidth={2.5}
-                />
-              </RadarChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+            {/* Main line */}
+            <Area
+              type="monotone"
+              dataKey="expertisePercentage"
+              name="Expertise Percentage"
+              stroke="#22D3EE"
+              strokeWidth={1}
+              fill="url(#skillGradient)"
+              activeDot={{
+                r: 5,
+                fill: "#22D3EE",
+                stroke: "#FFFFFF",
+                strokeWidth: 2,
+              }}
+              dot={{
+                r: 1,
+                fill: "#06B6D4",
+                stroke: "#67E8F9",
+                strokeWidth: 2,
+              }}
+            />
+          </AreaChart>
+        </ResponsiveContainer>
       </div>
     </>
   );
