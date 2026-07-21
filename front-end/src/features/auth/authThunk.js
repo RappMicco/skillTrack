@@ -6,10 +6,12 @@ export const loginUser = createAsyncThunk(
   async (credentials, thunkAPI) => {
     try {
       const response = await login(credentials);
+      console.log(response);
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        error.response?.data?.errors?.[0]?.message || error.message,
+        error.response?.data?.errors?.[0]?.message ||
+          error.response?.data?.message,
       );
     }
   },
