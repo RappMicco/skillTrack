@@ -21,9 +21,14 @@ export const getCurrentUser = createAsyncThunk(
   "auth/getCurrentUser",
   async (_, thunkAPI) => {
     try {
-      return await getMe();
+      const response = await getMe();
+      return response;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
+      console.log(error.response.data.message);
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.errors?.[0]?.message ||
+          error.response?.data?.message,
+      );
     }
   },
 );
