@@ -28,7 +28,7 @@ export const getMe = async () => {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message);
+    throw { response: { data } };
   }
 
   return data;
