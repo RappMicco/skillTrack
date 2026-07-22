@@ -52,12 +52,14 @@ const authSlice = createSlice({
         state.user = action.payload.data;
         state.isAuthenticated = true;
         state.success = true;
+        state.error = null;
       })
 
       .addCase(getCurrentUser.rejected, (state) => {
         state.loading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.error = null;
         state.success = false;
       })
 
