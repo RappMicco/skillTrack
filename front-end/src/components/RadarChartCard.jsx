@@ -72,7 +72,7 @@ export const RadarChartCard = () => {
 
             <XAxis
               dataKey="skillName"
-              padding={{ left: 25, right: 25 }}
+              padding={{ left: 15, right: 15 }}
               tick={{
                 fill: "#94A3B8",
                 fontSize: 12,
