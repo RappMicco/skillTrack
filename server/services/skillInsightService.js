@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 export const generateSkillInsights = (skill = []) => {
   if (!Array.isArray(skills) || skills.length === 0) {
     return {
@@ -67,8 +66,4 @@ export const generateSkillInsights = (skill = []) => {
   });
 
   // Weak skill recommendations
-=======
-export const skillInsightService = () => {
-  return <div></div>;
->>>>>>> main
 };
