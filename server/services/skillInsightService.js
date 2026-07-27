@@ -1,4 +1,4 @@
-export const generateSkillInsights = (skill = []) => {
+export const generateSkillInsights = (skills = []) => {
   if (!Array.isArray(skills) || skills.length === 0) {
     return {
       summary: {
