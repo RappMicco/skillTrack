@@ -1,4 +1,4 @@
-export const generateSkillInsights = (skill = []) => {
+export const generateSkillInsights = (skills = []) => {
   if (!Array.isArray(skills) || skills.length === 0) {
     return {
       summary: {
@@ -66,4 +66,40 @@ export const generateSkillInsights = (skill = []) => {
   });
 
   // Weak skill recommendations
+  const weakSkills = skills.filter((skill) => skill.expertisePercentage < 60);
+
+  weakSkills.forEach((skill) => {
+    insights.push({
+      id: `improvement-${skill.skillId}`,
+      type: "recommendation",
+      title: "Skill Improvement Needed",
+      skillName: skill.skillName,
+      message: `${skill.skillName} currently has ${skill.expertisePercentage}% average expertise. Consider assigning foundational or refresher training to improve employee proficiency.`,
+      metrics: {
+        expertisePercentage: skill.expertisePercentage,
+        averageProficiency: skill.averageProficiency,
+        employeeCount: skill.employeeCount,
+      },
+    });
+  });
+
+  return {
+    summary: {
+      strongestSkill: {
+        skillName: strongestSkill.skillName,
+        expertisePercentage: strongestSkill.expertisePercentage,
+      },
+
+      weakestSkill: {
+        skillName: weakestSkill.skillName,
+        expertisePercentage: weakestSkill.expertisePercentage,
+      },
+
+      knowledgeRiskCount: knowledgeRisks.length,
+      improvementSkillCount: weakSkills.length,
+      totalInsight: insights.length,
+    },
+
+    insights,
+  };
 };

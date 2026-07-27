@@ -7,6 +7,7 @@ import { helmetConfig } from "./configs/helmetConfig.js";
 import employeeRoutes from "./routes/employeeRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import summaryRoutes from "./routes/summaryRoutes.js";
+import insightRoutes from "./routes/insightRoutes.js";
 
 dotEnv.config();
 
@@ -44,6 +45,7 @@ app.use(cors(corsOptions));
 app.use("/api", employeeRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/dashboard", summaryRoutes);
+app.use("/api", insightRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
