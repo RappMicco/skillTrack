@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { SkillMatrix } from "../models/skillMatrixModel.js";
 
-export const getSkllOverviewData = async () => {
+export const getSkillOverviewData = async () => {
   const skills = await SkillMatrix.aggregate([
     // get employee information
     {
