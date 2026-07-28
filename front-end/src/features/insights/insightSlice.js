@@ -22,4 +22,26 @@ const insightSlice = createSlice({
       state.error = null;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchSkillInsights.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+
+      .addCase(fetchSkillInsights.fulfilled, (state, action) => {
+        state.loading = false;
+        state.insights = action.payload?.data?.insights || [];
+        state.summary = action.payload?.data?.summary || initialState.summary;
+      })
+
+      .addCase(fetchSkillInsights.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
 });
+
+export const { clearInsightError } = insightSlice.actions;
+
+export default insightSlice.reducer;
