@@ -44,7 +44,7 @@ export const generateSkillInsights = (skills = []) => {
       type: "risk",
       title: "Knowlede Concentration Risk",
       skillName: skill.skillName,
-      message: `${skill.skillName} has a high proficiency level`,
+      message: `${skill.skillName} has a high proficiency level, but only one employee currently possesses this skill. This may affect business continuity when that employee is unavailable.`,
       metrics: {
         expertisePercentage: skill.expertisePercentage,
         averageProficiency: skill.averageProficiency,
