@@ -57,10 +57,10 @@ export const RadarChartCard = () => {
           <AreaChart
             data={topFiveSkill}
             margin={{
-              top: 15,
+              top: 8,
               right: 15,
               left: 0,
-              bottom: 10,
+              bottom: 0,
             }}
           >
             <defs>
@@ -161,7 +161,7 @@ export const RadarChartCard = () => {
                 r: 1,
                 fill: "#06B6D4",
                 stroke: "#67E8F9",
-                strokeWidth: 2,
+                strokeWidth: 3,
               }}
             />
           </AreaChart>
