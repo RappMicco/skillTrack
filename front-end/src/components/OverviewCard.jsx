@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { fetchRecentTrainings } from "../features/statusSummary/statusThunk.js";
 import { RecentTrainingCard } from "./RecentTrainingCard.jsx";
 import { RadarChartCard } from "./RadarChartCard.jsx";
+import { InsightCard } from "./InsightCard.jsx";
 
 export const OverviewCard = () => {
   const navigate = useNavigate();
@@ -24,6 +25,7 @@ export const OverviewCard = () => {
       btnTitle: "View Insight",
       bgColor: "bg-purple-500/15",
       icon: <ChartColumn className="text-purple-400" size={15} />,
+      card: <InsightCard />,
     },
     {
       id: 3,
