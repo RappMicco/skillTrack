@@ -5,7 +5,7 @@ export const fetchSkillInsights = createAsyncThunk(
   "insights/fetchSkillInsights",
   async (_, thunkAPI) => {
     try {
-      const response = await fetchSkillInsightRequest().unwrap();
+      const response = await fetchSkillInsightRequest();
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(
