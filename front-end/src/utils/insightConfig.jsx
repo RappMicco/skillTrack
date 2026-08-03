@@ -54,7 +54,6 @@ export const typeColor = (type) => {
 export const borderColor = (type) => {
   switch (type) {
     case "strength":
-<<<<<<< HEAD
       return "border-l-2 border-l-emerald-500 bg-slate-800 border-emerald-600/20 shadow-emerald-500/20";
 
     case "risk":
@@ -62,20 +61,10 @@ export const borderColor = (type) => {
 
     case "recommendation":
       return "border-l-2 border-l-cyan-500 bg-slate-80 border-cyan-600/20 shadow-blue-500/20";
-=======
-      return "border border-emerald-600/20 shadow-emerald-500/20";
-
-    case "risk":
-      return "border border-orange-600/20 shadow-amber-500/20";
-
-    case "recommendation":
-      return "border border-cyan-600/20 shadow-blue-500/20";
->>>>>>> main
     default:
       return null;
   }
 };
-<<<<<<< HEAD
 
 export const bgColorHover = (type) => {
   switch (type) {
@@ -92,5 +81,3 @@ export const bgColorHover = (type) => {
       return "hover:bg-slate-700";
   }
 };
-=======
->>>>>>> main
