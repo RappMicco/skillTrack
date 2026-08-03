@@ -42,7 +42,6 @@ export const RadarChartCard = () => {
       try {
         await dispatch(fetchTopFiveExpertSkills());
       } catch (error) {
-        alert(error);
         console.error(error);
         navigate("/");
       }
