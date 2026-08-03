@@ -42,7 +42,6 @@ export const OverviewCard = () => {
       try {
         await dispatch(fetchRecentTrainings());
       } catch (error) {
-        alert(error);
         console.log(error);
         navigate("/");
       }

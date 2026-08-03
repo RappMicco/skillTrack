@@ -24,7 +24,6 @@ export const getCurrentUser = createAsyncThunk(
       const response = await getMe();
       return response;
     } catch (error) {
-      console.log(error.response.data.message);
       return thunkAPI.rejectWithValue(
         error.response?.data?.errors?.[0]?.message ||
           error.response?.data?.message,
