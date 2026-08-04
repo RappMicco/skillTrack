@@ -33,14 +33,14 @@ export const InsightCard = () => {
         return (
           <div
             key={id}
-            className={`relative group overflow-hidden flex items-center border gap-4 px-2 py-2 rounded-lg bg-[#EFE9E9]/8 shadow-md ${borderColor(item.type)} transition-all duration-300 hover:-translate-y-1`}
+            className={`relative group overflow-hidden flex items-center border gap-4 px-2 py-2 rounded-lg bg-[#EFE9E9]/8 shadow-md ${borderColor(item.type)} transition-all duration-300 ease-out hover:-translate-y-1`}
           >
             <div
               className={`absolute inset-0 opacity-0 group-hover:opacity-5 transition-opacity duration-300 bg-linear-to-br ${bgColorHover(item.type)}`}
             ></div>
             {/* icon */}
             <div
-              className={`flex items-center justify-center w-9 h-9 rounded-full ${bgIconColor(item.type)}`}
+              className={`flex items-center justify-center w-9 h-9 rounded-full ${bgIconColor(item.type)}  duration-700 group-hover:rotate-360`}
             >
               {getIcon(item.type)}
             </div>
@@ -49,7 +49,8 @@ export const InsightCard = () => {
               {/* type container */}
               <div className="flex justify-between">
                 <div
-                  className={`w-fit inline-flex items-center justify-center ${typeColor(item.type)} text-[8px] font-bold tracking-widest rounded-sm px-2 py-1 mb-2`}
+                  className={`w-fit inline-flex items-center justify-center ${typeColor(item.type)} text-[8px] font-bold tracking-widest rounded-sm px-2 py-1 mb-2
+                              transition-all duration-300 ease-out group-hover:-translate-y-0.5 group-hover:scale-102 hover:shadow-xl`}
                 >
                   {item.type.toUpperCase()}
                 </div>

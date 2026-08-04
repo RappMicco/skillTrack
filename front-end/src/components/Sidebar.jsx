@@ -121,7 +121,7 @@ export const Sidebar = () => {
                           ${isActive ? "text-slate-200 bg-[#7F96E0]/20 border border-white/10" : "text-[#E6E1E1]/69 border border-transparent hover:text-slate-200 hover:bg-white/5 cursor-pointer"}`}
             >
               <Icon size={16} />
-              <span className="ml-3 flex-1 text-left whitespace-nowrap">
+              <span className="ml-3 flex-1 text-[13px] text-left whitespace-nowrap">
                 {item.title}
               </span>
               <ChevronRight size={14} className="ml-auto" />
@@ -131,9 +131,9 @@ export const Sidebar = () => {
       </nav>
 
       {/* logout container */}
-      <div className="px-4 py-5 border-t border-[#FFFFFF]/10">
+      <div className="px-4 py-4 border-t border-[#FFFFFF]/10">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
+          <div className="w-8 h-8 rounded-full flex items-center justify-center text-[11px] font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
             {initials}
           </div>
           <div
@@ -142,8 +142,10 @@ export const Sidebar = () => {
           >
             {/* name and group */}
             <div className="flex-1">
-              <p className="text-xs font-semibold text-white">{userName}</p>
-              <p className="text-[11px] text-white/50 transition-colors duration-300 group-hover:text-white">
+              <p className="text-[11px] font-semibold text-slate-300 transition-colors duration-300 group-hover:text-white">
+                {userName}
+              </p>
+              <p className="text-[10px] text-white/50 transition-colors duration-300 group-hover:text-white">
                 Logout
               </p>
             </div>
@@ -151,8 +153,8 @@ export const Sidebar = () => {
             <div>
               <LogOut
                 onClick={() => handleLogOut()}
-                size={19}
-                className="text-white/80 group-hover:text-white group-hover:scale-110 transition-all duration-300"
+                size={16}
+                className="text-white/60 group-hover:text-white group-hover:scale-110 transition-all duration-300"
               />
             </div>
           </div>

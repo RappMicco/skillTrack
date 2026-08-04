@@ -11,13 +11,13 @@ export const Header = () => {
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-[#FFFFFF]/7 shrink-0">
       <div className="flex items-center">
-        <p className="text-xl font-bold text-[#E7EFF0]/34">{activeDesc}</p>
+        <p className="text-md font-bold text-[#E7EFF0]/51">{activeDesc}</p>
       </div>
       {/* OSS LOGO */}
       <div className="flex items-center gap-3">
         {/* member name */}
         <div>
-          <p className="text-xs font-semibold text-[#F3EDED]/76 whitespace-nowrap">
+          <p className="text-[11px] font-semibold text-[#F3EDED]/76 whitespace-nowrap">
             {userName}
           </p>
           <p className="text-[11px] text-white/50">
@@ -31,7 +31,7 @@ export const Header = () => {
           </p>
         </div>
         {/* OSS */}
-        <div className="w-10 h-10 shrink-0 rounded-full flex items-center justify-center text-xs font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
+        <div className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
           OSS
         </div>
       </div>
