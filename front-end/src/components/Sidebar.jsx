@@ -95,7 +95,7 @@ export const Sidebar = () => {
   return (
     <>
       {loading && <div>Loading...</div>}
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-[#FFFFFF]/10">
+      <div className="flex items-center gap-3 px-6 py-5 border-b border-[#FFFFFF]/5">
         <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
           <span className="text-white text-sm font-bold tracking-tight">
             ST
