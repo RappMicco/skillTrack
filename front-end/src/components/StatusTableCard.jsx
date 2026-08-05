@@ -13,6 +13,10 @@ export const StatusTableCard = () => {
   const { upcomingData } = useSelector((state) => state.statusData);
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("UPCOMING");
+  // change date format
+  const formatDate = (date) => {
+    return new Date(date).toLocaleDateString("en-CA");
+  };
 
   const handleClickStatus = (item) => {
     setSelectedStatus(item);
@@ -110,20 +114,22 @@ export const StatusTableCard = () => {
                   </td>
                   {/* traininig name */}
                   <td className="px-5 py-4 text-slate-400 text-xs">
-                    {item?.traingName}
+                    {item?.trainingName}
                   </td>
                   {/*Institution */}
-                  <td className="px-5 py-4 text-slate-400 text-xs">TNSP</td>
+                  <td className="px-5 py-4 text-slate-400 text-xs">
+                    {item?.trainingProvider}
+                  </td>
                   {/* Schedule */}
                   <td className="px-5 py-4 text-slate-400 text-xs whitespace-nowrap">
-                    July 10 - July 18, 2026
+                    {formatDate(item?.startDate)} ~ {formatDate(item?.endDate)}
                   </td>
                   {/* Status */}
                   <td className="px-5 py-4">
                     <span
                       className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${statusBgBorderColor(selectedStatus)}`}
                     >
-                      {selectedStatus}
+                      {item?.status}
                     </span>
                   </td>
                   {/* Actions */}
