@@ -25,8 +25,12 @@ export const StatusTableCard = () => {
   useEffect(() => {
     const fetchStatusData = async () => {
       try {
-        if (selectedStatus === "UPCOMING") {
-          await dispatch(fetchUpcomingData());
+        switch (selectedStatus) {
+          case "UPCOMING":
+            await dispatch(fetchUpcomingData()).unwrap();
+            break;
+          default:
+            break;
         }
       } catch (error) {
         console.error(error);
@@ -35,6 +39,16 @@ export const StatusTableCard = () => {
 
     fetchStatusData();
   }, [selectedStatus, dispatch]);
+
+  // rendered data of selected status
+  const dataByStatus = {
+    UPCOMING: upcomingData,
+    // ONGOING: ongoingData,
+    // PENDING: pendingData,
+    // COMPLETED: completedData,
+  };
+
+  const displayedData = dataByStatus[selectedStatus] || [];
   return (
     <>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 border-b border-[#06B6D4]/5">
@@ -44,7 +58,9 @@ export const StatusTableCard = () => {
             return (
               <button
                 key={item.id}
-                onClick={() => handleClickStatus(item.title)}
+                onClick={() => {
+                  handleClickStatus(item.title);
+                }}
                 className={`flex items-center justify-center px-3 py-1.5 rounded-lg text-[9px] font-semibold tracking-widest transition-colors duration-300  
                           ${selectedStatus === item.title ? "bg-[#06B6D4]/42 text-white border border-[#06B6D4]/20" : "text-slate-500 shadow-md hover:text-slate-300 hover:bg-white/5 cursor-pointer"} }`}
               >
@@ -90,7 +106,7 @@ export const StatusTableCard = () => {
 
           {/* ================================================================================= TABLE DETAILS =========================================================================================*/}
           <tbody>
-            {upcomingData.map((item, index) => {
+            {displayedData.map((item, index) => {
               return (
                 <tr
                   key={index}
