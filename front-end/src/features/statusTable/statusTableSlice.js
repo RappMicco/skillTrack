@@ -4,6 +4,9 @@ import { fetchUpcomingData } from "./statusTableThunk.js";
 const initialState = {
   success: false,
   upcomingData: [],
+  pendingData: [],
+  ongoingData: [],
+  completedData: [],
   loading: false,
   error: null,
 };
@@ -23,6 +26,7 @@ const statusTableSlice = createSlice({
         state.upcomingData = action.payload?.data;
         state.success = action.payload?.success;
       })
+
       .addCase(fetchUpcomingData.rejected, (state, action) => {
         state.success = false;
         state.loading = false;
