@@ -142,7 +142,7 @@ export const upcomingSummary = async (req, res) => {
           },
           group: "$employee.group",
           empLevel: "$employee.empLevel",
-          trainingName: "$training.traingName",
+          trainingName: "$training.trainingName",
           trainingProvider: "$training.trainingProvider",
           status: "$status.status",
           startDate: 1,
