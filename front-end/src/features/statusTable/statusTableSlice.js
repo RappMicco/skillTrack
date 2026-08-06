@@ -3,6 +3,7 @@ import {
   fetchPendingData,
   fetchUpcomingData,
   fetchOngoingData,
+  fetchCompletedData,
 } from "./statusTableThunk.js";
 
 const initialState = {
@@ -66,6 +67,23 @@ const statusTableSlice = createSlice({
       })
 
       .addCase(fetchOngoingData.rejected, (state, action) => {
+        state.success = false;
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // completed data
+      .addCase(fetchCompletedData.pending, (state) => {
+        state.loading = true;
+      })
+
+      .addCase(fetchCompletedData.fulfilled, (state, action) => {
+        state.loading = false;
+        state.completedDataData = action.payload?.data;
+        state.success = action.payload?.success;
+      })
+
+      .addCase(fetchCompletedData.rejected, (state, action) => {
         state.success = false;
         state.loading = false;
         state.error = action.payload;

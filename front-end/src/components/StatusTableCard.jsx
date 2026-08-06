@@ -11,12 +11,14 @@ import {
   fetchUpcomingData,
   fetchPendingData,
   fetchOngoingData,
+  fetchCompletedData,
 } from "../features/statusTable/statusTableThunk.js";
 
 export const StatusTableCard = () => {
-  const { upcomingData, pendingData, ongoingData } = useSelector(
+  const { upcomingData, pendingData, ongoingData, completedData } = useSelector(
     (state) => state.statusData,
   );
+
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("UPCOMING");
   // change date format
@@ -41,7 +43,11 @@ export const StatusTableCard = () => {
             break;
 
           case "ONGOING":
-            await dispatch(fetchOngoingData());
+            await dispatch(fetchOngoingData()).unwrap();
+            break;
+
+          case "COMPLETED":
+            await dispatch(fetchCompletedData()).unwrap();
             break;
 
           default:
@@ -60,7 +66,7 @@ export const StatusTableCard = () => {
     UPCOMING: upcomingData,
     PENDING: pendingData,
     ONGOING: ongoingData,
-    // COMPLETED: completedData,
+    COMPLETED: completedData,
   };
 
   const displayedData = dataByStatus[selectedStatus] || [];
@@ -122,70 +128,82 @@ export const StatusTableCard = () => {
 
           {/* ================================================================================= TABLE DETAILS =========================================================================================*/}
           <tbody>
-            {displayedData.map((item, index) => {
-              return (
-                <tr
-                  key={index}
-                  className="border-b border-white/4 hover:bg:white/3 transition-colors group"
+            {displayedData.length === 0 ? (
+              <tr>
+                <td
+                  colSpan={6}
+                  className="text-center py-10 text-slate-500 font-semibold"
                 >
-                  <td className="px-5 py-4">
-                    {/* initials and fullname container*/}
-                    <div className="flex items-center gap-2.5">
-                      {/* initials */}
-                      <div
-                        className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0 bg-linear-to-br ${initialIconBg(selectedStatus)}`}
-                      >
-                        R
-                      </div>
+                  {`No ${selectedStatus.toLowerCase()} training records found.`}
+                </td>
+              </tr>
+            ) : (
+              displayedData.map((item, index) => {
+                return (
+                  <tr
+                    key={index}
+                    className="border-b border-white/4 hover:bg:white/3 transition-colors group"
+                  >
+                    <td className="px-5 py-4">
+                      {/* initials and fullname container*/}
+                      <div className="flex items-center gap-2.5">
+                        {/* initials */}
+                        <div
+                          className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0 bg-linear-to-br ${initialIconBg(selectedStatus)}`}
+                        >
+                          R
+                        </div>
 
-                      {/* full name */}
-                      <span className="text-slate-300 font-medium text-xs whitespace-nowrap">
-                        {item?.fullName}
+                        {/* full name */}
+                        <span className="text-slate-300 font-medium text-xs whitespace-nowrap">
+                          {item?.fullName}
+                        </span>
+                      </div>
+                    </td>
+                    {/* traininig name */}
+                    <td className="px-5 py-4 text-slate-400 text-xs">
+                      {item?.trainingName}
+                    </td>
+                    {/*Institution */}
+                    <td className="px-5 py-4 text-slate-400 text-xs">
+                      {item?.trainingProvider}
+                    </td>
+                    {/* Schedule */}
+                    <td className="px-5 py-4 text-slate-400 text-xs whitespace-nowrap">
+                      {formatDate(item?.startDate)} ~{" "}
+                      {formatDate(item?.endDate)}
+                    </td>
+                    {/* Status */}
+                    <td className="px-5 py-4">
+                      <span
+                        className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${statusBgBorderColor(selectedStatus)}`}
+                      >
+                        {item?.status}
                       </span>
-                    </div>
-                  </td>
-                  {/* traininig name */}
-                  <td className="px-5 py-4 text-slate-400 text-xs">
-                    {item?.trainingName}
-                  </td>
-                  {/*Institution */}
-                  <td className="px-5 py-4 text-slate-400 text-xs">
-                    {item?.trainingProvider}
-                  </td>
-                  {/* Schedule */}
-                  <td className="px-5 py-4 text-slate-400 text-xs whitespace-nowrap">
-                    {formatDate(item?.startDate)} ~ {formatDate(item?.endDate)}
-                  </td>
-                  {/* Status */}
-                  <td className="px-5 py-4">
-                    <span
-                      className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${statusBgBorderColor(selectedStatus)}`}
-                    >
-                      {item?.status}
-                    </span>
-                  </td>
-                  {/* Actions */}
-                  <td className="px-5 py-4">
-                    <div className="flex items-center gap-2">
-                      {/* view */}
-                      <button
-                        className={`text-[10px] font-semibold cursor-pointer ${viewIconColor(selectedStatus)}
+                    </td>
+                    {/* Actions */}
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-2">
+                        {/* view */}
+                        <button
+                          className={`text-[10px] font-semibold cursor-pointer ${viewIconColor(selectedStatus)}
                                     px-4 py-1 rounded-lg transition-all duration-300 active:scale-95`}
-                      >
-                        View
-                      </button>
-                      {/* edit */}
-                      <button
-                        className="text-[10px] font-semibold text-slate-500 hover:text-slate-300 border border-white/10 hover:border-white/20 px-4 py-1 rounded-lg transition-all
+                        >
+                          View
+                        </button>
+                        {/* edit */}
+                        <button
+                          className="text-[10px] font-semibold text-slate-500 hover:text-slate-300 border border-white/10 hover:border-white/20 px-4 py-1 rounded-lg transition-all
                                     duration-300 active:scale-95 cursor-pointer"
-                      >
-                        Edit
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              );
-            })}
+                        >
+                          Edit
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
+            )}
           </tbody>
         </table>
       </div>
