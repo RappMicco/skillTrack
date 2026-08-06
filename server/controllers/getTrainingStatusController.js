@@ -352,13 +352,13 @@ export const ongoingSummary = async (req, res) => {
     ]);
 
     if (summary.length === 0) {
-      return res.status(500).json({
+      return res.status(200).json({
         success: true,
         message: "No ongoing training!",
       });
     }
 
-    res.status(500).json({
+    res.status(200).json({
       success: true,
       data: summary,
     });
