@@ -79,7 +79,7 @@ const statusTableSlice = createSlice({
 
       .addCase(fetchCompletedData.fulfilled, (state, action) => {
         state.loading = false;
-        state.completedDataData = action.payload?.data;
+        state.completedData = action.payload?.data;
         state.success = action.payload?.success;
       })
 

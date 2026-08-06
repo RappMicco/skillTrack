@@ -152,7 +152,6 @@ export const Sidebar = () => {
             {/* logout icon */}
             <div>
               <LogOut
-                onClick={() => handleLogOut()}
                 size={16}
                 className="text-white/60 group-hover:text-white group-hover:scale-110 transition-all duration-300"
               />

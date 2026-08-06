@@ -25,7 +25,7 @@ export const Dashboard = () => {
       </div>
 
       {/* status table */}
-      <div className="rounded-2xl overflow-hidden bg-[#0F172A] border border-[#06B6D4]/13">
+      <div className="rounded-2xl overflow-hidden bg-[#0F172A] border border-[#06B6D4]/13 overflow-y-auto xl:max-h-60 custom-scrollbar">
         <StatusTableCard />
       </div>
     </>
