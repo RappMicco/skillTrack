@@ -3,7 +3,7 @@ import { Training } from "../models/trainingModel.js";
 
 export const createTraining = async (req, res) => {
   try {
-    const { trainingName, trainingProvider } = req.body;
+    const { trainingName, trainingProvider, trainingDescription } = req.body;
 
     const existingTraining = await Training.findOne({ trainingName });
 
@@ -17,6 +17,7 @@ export const createTraining = async (req, res) => {
     const trainingRecord = await Training.create({
       trainingName,
       trainingProvider,
+      trainingDescription,
     });
 
     res.status(201).json({
@@ -36,7 +37,7 @@ export const createTraining = async (req, res) => {
 export const updateTrainingProvider = async (req, res) => {
   try {
     const { id } = req.params;
-    const { trainingName, trainingProvider } = req.body;
+    const { trainingName, trainingProvider, trainingDescription } = req.body;
 
     if (mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
@@ -56,12 +57,15 @@ export const updateTrainingProvider = async (req, res) => {
     //check if no changes on training name and training provided field
     const trainingProviderChanges =
       trainingProviderRecord.trainingName === trainingName &&
-      trainingProviderRecord.trainingProvider === trainingProvider;
+      trainingProviderRecord.trainingProvider === trainingProvider &&
+      trainingProviderRecord.trainingDescription === trainingDescription;
 
     trainingProviderRecord.trainingName =
       trainingName || trainingProviderRecord.trainingName;
     trainingProviderRecord.trainingProvider =
       trainingProvider || trainingProviderRecord.trainingProvider;
+    trainingProviderRecord.trainingDescription =
+      trainingDescription || trainingProviderRecord.trainingDescription;
 
     trainingProviderRecord.save();
 
