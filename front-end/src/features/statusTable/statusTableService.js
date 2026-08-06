@@ -17,3 +17,38 @@ export const getUpcomingData = async () => {
 
   return data;
 };
+
+export const getPendingData = async () => {
+  const response = await fetch(
+    `${VITE_API_URL}/dashboard/get-pending-training`,
+    {
+      method: "GET",
+      credentials: "include",
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
+
+export const getOngoingData = async () => {
+  const response = await fetch(
+    `${VITE_API_URL}/dashboard/get-ongoing-training`,
+    {
+      method: "GET",
+      credentials: "include",
+    },
+  );
+
+  const data = await response.json();
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
