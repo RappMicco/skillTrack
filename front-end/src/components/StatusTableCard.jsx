@@ -7,10 +7,16 @@ import {
   viewIconColor,
 } from "../utils/StatusTableConfig.jsx";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUpcomingData } from "../features/statusTable/statusTableThunk.js";
+import {
+  fetchUpcomingData,
+  fetchPendingData,
+  fetchOngoingData,
+} from "../features/statusTable/statusTableThunk.js";
 
 export const StatusTableCard = () => {
-  const { upcomingData } = useSelector((state) => state.statusData);
+  const { upcomingData, pendingData, ongoingData } = useSelector(
+    (state) => state.statusData,
+  );
   const dispatch = useDispatch();
   const [selectedStatus, setSelectedStatus] = useState("UPCOMING");
   // change date format
@@ -29,6 +35,15 @@ export const StatusTableCard = () => {
           case "UPCOMING":
             await dispatch(fetchUpcomingData()).unwrap();
             break;
+
+          case "PENDING":
+            await dispatch(fetchPendingData()).unwrap();
+            break;
+
+          case "ONGOING":
+            await dispatch(fetchOngoingData());
+            break;
+
           default:
             break;
         }
@@ -43,12 +58,13 @@ export const StatusTableCard = () => {
   // rendered data of selected status
   const dataByStatus = {
     UPCOMING: upcomingData,
-    // ONGOING: ongoingData,
-    // PENDING: pendingData,
+    PENDING: pendingData,
+    ONGOING: ongoingData,
     // COMPLETED: completedData,
   };
 
   const displayedData = dataByStatus[selectedStatus] || [];
+
   return (
     <>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 border-b border-[#06B6D4]/5">
