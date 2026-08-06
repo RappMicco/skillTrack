@@ -30,7 +30,7 @@ export const ViewModal = ({ training }) => {
                 <div className="flex items-center gap-3">
                   {/* initial */}
                   <div
-                    className={`w-11 h-11 rounded-2xl flex items-center justify-center text-sm font-bold text-white shrink-0 bg-linear-to-br ${initialIconBg(selectedStatus)}`}
+                    className={`w-9 h-9 rounded-xl flex items-center justify-center text-md font-bold text-white shrink-0 bg-linear-to-br ${initialIconBg(selectedStatus)}`}
                   >
                     {training?.fullName?.charAt(0).toUpperCase()}
                   </div>
@@ -60,7 +60,7 @@ export const ViewModal = ({ training }) => {
               {/* status */}
               <div className="px-6 pb-4">
                 <span
-                  className={`inline-block px-2.5 py-1 rounded-full text-[10px] font-bold uppercase
+                  className={`inline-block px-2.5 py-1 rounded-full text-[8px] font-bold uppercase
                                 tracking-widest ${statusBgBorderColor(selectedStatus)}`}
                 >
                   {training?.status}
