@@ -3,6 +3,7 @@ import {
   getUpcomingData,
   getPendingData,
   getOngoingData,
+  getCompletedData,
 } from "./statusTableService.js";
 
 export const fetchUpcomingData = createAsyncThunk(
@@ -42,6 +43,20 @@ export const fetchOngoingData = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || error.message,
+      );
+    }
+  },
+);
+
+export const fetchCompletedData = createAsyncThunk(
+  "statusData/fetchCompletedData",
+  async (_, thunkAPI) => {
+    try {
+      const response = await getCompletedData();
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data.message || error.message,
       );
     }
   },
