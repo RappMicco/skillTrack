@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useContext, useState } from "react";
 import { Search } from "lucide-react";
 import { statusCategory, statusHeader } from "../hook/statusCategory.js";
 import {
@@ -13,6 +13,8 @@ import {
   fetchOngoingData,
   fetchCompletedData,
 } from "../features/statusTable/statusTableThunk.js";
+import { ViewModal } from "./ViewModal.jsx";
+import { PageContext } from "../context/PageContext.js";
 
 export const StatusTableCard = () => {
   const { upcomingData, pendingData, ongoingData, completedData } = useSelector(
@@ -20,7 +22,9 @@ export const StatusTableCard = () => {
   );
 
   const dispatch = useDispatch();
-  const [selectedStatus, setSelectedStatus] = useState("UPCOMING");
+  const { selectedStatus, setSelectedStatus, isOpen, setIsOpen } =
+    useContext(PageContext);
+  const [selectedTraining, setSelectedTraining] = useState(null);
   // change date format
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString("en-CA");
@@ -70,9 +74,17 @@ export const StatusTableCard = () => {
   };
 
   const displayedData = dataByStatus[selectedStatus] || [];
+  // view screen
+  const handleClickView = (item) => {
+    setSelectedTraining(item);
+    setIsOpen(true);
+  };
 
   return (
     <>
+      {/* ========================================================================================================Open Modal ===================================================================== */}
+      {isOpen && <ViewModal training={selectedTraining} />}
+
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 border-b border-[#06B6D4]/5">
         {/* =================================================================================================== status button ============================================================================================ */}
         <div className="flex items-center gap-2 bg-white/5 rounded-lg p-1">
@@ -151,7 +163,7 @@ export const StatusTableCard = () => {
                         <div
                           className={`w-7 h-7 rounded-full flex items-center justify-center text-[12px] font-bold text-white shrink-0 bg-linear-to-br ${initialIconBg(selectedStatus)}`}
                         >
-                          R
+                          {item?.fullName?.charAt(0).toUpperCase()}
                         </div>
 
                         {/* full name */}
@@ -166,7 +178,8 @@ export const StatusTableCard = () => {
                     </td>
                     {/*Institution */}
                     <td className="px-5 py-4 text-slate-400 text-xs">
-                      {item?.trainingProvider}
+                      {item?.trainingProvider?.charAt(0).toUpperCase() +
+                        item?.trainingProvider?.slice(1)}
                     </td>
                     {/* Schedule */}
                     <td className="px-5 py-4 text-slate-400 text-xs whitespace-nowrap">
@@ -176,27 +189,23 @@ export const StatusTableCard = () => {
                     {/* Status */}
                     <td className="px-5 py-4">
                       <span
-                        className={`inline-block px-2 py-0.5 rounded-full text-[10px] font-semibold uppercase tracking-wider ${statusBgBorderColor(selectedStatus)}`}
+                        className={`inline-block px-2 py-1 rounded-full text-[10px] font-semibold uppercase tracking-wider ${statusBgBorderColor(selectedStatus)}`}
                       >
                         {item?.status}
                       </span>
                     </td>
                     {/* Actions */}
                     <td className="px-5 py-4">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center">
                         {/* view */}
                         <button
+                          onClick={() => {
+                            handleClickView(item);
+                          }}
                           className={`text-[10px] font-semibold cursor-pointer ${viewIconColor(selectedStatus)}
                                     px-4 py-1 rounded-lg transition-all duration-300 active:scale-95`}
                         >
                           View
-                        </button>
-                        {/* edit */}
-                        <button
-                          className="text-[10px] font-semibold text-slate-500 hover:text-slate-300 border border-white/10 hover:border-white/20 px-4 py-1 rounded-lg transition-all
-                                    duration-300 active:scale-95 cursor-pointer"
-                        >
-                          Edit
                         </button>
                       </div>
                     </td>

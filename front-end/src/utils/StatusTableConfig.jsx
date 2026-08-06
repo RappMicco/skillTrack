@@ -37,16 +37,34 @@ export const initialIconBg = (type) => {
 export const viewIconColor = (type) => {
   switch (type) {
     case "UPCOMING":
-      return "text-blue-400 hover:text-blue-300 border border-blue-500/30 hover:border-blue-400/50";
+      return "text-blue-400 hover:text-blue-300 border border-blue-500/30 hover:border-blue-400/50 hover:bg-blue-500/20";
 
     case "PENDING":
-      return "text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-400/50";
+      return "text-amber-400 hover:text-amber-300 border border-amber-500/30 hover:border-amber-400/50 hover:bg-amber-500/20";
 
     case "ONGOING":
-      return "text-violet-400 hover:text-purple-300 border border-violet-500/30 hover:border-violet-400/50";
+      return "text-violet-400 hover:text-purple-300 border border-violet-500/30 hover:border-violet-400/50 hover:bg-violet-500/20";
 
     case "COMPLETED":
-      return "text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-400/50";
+      return "text-emerald-400 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-400/50 hover:bg-emerald-500/20";
+    default:
+      return null;
+  }
+};
+
+export const modalTopBorderColor = (type) => {
+  switch (type) {
+    case "UPCOMING":
+      return "from-blue-500 to-cyan-400/20";
+
+    case "PENDING":
+      return "from-amber-500 to-orange-300/20";
+
+    case "ONGOING":
+      return "from-blue-500 to-violet-500/20";
+
+    case "COMPLETED":
+      return "from-emerald-500 to-green-400/20";
     default:
       return null;
   }

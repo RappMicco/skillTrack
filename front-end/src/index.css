@@ -7,3 +7,24 @@ body {
   font-family: "Poppins", "Spartan";
   background: #0b1120;
 }
+
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #e2e2e2ee;
+    border-radius: 9999px;
+    border: 1px solid #0a0733;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #022544 30%, #464787 100%);
+    border-radius: 9999px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(to right, #00284b 30%, #3a3db3 100%);
+  }
+}
