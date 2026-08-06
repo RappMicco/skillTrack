@@ -122,13 +122,19 @@ export const validateTrainingProvider = [
   body("trainingName")
     .customSanitizer(normalizeSpaces)
     .notEmpty()
-    .withMessage("Training Name is required")
+    .withMessage("Training Name is required!")
     .trim(),
 
   body("trainingProvider")
     .customSanitizer(normalizeSpaces)
     .notEmpty()
-    .withMessage("Training provider is required")
+    .withMessage("Training provider is required!")
+    .trim(),
+
+  body("trainingDescription")
+    .customSanitizer(normalizeSpaces)
+    .notEmpty()
+    .withMessage("Training description is required!")
     .trim(),
 ];
 

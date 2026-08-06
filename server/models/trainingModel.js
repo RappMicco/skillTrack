@@ -12,6 +12,11 @@ const trainingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    trainingDescription: {
+      type: String,
+      required: true,
+      trim: true,
+    },
   },
   {
     timestamps: true,
