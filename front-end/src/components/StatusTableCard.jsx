@@ -85,35 +85,34 @@ export const StatusTableCard = () => {
       {/* ========================================================================================================Open Modal ===================================================================== */}
       {isOpen && <ViewModal training={selectedTraining} />}
 
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-5 py-4 border-b border-[#06B6D4]/5">
-        {/* =================================================================================================== status button ============================================================================================ */}
-        <div className="flex items-center gap-2 bg-white/5 rounded-lg p-1">
-          {statusCategory.map((item) => {
-            return (
-              <button
-                key={item.id}
-                onClick={() => {
-                  handleClickStatus(item.title);
-                }}
-                className={`flex items-center justify-center px-3 py-1.5 rounded-lg text-[9px] font-semibold tracking-widest transition-colors duration-300  
-                          ${selectedStatus === item.title ? "bg-[#06B6D4]/42 text-white border border-[#06B6D4]/20" : "text-slate-500 shadow-md hover:text-slate-300 hover:bg-white/5 cursor-pointer"} }`}
-              >
-                {item.title}
-              </button>
-            );
-          })}
+      <div className="flex flex-col gap-3 border-b border-[#06B6D4]/5 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex w-full items-center gap-2 overflow-x-auto rounded-lg bg-white/5 p-1 sm:w-auto">
+          {statusCategory.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleClickStatus(item.title)}
+              className={`shrink-0 flex items-center justify-center rounded-lg px-3 py-1.5 text-[9px] font-semibold tracking-widest transition-colors duration-300
+          ${
+            selectedStatus === item.title
+              ? "border border-[#06B6D4]/20 bg-[#06B6D4]/42 text-white"
+              : "cursor-pointer text-slate-500 shadow-md hover:bg-white/5 hover:text-slate-300"
+          }`}
+            >
+              {item.title}
+            </button>
+          ))}
         </div>
 
-        {/* =================================================================================================== SEARCH ================================================================================================== */}
-        <div className="relative bg-[#EFE9E9]/5 border border-white/5 rounded-xl">
+        <div className="relative w-full rounded-xl border border-white/5 bg-[#EFE9E9]/5 sm:w-auto">
           <Search
             className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500"
             size={15}
           />
+
           <input
             type="text"
             placeholder="Search..."
-            className="pl-8 pr-4 py-2 text-[10px] font-semibold tracking-wider text-slate-300 placeholder-slate-600 rounded-xl outline-none focus:ring-1 focus:ring-blue-500/50 transition-all w-48"
+            className="w-full rounded-xl py-2 pl-8 pr-4 text-[10px] font-semibold tracking-wider text-slate-300 outline-none placeholder:text-slate-600 focus:ring-1 focus:ring-blue-500/50 sm:w-48"
           />
         </div>
       </div>
@@ -154,7 +153,7 @@ export const StatusTableCard = () => {
                 return (
                   <tr
                     key={index}
-                    className="border-b border-white/4 hover:bg:white/3 transition-colors group"
+                    className="border-b border-white/5 hover:bg-white/3 transition-colors group"
                   >
                     <td className="px-5 py-4">
                       {/* initials and fullname container*/}

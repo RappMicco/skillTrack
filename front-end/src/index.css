@@ -28,3 +28,19 @@ body {
     background: linear-gradient(to right, #00284b 30%, #3a3db3 100%);
   }
 }
+
+/* SHIMMER ANIMATION */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) rotate(12deg);
+  }
+
+  100% {
+    transform: translateX(100%) rotate(12deg);
+  }
+}
+
+.shimmer-diagonal {
+  width: 200%;
+  animation: shimmer 2s linear infinite;
+}
