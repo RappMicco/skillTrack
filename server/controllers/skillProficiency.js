@@ -55,7 +55,7 @@ export const updateSkillProficiency = async (req, res) => {
     skillProficiencyRecord.description =
       description || skillProficiencyRecord.description;
 
-    skillProficiencyRecord.save();
+    await skillProficiencyRecord.save();
 
     await skillProficiencyRecord.populate("description");
 

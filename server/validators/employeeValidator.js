@@ -192,3 +192,12 @@ export const validateAssignTraining = [
 
   body("statusId").notEmpty().withMessage("Status is required!"),
 ];
+
+export const validateCompetency = [
+  body("competency").notEmpty().withMessage("Competency name is required!"),
+];
+
+export const validateSkillCompetency = [
+  body("competencyId").notEmpty().withMessage("Competency is required!"),
+  body("skillId").notEmpty().withMessage("Skill is required!"),
+];

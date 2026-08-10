@@ -28,7 +28,15 @@ import {
   validateSkillProficiency,
   validateSkillMatrix,
   validateAssignTraining,
+  validateCompetency,
+  validateSkillCompetency,
 } from "../validators/employeeValidator.js";
+
+import {
+  createCompetency,
+  updateCompetency,
+  createSkillCompetency,
+} from "../controllers/compentencyMatrixController.js";
 
 const router = express.Router();
 
@@ -76,6 +84,25 @@ router.post(
   assignTraining,
 );
 
+// create competency
+router.post(
+  "/create-competency",
+  isAuthenticated,
+  protect,
+  validateCompetency,
+  validateResult,
+  createCompetency,
+);
+// create skill competency
+router.post(
+  "/create-skill-competency",
+  isAuthenticated,
+  protect,
+  validateSkillCompetency,
+  validateResult,
+  createSkillCompetency,
+);
+
 router.put(
   "/update-skill-category/:id",
   isAuthenticated,
@@ -119,6 +146,15 @@ router.put(
   validateAssignTraining,
   validateResult,
   updateAssignTraining,
+);
+
+router.put(
+  "/update-competency/:id",
+  isAuthenticated,
+  protect,
+  validateCompetency,
+  validateResult,
+  updateCompetency,
 );
 
 export default router;

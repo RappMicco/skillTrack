@@ -114,7 +114,7 @@ export const updateAssignTraining = async (req, res) => {
     assignTrainingRecord.endDate = endDate || assignTrainingRecord.endDate;
     assignTrainingRecord.progress = progress || assignTrainingRecord.progress;
 
-    assignTrainingRecord.save();
+    await assignTrainingRecord.save();
 
     //populate
     await assignTrainingRecord.populate([

@@ -246,6 +246,33 @@ export const skillMatrixSummary = async (req, res) => {
           proficiencyDescription: "$proficiency.description",
         },
       },
+      {
+        $group: {
+          _id: "$empId",
+          empId: { $first: "$empId" },
+          fullName: { $first: "$fullName" },
+          group: { $first: "$group" },
+          empLevel: { $first: "$empLevel" },
+          skills: {
+            $push: {
+              skillName: "$skillName",
+              skillCategory: "$skillCategory",
+              proficiencySequence: "$proficiencySequence",
+              proficiencyDescription: "$proficiencyDescription",
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          empId: 1,
+          fullName: 1,
+          group: 1,
+          empLevel: 1,
+          skills: 1,
+        },
+      },
     ]);
 
     if (summary.length === 0) {
