@@ -39,7 +39,7 @@ export const updateTrainingProvider = async (req, res) => {
     const { id } = req.params;
     const { trainingName, trainingProvider, trainingDescription } = req.body;
 
-    if (mongoose.Types.ObjectId.isValid(id)) {
+    if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
         success: false,
         message: "Invalid training provider ID!",
@@ -61,13 +61,13 @@ export const updateTrainingProvider = async (req, res) => {
       trainingProviderRecord.trainingDescription === trainingDescription;
 
     trainingProviderRecord.trainingName =
-      trainingName || trainingProviderRecord.trainingName;
+      trainingName ?? trainingProviderRecord.trainingName;
     trainingProviderRecord.trainingProvider =
-      trainingProvider || trainingProviderRecord.trainingProvider;
+      trainingProvider ?? trainingProviderRecord.trainingProvider;
     trainingProviderRecord.trainingDescription =
-      trainingDescription || trainingProviderRecord.trainingDescription;
+      trainingDescription ?? trainingProviderRecord.trainingDescription;
 
-    trainingProviderRecord.save();
+    await trainingProviderRecord.save();
 
     res.status(200).json({
       success: true,
