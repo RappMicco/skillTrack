@@ -17,7 +17,10 @@ import {
   getRecentTrainingSummary,
 } from "../controllers/getTrainingStatusController.js";
 import { getTopFiveExpertSkills } from "../controllers/skillMatrixController.js";
-
+import {
+  fetchSkillCompetency,
+  fetchCompetency,
+} from "../controllers/compentencyMatrixController.js";
 const router = express.Router();
 
 router.get("/get-training-summary", isAuthenticated, getTrainingStatusSummary);
@@ -38,5 +41,8 @@ router.get(
   getRecentTrainingSummary,
 );
 router.get("/get-top-skills", isAuthenticated, getTopFiveExpertSkills);
+// get skill competency for skill matrix - for removal skill competency
+router.get("/get-skill-competency", isAuthenticated, fetchSkillCompetency);
+router.get("/get-competency", isAuthenticated, fetchCompetency);
 
 export default router;
