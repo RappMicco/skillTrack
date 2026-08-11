@@ -70,7 +70,7 @@ export const StatusCard = () => {
             ></div>
             {/* Icon container */}
             <div
-              className={`w-7 h-7 rounded-lg flex items-center justify-center mb-3 bg-linear-to-br ${item.iconColor} transition-all duration-700 group-hover:rotate-360`}
+              className={`w-7 h-7 rounded-lg flex items-center justify-center mb-3 bg-linear-to-br ${item.iconColor} duration-700 group-hover:rotate-360`}
             >
               {item.icon}
             </div>
