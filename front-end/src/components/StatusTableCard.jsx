@@ -25,6 +25,7 @@ export const StatusTableCard = () => {
   const { selectedStatus, setSelectedStatus, isOpen, setIsOpen } =
     useContext(PageContext);
   const [selectedTraining, setSelectedTraining] = useState(null);
+  const [search, setSearch] = useState("");
   // change date format
   const formatDate = (date) => {
     return new Date(date).toLocaleDateString("en-CA");
@@ -80,9 +81,21 @@ export const StatusTableCard = () => {
     setIsOpen(true);
   };
 
+  // search filter
+  const filteredData = displayedData.filter((item) => {
+    const searchValue = search.toLowerCase();
+
+    return (
+      item?.fullName?.toLowerCase?.().includes(searchValue) ||
+      item?.trainingName?.toLowerCase?.().includes(searchValue) ||
+      item?.trainingProvider?.toLowerCase?.().includes(searchValue) ||
+      item?.status?.toLowerCase?.().includes(searchValue)
+    );
+  });
+
   return (
     <>
-      {/* ========================================================================================================Open Modal ===================================================================== */}
+      {/* ======================================================================================================== Open Modal ===================================================================== */}
       {isOpen && <ViewModal training={selectedTraining} />}
 
       <div className="flex flex-col gap-3 border-b border-[#06B6D4]/5 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
@@ -112,6 +125,8 @@ export const StatusTableCard = () => {
           <input
             type="text"
             placeholder="Search..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
             className="w-full rounded-xl py-2 pl-8 pr-4 text-[10px] font-semibold tracking-wider text-slate-300 outline-none placeholder:text-slate-600 focus:ring-1 focus:ring-blue-500/50 sm:w-48"
           />
         </div>
@@ -139,7 +154,7 @@ export const StatusTableCard = () => {
 
           {/* ================================================================================= TABLE DETAILS =========================================================================================*/}
           <tbody>
-            {displayedData.length === 0 ? (
+            {filteredData.length === 0 ? (
               <tr>
                 <td
                   colSpan={6}
@@ -149,7 +164,7 @@ export const StatusTableCard = () => {
                 </td>
               </tr>
             ) : (
-              displayedData.map((item, index) => {
+              filteredData.map((item, index) => {
                 return (
                   <tr
                     key={index}
