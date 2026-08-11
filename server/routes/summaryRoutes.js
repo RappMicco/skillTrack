@@ -16,7 +16,10 @@ import {
   completedSummary,
   getRecentTrainingSummary,
 } from "../controllers/getTrainingStatusController.js";
-import { getTopFiveExpertSkills } from "../controllers/skillMatrixController.js";
+import {
+  getTopFiveExpertSkills,
+  skillSummary,
+} from "../controllers/skillMatrixController.js";
 import {
   fetchSkillCompetency,
   fetchCompetency,
@@ -28,6 +31,7 @@ router.get("/get-employees", isAuthenticated, employeesSummary);
 router.get("/get-assigned-training", isAuthenticated, assignedTrainingSummary);
 router.get("/get-skill-category", isAuthenticated, skillCategorySummary);
 router.get("/get-skill-matrix", isAuthenticated, skillMatrixSummary);
+router.get("/get-skillMatrix-summary", isAuthenticated, skillSummary);
 router.get("/get-skill-proficiency", isAuthenticated, skillProficiencySummary);
 router.get("/get-training-provider", isAuthenticated, trainingProviderSummary);
 // upcoming // pending // ongoing // completed
