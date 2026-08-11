@@ -93,7 +93,7 @@ router.post(
   validateResult,
   createCompetency,
 );
-// create skill competency
+// create skill competency - for removal
 router.post(
   "/create-skill-competency",
   isAuthenticated,

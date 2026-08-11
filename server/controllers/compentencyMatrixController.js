@@ -45,16 +45,25 @@ export const updateCompetency = async (req, res) => {
       });
     }
 
-    const compentencyRecord = await Competency.findById(id);
-
-    if (!compentencyRecord) {
+    if (!competency?.trim()) {
       return res.status(400).json({
+        success: false,
+        message: "Competency is required!",
+      });
+    }
+
+    const competencyRecord = await Competency.findById(id);
+
+    if (!competencyRecord) {
+      return res.status(404).json({
         success: false,
         message: "Competency record not found!",
       });
     }
 
-    const noRecordChanges = compentencyRecord.competency === competency;
+    const competencyValue = competency.trim();
+
+    const noRecordChanges = competencyRecord.competency === competencyValue;
 
     if (noRecordChanges) {
       return res.status(200).json({
@@ -63,25 +72,26 @@ export const updateCompetency = async (req, res) => {
       });
     }
 
-    compentencyRecord.competency = competency ?? compentencyRecord.competency;
+    competencyRecord.competency = competencyValue;
 
-    await compentencyRecord.save();
+    await competencyRecord.save();
 
     return res.status(200).json({
       success: true,
       message: "Updated successfully!",
-      data: compentencyRecord,
+      data: competencyRecord,
     });
   } catch (error) {
-    console.error("Update error: ", error);
-    res.status(500).json({
+    console.error("Update error:", error);
+
+    return res.status(500).json({
       success: false,
       message: "Server error during updating of competency data!",
       error: error.message,
     });
   }
 };
-
+// for removal
 export const createSkillCompetency = async (req, res) => {
   try {
     const { competencyId, skillId } = req.body;
@@ -115,7 +125,7 @@ export const createSkillCompetency = async (req, res) => {
     ]);
 
     res.status(200).json({
-      success: false,
+      success: true,
       message: "Added successfully!",
       data,
     });
@@ -124,6 +134,238 @@ export const createSkillCompetency = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Server error during creating skill competency data!",
+      error: error.message,
+    });
+  }
+};
+// for checking if remove
+export const fetchSkillCompetency = async (req, res) => {
+  try {
+    const summary = await SkillCompetency.aggregate([
+      {
+        $lookup: {
+          from: "competencies",
+          localField: "competencyId",
+          foreignField: "_id",
+          as: "competency",
+        },
+      },
+      {
+        $unwind: {
+          path: "$competency",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "skills",
+          localField: "skillId",
+          foreignField: "_id",
+          as: "skill",
+        },
+      },
+      {
+        $unwind: {
+          path: "$skill",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      //   get skill matrix
+      {
+        $lookup: {
+          from: "skillmatrixes",
+          localField: "skill._id",
+          foreignField: "skill",
+          as: "skillmatrix",
+        },
+      },
+      {
+        $unwind: {
+          path: "$skillmatrix",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      //   get sequence and description
+      {
+        $lookup: {
+          from: "skillproficiencies",
+          localField: "skillmatrix.proficiency",
+          foreignField: "_id",
+          as: "proficiency",
+        },
+      },
+      //   get empId
+      {
+        $unwind: {
+          path: "$proficiency",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "employees",
+          localField: "skillmatrix.empId",
+          foreignField: "_id",
+          as: "employee",
+        },
+      },
+      {
+        $unwind: {
+          path: "$employee",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      //   group skill + employees
+      {
+        $group: {
+          _id: {
+            competencyId: "$competency._id",
+            skillId: "$skill._id",
+          },
+
+          competencyName: {
+            $first: "$competency.competency",
+          },
+
+          skillCategory: {
+            $first: "$skill.category",
+          },
+
+          skillName: {
+            $first: "$skill.skillName",
+          },
+
+          employees: {
+            $push: {
+              employeeId: "$employee._id",
+              employeeName: {
+                $trim: {
+                  input: {
+                    $concat: [
+                      { $ifNull: ["$employee.firstName", ""] },
+                      " ",
+                      { $ifNull: ["$employee.lastName", ""] },
+                    ],
+                  },
+                },
+              },
+              proficiencySequence: "$proficiency.sequence",
+              proficiencyDescription: "$proficiency.description",
+            },
+          },
+        },
+      },
+
+      //   group competency + skills
+      {
+        $group: {
+          _id: "$_id.competencyId",
+
+          competencyName: {
+            $first: "$competencyName",
+          },
+
+          skillCategory: {
+            $first: "$skillCategory",
+          },
+
+          skills: {
+            $push: {
+              skillId: "$_id.skillId",
+              skillName: "$skillName",
+              employees: "$employees",
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          competencyId: "$_id",
+          competencyName: 1,
+          skillCategory: 1,
+          skills: 1,
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      data: summary,
+    });
+  } catch (error) {
+    console.error("Fetch Skill competency error: ", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error during fetching of skill competency!",
+      error: error.message,
+    });
+  }
+};
+// for removal
+export const fetchCompetency = async (req, res) => {
+  try {
+    const summary = await SkillCompetency.aggregate([
+      {
+        $lookup: {
+          from: "competencies",
+          localField: "competencyId",
+          foreignField: "_id",
+          as: "competency",
+        },
+      },
+      {
+        $unwind: {
+          path: "$competency",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "skills",
+          localField: "skillId",
+          foreignField: "_id",
+          as: "skill",
+        },
+      },
+      {
+        $unwind: {
+          path: "$skill",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $group: {
+          _id: "$competency._id",
+          competencyName: {
+            $first: "$competency.competency",
+          },
+          skills: {
+            $push: {
+              skillId: "$skill._id",
+              skillName: "$skill.skillName",
+            },
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          competencyId: "$_id",
+          competencyName: 1,
+          skills: 1,
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      data: summary,
+    });
+  } catch (error) {
+    console.error("Fetching Competency Error: ", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error during fetching of competency!",
       error: error.message,
     });
   }

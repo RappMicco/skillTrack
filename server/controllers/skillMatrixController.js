@@ -285,7 +285,7 @@ export const getTopFiveExpertSkills = async (req, res) => {
         },
       },
 
-      // Get only the top five
+      // Get only the top six
       {
         $limit: 6,
       },
