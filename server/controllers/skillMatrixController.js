@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { SkillMatrix } from "../models/skillMatrixModel.js";
+import { Employee } from "../models/employeesModel.js";
 
 export const skillMatrix = async (req, res) => {
   try {
@@ -303,6 +304,130 @@ export const getTopFiveExpertSkills = async (req, res) => {
       success: false,
       message: "Failed to retrieve top expert skills!",
       error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    });
+  }
+};
+
+export const skillSummary = async (req, res) => {
+  try {
+    const [totalEmployees, proficiencySummary] = await Promise.all([
+      // Count ALL active non-admin employees
+      Employee.countDocuments({
+        isActive: true,
+        group: { $ne: "admin" },
+      }),
+
+      // Count unique employees by proficiency
+      SkillMatrix.aggregate([
+        {
+          $lookup: {
+            from: "employees",
+            localField: "empId",
+            foreignField: "_id",
+            as: "employee",
+          },
+        },
+        {
+          $unwind: "$employee",
+        },
+
+        {
+          $lookup: {
+            from: "skillproficiencies",
+            localField: "proficiency",
+            foreignField: "_id",
+            as: "proficiency",
+          },
+        },
+        {
+          $unwind: "$proficiency",
+        },
+
+        {
+          $match: {
+            "employee.isActive": true,
+            "employee.group": { $ne: "admin" },
+          },
+        },
+
+        {
+          $group: {
+            _id: null,
+
+            expertEmployees: {
+              $addToSet: {
+                $cond: [
+                  { $eq: ["$proficiency.sequence", 5] },
+                  "$employee._id",
+                  "$$REMOVE",
+                ],
+              },
+            },
+
+            advancedEmployees: {
+              $addToSet: {
+                $cond: [
+                  { $eq: ["$proficiency.sequence", 4] },
+                  "$employee._id",
+                  "$$REMOVE",
+                ],
+              },
+            },
+
+            intermediateEmployees: {
+              $addToSet: {
+                $cond: [
+                  { $eq: ["$proficiency.sequence", 3] },
+                  "$employee._id",
+                  "$$REMOVE",
+                ],
+              },
+            },
+          },
+        },
+
+        {
+          $project: {
+            _id: 0,
+
+            expert: {
+              $size: "$expertEmployees",
+            },
+
+            advanced: {
+              $size: "$advancedEmployees",
+            },
+
+            intermediate: {
+              $size: "$intermediateEmployees",
+            },
+          },
+        },
+      ]),
+    ]);
+
+    const proficiency = proficiencySummary[0] ?? {
+      expert: 0,
+      advanced: 0,
+      intermediate: 0,
+    };
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        totalEmployees,
+        expert: proficiency.expert,
+        advanced: proficiency.advanced,
+        intermediate: proficiency.intermediate,
+      },
+    });
+  } catch (error) {
+    console.error("Fetching Skill Summary error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error during fetching of skill summary!",
+      error: error.message,
     });
   }
 };
