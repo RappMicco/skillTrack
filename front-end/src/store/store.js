@@ -3,6 +3,7 @@ import authReducer from "../features/auth/authSlice.js";
 import trainingReducer from "../features/statusSummary/statusSlice.js";
 import insightReducer from "../features/insights/insightSlice.js";
 import statusTableReducer from "../features/statusTable/statusTableSlice.js";
+import matrixSummaryReducer from "../features/skillMatrix/matrixSlice.js";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export const store = configureStore({
     training: trainingReducer,
     insights: insightReducer,
     statusData: statusTableReducer,
+    skillMatrix: matrixSummaryReducer,
   },
 });

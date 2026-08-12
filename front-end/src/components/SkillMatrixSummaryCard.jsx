@@ -1,10 +1,18 @@
 import { Users, Trophy, Medal, Award } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchSkillMatrixSummary } from "../features/skillMatrix/matrixThunk.js";
 
 export const SkillMatrixSummaryCard = () => {
+  const { matrix } = useSelector((state) => state.skillMatrix);
+  //   const { activeDesc } = useContext(PageContext);
+  const dispatch = useDispatch();
+
   const matrixSummary = [
     {
       id: 1,
-      title: "TEAM MEMBERS",
+      key: "totalEmployees",
+      title: "Team Members",
       icon: <Users className="text-cyan-500" size={15} />,
       bgContainerIcon: "border border-cyan-600/20 shadow-blue-500/20",
       borderIcon: "bg-blue-500/15 border border-blue-500/30",
@@ -12,7 +20,8 @@ export const SkillMatrixSummaryCard = () => {
     },
     {
       id: 2,
-      title: "EXPERT",
+      key: "expert",
+      title: "Expert",
       icon: <Trophy className="text-green-500" size={15} />,
       bgContainerIcon: "border border-emerald-600/20 shadow-emerald-500/20",
       borderIcon: "bg-emerald-500/15 border border-emerald-500/30",
@@ -20,7 +29,8 @@ export const SkillMatrixSummaryCard = () => {
     },
     {
       id: 3,
-      title: "ADVANCED",
+      key: "advanced",
+      title: "Advanced",
       icon: <Medal className="text-purple-500" size={15} />,
       bgContainerIcon: "border border-purple-600/20 shadow-purple-500/20",
       borderIcon: "bg-purple-500/15 border border-purple-500/30",
@@ -28,13 +38,28 @@ export const SkillMatrixSummaryCard = () => {
     },
     {
       id: 4,
-      title: "INTERMEDIATE",
+      key: "intermediate",
+      title: "Intermediate",
       icon: <Award className="text-amber-500" size={15} />,
       bgContainerIcon: "border border-yellow-600/20 shadow-yellow-500/20",
       borderIcon: "bg-yellow-500/15 border border-amber-500/30",
       secondContainerColor: "from-amber-500 to-orange-400",
     },
   ];
+
+  useEffect(() => {
+    const getMatrixSummary = async () => {
+      try {
+        await dispatch(fetchSkillMatrixSummary());
+      } catch (error) {
+        console.log(error.message);
+        alert(error.message);
+      }
+    };
+
+    getMatrixSummary();
+  }, [dispatch]);
+
   return (
     <>
       {matrixSummary.map((item) => {
@@ -54,7 +79,9 @@ export const SkillMatrixSummaryCard = () => {
             </div>
             {/* number of summary */}
             <div>
-              <p className="text-lg font-bold text-white leading-tight">8</p>
+              <p className="text-lg font-bold text-white leading-tight">
+                {matrix?.[item.key] ?? 0}
+              </p>
               <p className="text-[10px] text-slate-500 font-medium uppercase tracking-wider">
                 {item.title}
               </p>
