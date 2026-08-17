@@ -148,13 +148,21 @@ export const validateSkillProficiency = [
 ];
 
 export const validateSkillMatrix = [
-  body("empId").notEmpty().withMessage("Employee id is required!"),
-
+  body("empId")
+    .notEmpty()
+    .withMessage("Employee id is required!")
+    .isMongoId()
+    .withMessage("Invalid employee id!"),
   body("skill")
     .notEmpty()
-    .withMessage("Skill is required! Please select skill."),
-
-  body("proficiency").notEmpty().withMessage("Proficiency is required!"),
+    .withMessage("Skill is required!")
+    .isMongoId()
+    .withMessage("Invalid skill id!"),
+  body("proficiency")
+    .notEmpty()
+    .withMessage("Proficiency is required!")
+    .isMongoId()
+    .withMessage("Invalid proficiency id!"),
 ];
 
 export const validateAssignTraining = [

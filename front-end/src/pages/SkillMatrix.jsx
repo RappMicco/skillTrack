@@ -1,6 +1,6 @@
 import { Download } from "lucide-react";
 import { SkillMatrixSummaryCard } from "../components/SkillMatrixSummaryCard.jsx";
-import { SearchToggleCard } from "../components/searchToggleCard.jsx";
+import { SearchToggleCard } from "../components/SearchToggleCard.jsx";
 
 export const SkillMatrix = () => {
   return (

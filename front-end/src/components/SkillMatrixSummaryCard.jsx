@@ -50,10 +50,9 @@ export const SkillMatrixSummaryCard = () => {
   useEffect(() => {
     const getMatrixSummary = async () => {
       try {
-        await dispatch(fetchSkillMatrixSummary());
+        await dispatch(fetchSkillMatrixSummary()).unwrap();
       } catch (error) {
-        console.log(error.message);
-        alert(error.message);
+        console.error(error);
       }
     };
 
