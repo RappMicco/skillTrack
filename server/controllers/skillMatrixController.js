@@ -58,15 +58,16 @@ export const updateSkillMatrix = async (req, res) => {
     }
 
     const checkChanges =
-      skillMatrixRecord.empId === empId &&
-      skillMatrixRecord.skill === skill &&
-      skillMatrixRecord.proficiency === proficiency;
+      skillMatrixRecord.empId.equals(empId) &&
+      skillMatrixRecord.skill.equals(skill) &&
+      skillMatrixRecord.proficiency.equals(proficiency);
 
     skillMatrixRecord.empId = empId || skillMatrixRecord.empId;
     skillMatrixRecord.skill = skill || skillMatrixRecord.skill;
-    skillMatrixRecord.proficiency || skillMatrixRecord.proficiency;
+    skillMatrixRecord.proficiency =
+      proficiency || skillMatrixRecord.proficiency;
 
-    skillMatrixRecord.save();
+    await skillMatrixRecord.save();
 
     await skillMatrixRecord.populate([
       {
@@ -163,10 +164,6 @@ export const getTopFiveExpertSkills = async (req, res) => {
 
       /*
        * Group by employee and skill first.
-       */
-      /*
-       * Group by employee and skill first.
-       * This prevents duplicate records for the same employee and skill.
        */
       {
         $group: {
