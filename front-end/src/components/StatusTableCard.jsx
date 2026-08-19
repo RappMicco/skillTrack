@@ -127,7 +127,7 @@ export const StatusTableCard = () => {
             placeholder="Search..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-xl py-2 pl-8 pr-4 text-[10px] font-semibold tracking-wider text-slate-300 outline-none placeholder:text-slate-600 focus:ring-1 focus:ring-blue-500/50 sm:w-48"
+            className="w-full rounded-xl py-2 pl-8 pr-4 text-xs font-semibold tracking-wider text-slate-300 outline-none placeholder:text-slate-600 focus:ring-1 focus:ring-blue-500/50 sm:w-48"
           />
         </div>
       </div>
