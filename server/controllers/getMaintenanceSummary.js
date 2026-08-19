@@ -243,6 +243,7 @@ export const skillMatrixSummary = async (req, res) => {
           skillName: "$skill.skillName",
           skillCategory: "$skill.category",
           proficiencySequence: "$proficiency.sequence",
+          proficiencyLevel: "$proficiency.level",
           proficiencyDescription: "$proficiency.description",
         },
       },
@@ -258,6 +259,7 @@ export const skillMatrixSummary = async (req, res) => {
               skillName: "$skillName",
               skillCategory: "$skillCategory",
               proficiencySequence: "$proficiencySequence",
+              proficiencyLevel: "$proficiencyLevel",
               proficiencyDescription: "$proficiencyDescription",
             },
           },
@@ -302,6 +304,7 @@ export const skillProficiencySummary = async (req, res) => {
       {
         $project: {
           sequence: 1,
+          level: 1,
           description: 1,
         },
       },
