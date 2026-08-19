@@ -6,6 +6,11 @@ const skillProficiencySchema = new mongoose.Schema({
     unique: true,
     default: 0,
   },
+  level: {
+    type: String,
+    required: true,
+    trim: true,
+  },
   description: {
     type: String,
     required: true,

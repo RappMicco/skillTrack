@@ -7,10 +7,11 @@ export const skillProficiency = async (req, res) => {
     const lastRecord = await SkillProficiency.findOne().sort({ sequence: -1 });
     let sequence = lastRecord ? lastRecord.sequence + 1 : 1;
 
-    const { description } = req.body;
+    const { level, description } = req.body;
 
     const skillProficiencyRecord = await SkillProficiency.create({
       sequence,
+      level,
       description,
     });
 
@@ -32,7 +33,7 @@ export const skillProficiency = async (req, res) => {
 export const updateSkillProficiency = async (req, res) => {
   try {
     const { id } = req.params;
-    const { description } = req.body;
+    const { level, description } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
@@ -50,7 +51,11 @@ export const updateSkillProficiency = async (req, res) => {
       });
     }
 
-    const noChanges = skillProficiencyRecord.description === description;
+    const noChanges =
+      skillProficiencyRecord.description === description &&
+      skillProficiencyRecord.level === level;
+
+    skillProficiencyRecord.level = level || skillProficiencyRecord.level;
 
     skillProficiencyRecord.description =
       description || skillProficiencyRecord.description;
