@@ -17,3 +17,18 @@ export const getSkillMatrixSummary = async () => {
 
   return data;
 };
+
+export const getCompetencyData = async () => {
+  const response = await fetch(`${VITE_API_URL}/dashboard/get-competency`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
