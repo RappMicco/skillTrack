@@ -1,8 +1,13 @@
 import { Download } from "lucide-react";
 import { SkillMatrixSummaryCard } from "../components/SkillMatrixSummaryCard.jsx";
 import { SearchToggleCard } from "../components/SearchToggleCard.jsx";
+import { PageContext } from "../context/PageContext.js";
+import { useContext } from "react";
+import { LegendCard } from "../components/LegendCard.jsx";
+import { SkillMatrixTable } from "../components/SkillMatrixTable.jsx";
 
 export const SkillMatrix = () => {
+  const { viewLegend } = useContext(PageContext);
   return (
     <>
       <div className="space-y-5">
@@ -27,15 +32,25 @@ export const SkillMatrix = () => {
             </button>
           </div>
 
-          {/* summary card */}
+          {/* ===================================================================================================== summary card ==================================================================================================== */}
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 py-2">
             <SkillMatrixSummaryCard />
           </div>
         </div>
 
-        {/* search, toggle, dropdown */}
+        {/* ===================================================================================================== search, toggle, dropdown ========================================================================================== */}
         <div className="flex flex-wrap items-center gap-3">
           <SearchToggleCard />
+        </div>
+        {/* ====================================================================================================== Legend ============================================================================================================= */}
+        {viewLegend && (
+          <div className="flex flex-wrap gap-5 px-3 py-2 rounded-2xl border border-white/9 bg-[#EFE9E9]/5">
+            <LegendCard />
+          </div>
+        )}
+        {/* ====================================================================================================== Skill matrix table ================================================================================================== */}
+        <div className="rounded-2xl overflow-hidden border border-white/9 bg-[#EFE9E9]/5">
+          <SkillMatrixTable />
         </div>
       </div>
     </>

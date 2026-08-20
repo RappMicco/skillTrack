@@ -334,13 +334,18 @@ export const fetchCompetency = async (req, res) => {
         },
       },
       {
+        $match: {
+          "competency._id": { $ne: null },
+        },
+      },
+      {
         $group: {
           _id: "$competency._id",
           competencyName: {
             $first: "$competency.competency",
           },
           skills: {
-            $push: {
+            $addToSet: {
               skillId: "$skill._id",
               skillName: "$skill.skillName",
             },
