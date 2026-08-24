@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { fetchCompetencyData } from "../features/skillMatrix/matrixThunk.js";
 import { useDispatch, useSelector } from "react-redux";
+import { Users } from "lucide-react";
 
 export const SkillMatrixTable = () => {
   const { competency } = useSelector((state) => state.skillMatrix);
@@ -22,8 +23,9 @@ export const SkillMatrixTable = () => {
           {/* table header */}
           <thead>
             <tr className="border-b border-white/5">
-              <th className="px-5 py-3 text-left w-48 sticky left-0 z-10">
-                <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">
+              <th className="px-5 py-3 text-left w-48 sticky left-0 z-20 bg-[linear-gradient(to_right,#001A31_25%,#2A2C8D_100%)]">
+                <span className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                  <Users size={12} />
                   Members
                 </span>
               </th>
