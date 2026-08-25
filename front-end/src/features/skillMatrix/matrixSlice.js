@@ -39,7 +39,16 @@ const matrixSlice = createSlice({
       .addCase(fetchCompetencyData.fulfilled, (state, action) => {
         state.loading = false;
         state.success = true;
-        state.competency = action.payload?.data || [];
+        const competency = action.payload?.data || [];
+
+        competency.sort((a, b) =>
+          a.competencyName.localeCompare(b.competencyName),
+        );
+        competency.forEach((item) => {
+          item.skills.sort((a, b) => a.skillName.localeCompare(b.skillName));
+        });
+
+        state.competency = competency;
       })
 
       .addCase(fetchCompetencyData.rejected, (state, action) => {
