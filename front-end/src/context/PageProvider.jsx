@@ -6,6 +6,10 @@ export const PageProvider = ({ children }) => {
   const [selectedStatus, setSelectedStatus] = useState("UPCOMING");
   const [isOpen, setIsOpen] = useState(false);
   const [viewLegend, setViewLegend] = useState(false);
+  const [skillMatrixSearch, setSkillMatrixSearch] = useState("");
+  const [skillMatrixGroupFilter, setSkillMatrixGroupFilter] = useState("All");
+  const [skillMatrixCompetencyFilter, setSkillMatrixCompetencyFilter] =
+    useState("All");
 
   const valueObj = {
     activeDesc,
@@ -16,6 +20,12 @@ export const PageProvider = ({ children }) => {
     setIsOpen,
     viewLegend,
     setViewLegend,
+    skillMatrixSearch,
+    setSkillMatrixSearch,
+    skillMatrixGroupFilter,
+    setSkillMatrixGroupFilter,
+    skillMatrixCompetencyFilter,
+    setSkillMatrixCompetencyFilter,
   };
   return (
     <PageContext.Provider value={valueObj}>{children}</PageContext.Provider>

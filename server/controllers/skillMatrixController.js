@@ -101,6 +101,68 @@ export const updateSkillMatrix = async (req, res) => {
   }
 };
 
+export const getSkillMatrixCells = async (req, res) => {
+  try {
+    const cells = await SkillMatrix.aggregate([
+      {
+        $lookup: {
+          from: "employees",
+          localField: "empId",
+          foreignField: "_id",
+          as: "employeeDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$employeeDetails",
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+      {
+        $match: {
+          "employeeDetails.isActive": true,
+          "employeeDetails.group": { $ne: "admin" },
+        },
+      },
+      {
+        $lookup: {
+          from: "skillproficiencies",
+          localField: "proficiency",
+          foreignField: "_id",
+          as: "proficiencyDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$proficiencyDetails",
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          empId: 1,
+          skill: 1,
+          proficiency: "$proficiencyDetails._id",
+          sequence: "$proficiencyDetails.sequence",
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      data: cells,
+    });
+  } catch (error) {
+    console.error("Fetching skill matrix cells error:", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error during fetching of skill matrix cells!",
+      error: error.message,
+    });
+  }
+};
+
 export const getTopFiveExpertSkills = async (req, res) => {
   try {
     const topSkills = await SkillMatrix.aggregate([

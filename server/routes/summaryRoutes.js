@@ -18,6 +18,7 @@ import {
 } from "../controllers/getTrainingStatusController.js";
 import {
   getTopFiveExpertSkills,
+  getSkillMatrixCells,
   skillSummary,
 } from "../controllers/skillMatrixController.js";
 import {
@@ -31,6 +32,7 @@ router.get("/get-employees", isAuthenticated, employeesSummary);
 router.get("/get-assigned-training", isAuthenticated, assignedTrainingSummary);
 router.get("/get-skill-category", isAuthenticated, skillCategorySummary);
 router.get("/get-skill-matrix", isAuthenticated, skillMatrixSummary);
+router.get("/get-skill-matrix-cells", isAuthenticated, getSkillMatrixCells);
 router.get("/get-skillMatrix-summary", isAuthenticated, skillSummary);
 router.get("/get-skill-proficiency", isAuthenticated, skillProficiencySummary);
 router.get("/get-training-provider", isAuthenticated, trainingProviderSummary);
