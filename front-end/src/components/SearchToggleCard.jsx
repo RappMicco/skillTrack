@@ -1,11 +1,22 @@
 import { Search, FunnelPlus, ChevronDown, CircleAlert } from "lucide-react";
-import { skillMatrixToggle } from "../hook/skillMatrixToggle.js";
-import { useContext, useState } from "react";
+import { useContext, useMemo } from "react";
+import { useSelector } from "react-redux";
 import { PageContext } from "../context/PageContext.js";
+import { getCompetencyNames } from "../utils/skillMatrixFilters.js";
 
 export const SearchToggleCard = () => {
-  const [selectedStatus, setSelectedStatus] = useState("All");
-  const { viewLegend, setViewLegend } = useContext(PageContext);
+  const { competency } = useSelector((state) => state.skillMatrix);
+  const {
+    viewLegend,
+    setViewLegend,
+    skillMatrixSearch,
+    setSkillMatrixSearch,
+    skillMatrixGroupFilter,
+    setSkillMatrixGroupFilter,
+    skillMatrixCompetencyFilter,
+    setSkillMatrixCompetencyFilter,
+  } = useContext(PageContext);
+
   const dropdownValue = [
     { id: 1, value: "All", label: "All Group" },
     { id: 2, value: "smart_local", label: "Smart Local" },
@@ -14,13 +25,15 @@ export const SearchToggleCard = () => {
     { id: 5, value: "network", label: "Network Group" },
   ];
 
-  const handleToggleClick = (item) => {
-    setSelectedStatus(item);
-  };
+  const competencyToggle = useMemo(() => {
+    const competencyNames = getCompetencyNames(competency);
+    return ["All", ...competencyNames];
+  }, [competency]);
 
   const handleLegendClick = () => {
     setViewLegend(!viewLegend);
   };
+
   return (
     <>
       <div className="relative">
@@ -32,7 +45,9 @@ export const SearchToggleCard = () => {
         <input
           type="text"
           placeholder="Search..."
-          className="pl-8 pr-4 py-2 text-xs text-slate-300 border border-white/9 bg-[#EFE9E9]/5 placeholder:text-slate-500 rounded-xl 
+          value={skillMatrixSearch}
+          onChange={(e) => setSkillMatrixSearch(e.target.value)}
+          className="pl-8 pr-4 py-2 text-xs text-slate-300 border border-white/9 bg-[#EFE9E9]/5 placeholder:text-slate-500 rounded-xl
                       outline-none transition-all w-44 tracking-wider focus:ring-1 focus:ring-blue-500/50"
         />
       </div>
@@ -45,8 +60,8 @@ export const SearchToggleCard = () => {
         />
 
         <select
-          name=""
-          id=""
+          value={skillMatrixGroupFilter}
+          onChange={(e) => setSkillMatrixGroupFilter(e.target.value)}
           className="appearance-none pl-8 pr-7 py-2 text-xs text-slate-500 rounded-xl
                                         outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider"
         >
@@ -69,20 +84,18 @@ export const SearchToggleCard = () => {
 
       {/* toggle button */}
       <div className="flex item-center gap-1 p-1 overflow-x-auto rounded-xl border border-white/9 bg-[#EFE9E9]/5">
-        {skillMatrixToggle.map((item) => (
+        {competencyToggle.map((label) => (
           <button
-            key={item.id}
-            onClick={() => {
-              handleToggleClick(item.label);
-            }}
+            key={label}
+            onClick={() => setSkillMatrixCompetencyFilter(label)}
             className={`shrink-0 flex items-center justify-center rounded-lg px-3 py-1.5 text-xs tracking-wider transition-colors duration-300
                         ${
-                          selectedStatus === item.label
+                          skillMatrixCompetencyFilter === label
                             ? "border border-[#06B6D4]/20 bg-[#06B6D4]/42 text-white"
                             : "cursor-pointer text-slate-500 shadow-md hover:bg-white/5 hover:text-slate-300"
                         }`}
           >
-            {item.label}
+            {label}
           </button>
         ))}
       </div>
@@ -90,7 +103,7 @@ export const SearchToggleCard = () => {
       <button
         onClick={() => handleLegendClick()}
         className={`ml-auto flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs tracking-wider transition-all
-                         border border-white/10 text-slate-500 duration-300 active:scale-95 
+                         border border-white/10 text-slate-500 duration-300 active:scale-95
                          ${viewLegend ? "bg-slate-500/25 border border-slate-500/60 text-white/50" : "bg-[#EFE9E9]/5 hover:border-slate-500/60 hover:text-slate-400 hover:bg-slate-500/25"}`}
       >
         <CircleAlert size={14} />
