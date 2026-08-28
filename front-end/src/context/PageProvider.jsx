@@ -10,6 +10,7 @@ export const PageProvider = ({ children }) => {
   const [skillMatrixGroupFilter, setSkillMatrixGroupFilter] = useState("All");
   const [skillMatrixCompetencyFilter, setSkillMatrixCompetencyFilter] =
     useState("All");
+  const [insightTypeFilter, setInsightTypeFilter] = useState("All");
 
   const valueObj = {
     activeDesc,
@@ -26,6 +27,8 @@ export const PageProvider = ({ children }) => {
     setSkillMatrixGroupFilter,
     skillMatrixCompetencyFilter,
     setSkillMatrixCompetencyFilter,
+    insightTypeFilter,
+    setInsightTypeFilter,
   };
   return (
     <PageContext.Provider value={valueObj}>{children}</PageContext.Provider>

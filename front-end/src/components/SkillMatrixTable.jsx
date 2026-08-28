@@ -50,6 +50,7 @@ export const SkillMatrixTable = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [pendingScores, setPendingScores] = useState({});
   const [saveError, setSaveError] = useState(null);
+  const [hoveredCell, setHoveredCell] = useState(null);
 
   useEffect(() => {
     const fetchTableData = async () => {
@@ -88,6 +89,12 @@ export const SkillMatrixTable = () => {
   );
 
   const cellMap = useMemo(() => buildCellMap(cells), [cells]);
+
+  const levelById = useMemo(
+    () =>
+      Object.fromEntries(proficiencyLevels.map((lvl) => [lvl._id, lvl.level])),
+    [proficiencyLevels],
+  );
 
   const handleEdit = () => {
     const initialScores = {};
@@ -313,11 +320,24 @@ export const SkillMatrixTable = () => {
 
                     return (
                       <td key={skill.skillId} className="px-3 py-3 text-center">
-                        <span
-                          className={`inline-flex w-7 h-7 rounded-lg items-center justify-center text-[10px] font-bold ${proficiencyColor(existing?.sequence)} duration-300 hover:scale-115`}
+                        <div
+                          className="relative inline-block"
+                          onMouseEnter={() => setHoveredCell(key)}
+                          onMouseLeave={() => setHoveredCell(null)}
                         >
-                          {existing?.sequence ?? "—"}
-                        </span>
+                          <span
+                            className={`inline-flex w-7 h-7 rounded-lg items-center justify-center text-[10px] font-bold ${proficiencyColor(existing?.sequence)} duration-300 hover:scale-115`}
+                          >
+                            {existing?.sequence ?? "—"}
+                          </span>
+                          {hoveredCell === key && existing && (
+                            <div
+                              className={`absolute z-30 bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2 py-1 rounded-md text-[9px] font-semibold whitespace-nowrap shadow-lg ${proficiencyColor(existing?.sequence)}`}
+                            >
+                              {levelById[existing.proficiency] ?? "—"}
+                            </div>
+                          )}
+                        </div>
                       </td>
                     );
                   })}
