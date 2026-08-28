@@ -47,7 +47,7 @@ export const SearchToggleCard = () => {
           placeholder="Search..."
           value={skillMatrixSearch}
           onChange={(e) => setSkillMatrixSearch(e.target.value)}
-          className="pl-8 pr-4 py-2 text-xs text-slate-300 border border-white/9 bg-[#EFE9E9]/5 placeholder:text-slate-500 rounded-xl
+          className="pl-8 pr-4 py-2 text-xs text-slate-300 bg-[#0F172A] border border-[#06B6D4]/13 placeholder:text-slate-500 rounded-xl
                       outline-none transition-all w-44 tracking-wider focus:ring-1 focus:ring-blue-500/50"
         />
       </div>
@@ -63,7 +63,7 @@ export const SearchToggleCard = () => {
           value={skillMatrixGroupFilter}
           onChange={(e) => setSkillMatrixGroupFilter(e.target.value)}
           className="appearance-none pl-8 pr-7 py-2 text-xs text-slate-500 rounded-xl
-                                        outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider"
+                                        outline-none cursor-pointer transition-all bg-[#0F172A] border border-[#06B6D4]/13 tracking-wider"
         >
           {dropdownValue.map((item) => (
             <option
@@ -83,7 +83,7 @@ export const SearchToggleCard = () => {
       </div>
 
       {/* toggle button */}
-      <div className="flex item-center gap-1 p-1 overflow-x-auto rounded-xl border border-white/9 bg-[#EFE9E9]/5">
+      <div className="flex items-center gap-1 p-1 overflow-x-auto rounded-xl bg-[#0F172A] border border-[#06B6D4]/13">
         {competencyToggle.map((label) => (
           <button
             key={label}
@@ -103,8 +103,8 @@ export const SearchToggleCard = () => {
       <button
         onClick={() => handleLegendClick()}
         className={`ml-auto flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs tracking-wider transition-all
-                         border border-white/10 text-slate-500 duration-300 active:scale-95
-                         ${viewLegend ? "bg-slate-500/25 border border-slate-500/60 text-white/50" : "bg-[#EFE9E9]/5 hover:border-slate-500/60 hover:text-slate-400 hover:bg-slate-500/25"}`}
+                          border border-[#06B6D4]/13 text-slate-500 duration-300 active:scale-95
+                         ${viewLegend ? "border border-[#06B6D4]/20 bg-[#06B6D4]/42 text-white" : "bg-[#0F172A] hover:border-slate-500/80 hover:text-slate-400 hover:bg-white/5"}`}
       >
         <CircleAlert size={14} />
         Legend

@@ -6,7 +6,7 @@ export const Dashboard = () => {
   return (
     <>
       <div className="flex flex-col gap-4 bg-[linear-gradient(to_right,#001A31_30%,#2A2C8D_100%)] rounded-[20px] px-4 py-3">
-        <h1 className="text-md font-semibold text-[#E7EFF0]/51">
+        <h1 className="text-md font-semibold text-[#E7EFF0]/70">
           Training Plan Overview Dashboard
         </h1>
 

@@ -74,7 +74,7 @@ export const RadarChartCard = () => {
               padding={{ left: 15, right: 15 }}
               tick={{
                 fill: "#94A3B8",
-                fontSize: 12,
+                fontSize: 8,
               }}
               axisLine={{
                 stroke: "#22D3EE",
@@ -91,7 +91,7 @@ export const RadarChartCard = () => {
               width={35}
               tick={{
                 fill: "#94A3B8",
-                fontSize: 11,
+                fontSize: 8,
               }}
               axisLine={{
                 stroke: "#22D3EE",

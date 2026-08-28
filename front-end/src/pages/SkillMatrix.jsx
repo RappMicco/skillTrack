@@ -12,7 +12,8 @@ import {
   buildCellMap,
 } from "../utils/skillMatrixFilters.js";
 
-const escapeCsvValue = (value) => `"${String(value ?? "").replace(/"/g, '""')}"`;
+const escapeCsvValue = (value) =>
+  `"${String(value ?? "").replace(/"/g, '""')}"`;
 
 export const SkillMatrix = () => {
   const {
@@ -99,7 +100,7 @@ export const SkillMatrix = () => {
         </div>
         {/* ====================================================================================================== Legend ============================================================================================================= */}
         {viewLegend && (
-          <div className="flex flex-wrap gap-5 px-3 py-2 rounded-2xl border border-white/9 bg-[#EFE9E9]/5">
+          <div className="flex flex-wrap gap-5 px-3 py-2 rounded-2xl bg-[#0F172A] border border-[#06B6D4]/13">
             <LegendCard />
           </div>
         )}
