@@ -192,18 +192,32 @@ export const getTopFiveExpertSkills = async (req, res) => {
         },
       },
 
-      // Get skill details
+      // Get the skill's competency
       {
         $lookup: {
-          from: "skills",
+          from: "skillcompetencies",
           localField: "skill",
-          foreignField: "_id",
-          as: "skillDetails",
+          foreignField: "skillId",
+          as: "skillCompetency",
         },
       },
       {
         $unwind: {
-          path: "$skillDetails",
+          path: "$skillCompetency",
+          preserveNullAndEmptyArrays: false,
+        },
+      },
+      {
+        $lookup: {
+          from: "competencies",
+          localField: "skillCompetency.competencyId",
+          foreignField: "_id",
+          as: "competencyDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$competencyDetails",
           preserveNullAndEmptyArrays: false,
         },
       },
@@ -234,8 +248,8 @@ export const getTopFiveExpertSkills = async (req, res) => {
             employeeId: "$empId",
           },
 
-          skillName: {
-            $first: "$skillDetails.skillName",
+          competencyName: {
+            $first: "$competencyDetails.competency",
           },
 
           employee: {
@@ -253,14 +267,10 @@ export const getTopFiveExpertSkills = async (req, res) => {
         },
       },
 
-      // Group all unique employees under each skill
+      // Group all unique employees under each competency
       {
         $group: {
-          _id: "$_id.skillId",
-
-          skillName: {
-            $first: "$skillName",
-          },
+          _id: "$competencyName",
 
           employees: {
             $addToSet: {
@@ -310,8 +320,7 @@ export const getTopFiveExpertSkills = async (req, res) => {
       {
         $project: {
           _id: 0,
-          skillId: "$_id",
-          skillName: 1,
+          competencyName: "$_id",
           employeeCount: 1,
           employees: 1,
           totalProficiency: 1,
@@ -343,11 +352,6 @@ export const getTopFiveExpertSkills = async (req, res) => {
           expertisePercentage: -1,
           employeeCount: -1,
         },
-      },
-
-      // Get only the top six
-      {
-        $limit: 6,
       },
     ]);
 

@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload }) => {
 
   return (
     <div className="rounded-xl border border-cyan-400/50 bg-[#020617] p-3 text-[10px] text-white shadow-[0_0_10px_rgba(34,211,238,0.25)]">
-      <p className=" text-white font-semibold">{item.skillName}</p>
+      <p className=" text-white font-semibold">{item.competencyName}</p>
       <p className="text-cyan-400">
         Expertise Percentage: {item.expertisePercentage}%
       </p>
@@ -70,7 +70,7 @@ export const RadarChartCard = () => {
             </defs>
 
             <XAxis
-              dataKey="skillName"
+              dataKey="competencyName"
               padding={{ left: 15, right: 15 }}
               tick={{
                 fill: "#94A3B8",
