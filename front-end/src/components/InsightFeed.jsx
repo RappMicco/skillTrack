@@ -56,7 +56,7 @@ export const InsightFeed = () => {
     <>
       {/* filter tabs */}
       <div className="flex justify-between">
-        <div className="flex items-center gap-1 p-1 overflow-x-auto rounded-xl border border-white/9 bg-[#EFE9E9]/5">
+        <div className="flex items-center gap-1 p-1 overflow-x-auto rounded-xl bg-[#0F172A] border border-[#06B6D4]/13">
           {typeTabs.map((tab) => (
             <button
               key={tab.value}
@@ -76,7 +76,7 @@ export const InsightFeed = () => {
       </div>
 
       {/* feed */}
-      <div className="rounded-2xl overflow-hidden border border-white/9 bg-[#EFE9E9]/5 p-3 space-y-3">
+      <div className="rounded-2xl overflow-hidden bg-[#0F172A] border border-[#06B6D4]/13 p-3 space-y-3">
         {loading ? (
           <p className="text-center py-10 text-slate-500 font-semibold text-xs">
             Loading insights...

@@ -11,6 +11,8 @@ export const PageProvider = ({ children }) => {
   const [skillMatrixCompetencyFilter, setSkillMatrixCompetencyFilter] =
     useState("All");
   const [insightTypeFilter, setInsightTypeFilter] = useState("All");
+  const [maintenanceToggle, setMaintenanceToggle] =
+    useState("Register Employee");
 
   const valueObj = {
     activeDesc,
@@ -29,6 +31,8 @@ export const PageProvider = ({ children }) => {
     setSkillMatrixCompetencyFilter,
     insightTypeFilter,
     setInsightTypeFilter,
+    maintenanceToggle,
+    setMaintenanceToggle,
   };
   return (
     <PageContext.Provider value={valueObj}>{children}</PageContext.Provider>
