@@ -18,6 +18,9 @@ export const employeesSummary = async (req, res) => {
       {
         $project: {
           empId: 1,
+          firstName: 1,
+          lastName: 1,
+          empLevel: 1,
           fullName: {
             $trim: {
               input: {
@@ -339,6 +342,7 @@ export const trainingProviderSummary = async (req, res) => {
         $project: {
           trainingName: 1,
           trainingProvider: 1,
+          trainingDescription: 1,
         },
       },
     ]);
@@ -360,6 +364,51 @@ export const trainingProviderSummary = async (req, res) => {
     return res.status(500).json({
       success: false,
       message: "Server error during fetching of training provider summary!",
+      error: error.message,
+    });
+  }
+};
+
+export const getEmployeeMaintenanceList = async (req, res) => {
+  try {
+    const summary = await Employee.aggregate([
+      {
+        $match: {
+          group: { $ne: "admin" },
+        },
+      },
+      {
+        $project: {
+          empId: 1,
+          firstName: 1,
+          lastName: 1,
+          empLevel: 1,
+          isActive: 1,
+          fullName: {
+            $trim: {
+              input: {
+                $concat: [
+                  { $ifNull: ["$firstName", ""] },
+                  " ",
+                  { $ifNull: ["$lastName", ""] },
+                ],
+              },
+            },
+          },
+          group: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      data: summary,
+    });
+  } catch (error) {
+    console.error("Summary error: ", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error during fetching of employee maintenance list!",
       error: error.message,
     });
   }

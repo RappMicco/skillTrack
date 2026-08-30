@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { MaintenanceSection } from "../components/MaintenanceSection.jsx";
 import { EmployeeRegistrationSection } from "../components/EmployeeRegistrationSection.jsx";
 import { SkillCompetencySection } from "../components/SkillCompetencySection.jsx";
+import { SkillMatrixAssignmentSection } from "../components/SkillMatrixAssignmentSection.jsx";
 import {
   fetchSkills,
   createSkill,
@@ -22,6 +23,9 @@ import {
   fetchSkillCompetencies,
   createSkillCompetency,
   updateSkillCompetency,
+  fetchSkillMatrixAssignments,
+  createSkillMatrixAssignment,
+  updateSkillMatrixAssignment,
 } from "../features/maintenance/maintenanceThunk.js";
 import { clearMaintenanceError } from "../features/maintenance/maintenanceSlice.js";
 
@@ -32,6 +36,7 @@ const tabs = [
   "Competencies",
   "Employees",
   "Skill Assignments",
+  "Employee Skills",
 ];
 
 export const Maintenance = () => {
@@ -43,6 +48,7 @@ export const Maintenance = () => {
     competencies,
     employees,
     skillCompetencies,
+    skillMatrixAssignments,
     loading,
     saving,
     error,
@@ -60,6 +66,7 @@ export const Maintenance = () => {
           dispatch(fetchCompetencies()),
           dispatch(fetchEmployeeList()),
           dispatch(fetchSkillCompetencies()),
+          dispatch(fetchSkillMatrixAssignments()),
         ]);
       } catch (err) {
         console.error(err);
@@ -198,6 +205,26 @@ export const Maintenance = () => {
     }
   };
 
+  const handleAssignSkillMatrix = async (values) => {
+    try {
+      await dispatch(createSkillMatrixAssignment(values)).unwrap();
+      await dispatch(fetchSkillMatrixAssignments());
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
+  const handleUpdateSkillMatrix = async (id, values) => {
+    try {
+      await dispatch(updateSkillMatrixAssignment({ id, ...values })).unwrap();
+      await dispatch(fetchSkillMatrixAssignments());
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   return (
     <div className="space-y-5">
       <div className="bg-[linear-gradient(to_right,#001A31_30%,#2A2C8D_100%)] rounded-[20px] px-4 py-3">
@@ -324,6 +351,20 @@ export const Maintenance = () => {
           error={error}
           onAssign={handleAssignSkillCompetency}
           onUpdate={handleUpdateSkillCompetency}
+        />
+      )}
+
+      {activeTab === "Employee Skills" && (
+        <SkillMatrixAssignmentSection
+          employees={employees}
+          skills={skills}
+          proficiencies={proficiencies}
+          assignments={skillMatrixAssignments}
+          loading={loading}
+          saving={saving}
+          error={error}
+          onAssign={handleAssignSkillMatrix}
+          onUpdate={handleUpdateSkillMatrix}
         />
       )}
     </div>

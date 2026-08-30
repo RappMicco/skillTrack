@@ -12,6 +12,9 @@ import {
   fetchCompetencies,
   createCompetency,
   updateCompetency,
+  fetchSkillMatrixAssignments,
+  createSkillMatrixAssignment,
+  updateSkillMatrixAssignment,
   fetchEmployeeList,
   registerEmployee,
   updateEmployee,
@@ -27,6 +30,7 @@ const initialState = {
   competencies: [],
   employees: [],
   skillCompetencies: [],
+  skillMatrixAssignments: [],
   loading: false,
   saving: false,
   error: null,
@@ -182,6 +186,42 @@ const maintenanceSlice = createSlice({
         state.saving = false;
       })
       .addCase(updateCompetency.rejected, (state, action) => {
+        state.saving = false;
+        state.error = action.payload;
+      })
+
+      // skill matrix (employee skills)
+      .addCase(fetchSkillMatrixAssignments.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchSkillMatrixAssignments.fulfilled, (state, action) => {
+        state.loading = false;
+        state.skillMatrixAssignments = action.payload?.data || [];
+      })
+      .addCase(fetchSkillMatrixAssignments.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(createSkillMatrixAssignment.pending, (state) => {
+        state.saving = true;
+        state.error = null;
+      })
+      .addCase(createSkillMatrixAssignment.fulfilled, (state) => {
+        state.saving = false;
+      })
+      .addCase(createSkillMatrixAssignment.rejected, (state, action) => {
+        state.saving = false;
+        state.error = action.payload;
+      })
+      .addCase(updateSkillMatrixAssignment.pending, (state) => {
+        state.saving = true;
+        state.error = null;
+      })
+      .addCase(updateSkillMatrixAssignment.fulfilled, (state) => {
+        state.saving = false;
+      })
+      .addCase(updateSkillMatrixAssignment.rejected, (state, action) => {
         state.saving = false;
         state.error = action.payload;
       })

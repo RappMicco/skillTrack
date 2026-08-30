@@ -36,6 +36,7 @@ import {
   createCompetency,
   updateCompetency,
   createSkillCompetency,
+  updateSkillCompetency,
 } from "../controllers/compentencyMatrixController.js";
 
 const router = express.Router();
@@ -155,6 +156,15 @@ router.put(
   validateCompetency,
   validateResult,
   updateCompetency,
+);
+
+router.put(
+  "/update-skill-competency/:id",
+  isAuthenticated,
+  protect,
+  validateSkillCompetency,
+  validateResult,
+  updateSkillCompetency,
 );
 
 export default router;

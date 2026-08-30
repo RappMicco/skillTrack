@@ -138,6 +138,71 @@ export const createSkillCompetency = async (req, res) => {
     });
   }
 };
+// for removal
+export const updateSkillCompetency = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { competencyId, skillId } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid skill competency ID!",
+      });
+    }
+
+    const skillCompetencyRecord = await SkillCompetency.findById(id);
+
+    if (!skillCompetencyRecord) {
+      return res.status(404).json({
+        success: false,
+        message: "Skill competency record not found!",
+      });
+    }
+
+    const duplicate = await SkillCompetency.findOne({
+      competencyId,
+      skillId,
+      _id: { $ne: id },
+    });
+
+    if (duplicate) {
+      return res.status(400).json({
+        success: false,
+        message: "Skill competency already existed!",
+      });
+    }
+
+    skillCompetencyRecord.competencyId = competencyId;
+    skillCompetencyRecord.skillId = skillId;
+
+    await skillCompetencyRecord.save();
+
+    await skillCompetencyRecord.populate([
+      {
+        path: "competencyId",
+        select: "competency",
+      },
+      {
+        path: "skillId",
+        select: "skillName",
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      message: "Updated successfully!",
+      data: skillCompetencyRecord,
+    });
+  } catch (error) {
+    console.error("Update Skill Competency Error: ", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error during updating of skill competency data!",
+      error: error.message,
+    });
+  }
+};
 // for checking if remove
 export const fetchSkillCompetency = async (req, res) => {
   try {
@@ -223,6 +288,10 @@ export const fetchSkillCompetency = async (req, res) => {
             skillId: "$skill._id",
           },
 
+          skillCompetencyId: {
+            $first: "$_id",
+          },
+
           competencyName: {
             $first: "$competency.competency",
           },
@@ -271,6 +340,7 @@ export const fetchSkillCompetency = async (req, res) => {
 
           skills: {
             $push: {
+              skillCompetencyId: "$skillCompetencyId",
               skillId: "$_id.skillId",
               skillName: "$skillName",
               employees: "$employees",

@@ -187,10 +187,13 @@ export const updateTrainingProviderEntry = async ({
 
 // ==================== Employees ====================
 export const getEmployeeList = async () => {
-  const response = await fetch(`${VITE_API_URL}/dashboard/get-employees`, {
-    method: "GET",
-    credentials: "include",
-  });
+  const response = await fetch(
+    `${VITE_API_URL}/dashboard/get-employee-maintenance-list`,
+    {
+      method: "GET",
+      credentials: "include",
+    },
+  );
 
   const data = await response.json();
 
@@ -240,8 +243,9 @@ export const updateEmployeeEntry = async ({
   lastName,
   empLevel,
   group,
+  isActive,
 }) => {
-  const payload = { empId, firstName, lastName, empLevel, group };
+  const payload = { empId, firstName, lastName, empLevel, group, isActive };
   if (password) payload.password = password;
 
   const response = await fetch(`${VITE_API_URL}/update/${id}`, {
@@ -279,10 +283,7 @@ export const getSkillCompetencyList = async () => {
   return data;
 };
 
-export const createSkillCompetencyEntry = async ({
-  competencyId,
-  skillId,
-}) => {
+export const createSkillCompetencyEntry = async ({ competencyId, skillId }) => {
   const response = await fetch(
     `${VITE_API_URL}/admin/create-skill-competency`,
     {
@@ -314,6 +315,71 @@ export const updateSkillCompetencyEntry = async ({
       credentials: "include",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ competencyId, skillId }),
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
+
+// ==================== Skill Matrix (Employee Skills) ====================
+export const getSkillMatrixAssignmentList = async () => {
+  const response = await fetch(
+    `${VITE_API_URL}/dashboard/get-skill-matrix-list`,
+    {
+      method: "GET",
+      credentials: "include",
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
+
+export const createSkillMatrixAssignmentEntry = async ({
+  empId,
+  skill,
+  proficiency,
+}) => {
+  const response = await fetch(`${VITE_API_URL}/admin/create-skill-matrix`, {
+    method: "POST",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ empId, skill, proficiency }),
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
+
+export const updateSkillMatrixAssignmentEntry = async ({
+  id,
+  empId,
+  skill,
+  proficiency,
+}) => {
+  const response = await fetch(
+    `${VITE_API_URL}/admin/update-skill-matrix/${id}`,
+    {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ empId, skill, proficiency }),
     },
   );
 

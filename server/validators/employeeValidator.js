@@ -84,8 +84,7 @@ export const validateUpdateEmployee = [
     .withMessage("Invalid Employee ID format!"),
 
   body("password")
-    .notEmpty()
-    .withMessage("Password is required!")
+    .optional({ checkFalsy: true })
     .isLength({ min: 6 })
     .withMessage("Password must be atleast 6 characters!")
     .matches(/[A-Z]/)

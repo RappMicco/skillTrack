@@ -52,6 +52,12 @@ export const InsightFeed = () => {
     [insights, insightTypeFilter],
   );
 
+  const secondContainerColor = [
+    { id: 0, type: "strength", hoverColor: "from-emerald-500 to-green-400" },
+    { id: 1, type: "recommendation", hoverColor: "from-blue-500 to-cyan-400" },
+    { id: 2, type: "risk", hoverColor: "from-amber-500 to-orange-400" },
+  ];
+
   return (
     <>
       {/* filter tabs */}
@@ -93,11 +99,14 @@ export const InsightFeed = () => {
           filteredInsights.map((item) => (
             <div
               key={item.id}
-              className={`flex gap-4 p-4 rounded-2xl ${borderColor(item.type)}`}
+              className={`relative group transition-all duration-300 flex gap-4 p-4 rounded-2xl ${borderColor(item.type)} transition-all duration-300 ease-out hover:-translate-y-1`}
             >
               {/* icon */}
               <div
-                className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${bgIconColor(item.type)}`}
+                className={`absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 bg-linear-to-br ${secondContainerColor.find((c) => c.type === item.type)?.hoverColor}`}
+              ></div>
+              <div
+                className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all group-hover:rotate-360 duration-700 ${bgIconColor(item.type)}`}
               >
                 {getIcon(item.type)}
               </div>

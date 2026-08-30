@@ -52,6 +52,7 @@ export const EmployeeRegistrationSection = ({
       lastName: row.lastName ?? "",
       empLevel: row.empLevel ?? "",
       group: row.group ?? groupOptions[0].value,
+      isActive: row.isActive ?? true,
     });
   };
 
@@ -117,7 +118,7 @@ export const EmployeeRegistrationSection = ({
           <input
             type="text"
             required
-            placeholder="L2"
+            placeholder="A4"
             value={formValues.empLevel}
             onChange={(e) => handleChange("empLevel", e.target.value)}
             className="px-3 py-2 text-xs text-slate-300 border border-white/9 bg-[#EFE9E9]/5 placeholder:text-slate-500 rounded-xl outline-none transition-all tracking-wider focus:ring-1 focus:ring-blue-500/50"
@@ -211,6 +212,9 @@ export const EmployeeRegistrationSection = ({
               <th className="px-5 py-2 text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                 Group
               </th>
+              <th className="px-5 py-2 text-left text-[10px] font-bold text-slate-500 uppercase tracking-widest">
+                Status
+              </th>
               <th className="px-5 py-2 w-20"></th>
             </tr>
           </thead>
@@ -218,7 +222,7 @@ export const EmployeeRegistrationSection = ({
             {loading ? (
               <tr>
                 <td
-                  colSpan={6}
+                  colSpan={7}
                   className="text-center py-10 text-slate-500 font-semibold text-xs"
                 >
                   Loading...
@@ -227,7 +231,7 @@ export const EmployeeRegistrationSection = ({
             ) : rows.length === 0 ? (
               <tr>
                 <td
-                  colSpan={6}
+                  colSpan={7}
                   className="text-center py-10 text-slate-500 font-semibold text-xs"
                 >
                   No employees found.
@@ -342,6 +346,43 @@ export const EmployeeRegistrationSection = ({
                       ) : (
                         <span className="text-xs text-slate-400">
                           {groupLabel(row.group)}
+                        </span>
+                      )}
+                    </td>
+                    <td className="px-5 py-3">
+                      {isEditing ? (
+                        <select
+                          value={String(editValues.isActive)}
+                          onChange={(e) =>
+                            setEditValues((prev) => ({
+                              ...prev,
+                              isActive: e.target.value === "true",
+                            }))
+                          }
+                          className="appearance-none w-full rounded-lg bg-[#EFE9E9]/10 border border-white/10 text-xs text-slate-200 px-2 py-1 outline-none cursor-pointer focus:ring-1 focus:ring-blue-500/50"
+                        >
+                          <option
+                            value="true"
+                            className="bg-slate-900 text-slate-500 text-xs"
+                          >
+                            Active
+                          </option>
+                          <option
+                            value="false"
+                            className="bg-slate-900 text-slate-500 text-xs"
+                          >
+                            Inactive
+                          </option>
+                        </select>
+                      ) : (
+                        <span
+                          className={`text-[8px] font-bold uppercase tracking-wide px-2 py-0.5 rounded-full ${
+                            row.isActive
+                              ? "bg-emerald-500/15 text-emerald-400 border border-emerald-500/30"
+                              : "bg-slate-500/15 text-slate-400 border border-slate-500/30"
+                          }`}
+                        >
+                          {row.isActive ? "Active" : "Inactive"}
                         </span>
                       )}
                     </td>

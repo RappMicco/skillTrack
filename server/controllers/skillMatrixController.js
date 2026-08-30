@@ -494,3 +494,86 @@ export const skillSummary = async (req, res) => {
     });
   }
 };
+
+export const getSkillMatrixList = async (req, res) => {
+  try {
+    const list = await SkillMatrix.aggregate([
+      {
+        $lookup: {
+          from: "employees",
+          localField: "empId",
+          foreignField: "_id",
+          as: "employeeDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$employeeDetails",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "skills",
+          localField: "skill",
+          foreignField: "_id",
+          as: "skillDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$skillDetails",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "skillproficiencies",
+          localField: "proficiency",
+          foreignField: "_id",
+          as: "proficiencyDetails",
+        },
+      },
+      {
+        $unwind: {
+          path: "$proficiencyDetails",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          empId: 1,
+          skill: 1,
+          proficiency: 1,
+          employeeName: {
+            $trim: {
+              input: {
+                $concat: [
+                  { $ifNull: ["$employeeDetails.firstName", ""] },
+                  " ",
+                  { $ifNull: ["$employeeDetails.lastName", ""] },
+                ],
+              },
+            },
+          },
+          skillName: "$skillDetails.skillName",
+          proficiencyLevel: "$proficiencyDetails.level",
+        },
+      },
+    ]);
+
+    return res.status(200).json({
+      success: true,
+      data: list,
+    });
+  } catch (error) {
+    console.error("Fetching skill matrix list error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Server error during fetching of skill matrix list!",
+      error: error.message,
+    });
+  }
+};
