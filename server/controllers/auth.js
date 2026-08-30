@@ -108,8 +108,15 @@ export const registerEmployee = async (req, res) => {
 export const updateEmployeeData = async (req, res) => {
   try {
     const { id } = req.params;
+    const updates = { ...req.body };
 
-    const updatedEmployee = await Employee.findByIdAndUpdate(id, req.body, {
+    if (updates.password) {
+      updates.password = await bcrypt.hash(updates.password, 10);
+    } else {
+      delete updates.password;
+    }
+
+    const updatedEmployee = await Employee.findByIdAndUpdate(id, updates, {
       returnDocument: "after",
       runValidators: true,
     });

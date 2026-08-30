@@ -7,6 +7,7 @@ import {
   skillMatrixSummary,
   skillProficiencySummary,
   trainingProviderSummary,
+  getEmployeeMaintenanceList,
 } from "../controllers/getMaintenanceSummary.js";
 import { isAuthenticated } from "../middlewares/authMiddleware.js";
 import {
@@ -20,6 +21,7 @@ import {
   getTopFiveExpertSkills,
   getSkillMatrixCells,
   skillSummary,
+  getSkillMatrixList,
 } from "../controllers/skillMatrixController.js";
 import {
   fetchSkillCompetency,
@@ -47,6 +49,12 @@ router.get(
   getRecentTrainingSummary,
 );
 router.get("/get-top-skills", isAuthenticated, getTopFiveExpertSkills);
+router.get("/get-skill-matrix-list", isAuthenticated, getSkillMatrixList);
+router.get(
+  "/get-employee-maintenance-list",
+  isAuthenticated,
+  getEmployeeMaintenanceList,
+);
 // get skill competency for skill matrix - for removal skill competency
 router.get("/get-skill-competency", isAuthenticated, fetchSkillCompetency);
 router.get("/get-competency", isAuthenticated, fetchCompetency);

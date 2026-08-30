@@ -12,6 +12,9 @@ import {
   getCompetencyList,
   createCompetencyEntry,
   updateCompetencyEntry,
+  getSkillMatrixAssignmentList,
+  createSkillMatrixAssignmentEntry,
+  updateSkillMatrixAssignmentEntry,
   getEmployeeList,
   registerEmployeeEntry,
   updateEmployeeEntry,
@@ -157,6 +160,40 @@ export const updateCompetency = createAsyncThunk(
   async (payload, thunkAPI) => {
     try {
       return await updateCompetencyEntry(payload);
+    } catch (error) {
+      return rejectWith(thunkAPI, error);
+    }
+  },
+);
+
+// Skill Matrix (Employee Skills)
+export const fetchSkillMatrixAssignments = createAsyncThunk(
+  "maintenance/fetchSkillMatrixAssignments",
+  async (_, thunkAPI) => {
+    try {
+      return await getSkillMatrixAssignmentList();
+    } catch (error) {
+      return rejectWith(thunkAPI, error);
+    }
+  },
+);
+
+export const createSkillMatrixAssignment = createAsyncThunk(
+  "maintenance/createSkillMatrixAssignment",
+  async (payload, thunkAPI) => {
+    try {
+      return await createSkillMatrixAssignmentEntry(payload);
+    } catch (error) {
+      return rejectWith(thunkAPI, error);
+    }
+  },
+);
+
+export const updateSkillMatrixAssignment = createAsyncThunk(
+  "maintenance/updateSkillMatrixAssignment",
+  async (payload, thunkAPI) => {
+    try {
+      return await updateSkillMatrixAssignmentEntry(payload);
     } catch (error) {
       return rejectWith(thunkAPI, error);
     }

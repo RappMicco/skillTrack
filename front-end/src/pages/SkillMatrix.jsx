@@ -105,7 +105,7 @@ export const SkillMatrix = () => {
           </div>
         )}
         {/* ====================================================================================================== Skill matrix table ================================================================================================== */}
-        <div className="rounded-2xl overflow-hidden border border-white/9 bg-[#EFE9E9]/5">
+        <div className="rounded-2xl overflow-hidden bg-[#0F172A] border border-[#06B6D4]/13">
           <SkillMatrixTable />
         </div>
       </div>
