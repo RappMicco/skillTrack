@@ -444,3 +444,19 @@ export const updateCompetencyEntry = async ({ id, competency }) => {
 
   return data;
 };
+
+// assign training
+export const getStatusTraining = async () => {
+  const response = await fetch(`${VITE_API_URL}/admin/training-status`, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};

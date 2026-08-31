@@ -21,6 +21,7 @@ import {
   fetchSkillCompetencies,
   createSkillCompetency,
   updateSkillCompetency,
+  fetchStatusTraining,
 } from "./maintenanceThunk.js";
 
 const initialState = {
@@ -31,6 +32,7 @@ const initialState = {
   employees: [],
   skillCompetencies: [],
   skillMatrixAssignments: [],
+  statusTraining: [],
   loading: false,
   saving: false,
   error: null,
@@ -295,6 +297,20 @@ const maintenanceSlice = createSlice({
       })
       .addCase(updateSkillCompetency.rejected, (state, action) => {
         state.saving = false;
+        state.error = action.payload;
+      })
+
+      // assign training
+      .addCase(fetchStatusTraining.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchStatusTraining.fulfilled, (state, action) => {
+        state.loading = false;
+        state.statusTraining = action.payload?.summary || [];
+      })
+      .addCase(fetchStatusTraining.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
       });
   },
