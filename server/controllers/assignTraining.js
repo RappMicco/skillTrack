@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { EmployeeTraining } from "../models/employeeTrainingModel.js";
 import { Employee } from "../models/employeesModel.js";
 import { Training } from "../models/trainingModel.js";
+import { Status } from "../models/statusModel.js";
 
 export const assignTraining = async (req, res) => {
   try {
@@ -156,6 +157,30 @@ export const updateAssignTraining = async (req, res) => {
     return res.status(500).json({
       success: false,
       messsage: "Server error during updating of training!",
+      error: error.message,
+    });
+  }
+};
+
+export const fetchStatus = async (req, res) => {
+  try {
+    const summary = await Status.aggregate([
+      {
+        $project: {
+          status: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      summary,
+    });
+  } catch (error) {
+    console.error("Fetch status error: ", error);
+    return res.status(500).json({
+      success: false,
+      message: "Server error during fetching of training status!",
       error: error.message,
     });
   }
