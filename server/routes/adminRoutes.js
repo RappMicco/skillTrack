@@ -39,6 +39,8 @@ import {
   updateSkillCompetency,
 } from "../controllers/compentencyMatrixController.js";
 
+import { fetchStatus } from "../controllers/assignTraining.js";
+
 const router = express.Router();
 
 router.post(
@@ -166,5 +168,7 @@ router.put(
   validateResult,
   updateSkillCompetency,
 );
+
+router.get("/training-status", isAuthenticated, protect, fetchStatus);
 
 export default router;
