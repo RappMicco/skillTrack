@@ -52,7 +52,8 @@ export const SkillMatrixAssignmentSection = ({
   };
 
   const handleEditSave = async (id) => {
-    if (!editValues.empId || !editValues.skill || !editValues.proficiency) return;
+    if (!editValues.empId || !editValues.skill || !editValues.proficiency)
+      return;
     const success = await onUpdate(id, editValues);
     if (success) handleEditCancel();
   };
@@ -65,7 +66,8 @@ export const SkillMatrixAssignmentSection = ({
           Employee Skills
         </h2>
         <p className="text-[11px] text-slate-500 mt-0.5">
-          Assign a proficiency level for an employee's skill (mirrors the Skill Matrix grid).
+          Assign a proficiency level for an employee's skill (mirrors the Skill
+          Matrix grid).
         </p>
       </div>
 
@@ -82,7 +84,7 @@ export const SkillMatrixAssignmentSection = ({
             required
             value={empId}
             onChange={(e) => setEmpId(e.target.value)}
-            className="appearance-none px-3 py-2 text-xs text-slate-300 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
+            className="appearance-none px-3 py-2 text-xs text-slate-500 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
           >
             <option value="" className="bg-slate-900 text-slate-500">
               Select employee
@@ -107,7 +109,7 @@ export const SkillMatrixAssignmentSection = ({
             required
             value={skillId}
             onChange={(e) => setSkillId(e.target.value)}
-            className="appearance-none px-3 py-2 text-xs text-slate-300 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
+            className="appearance-none px-3 py-2 text-xs text-slate-500 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
           >
             <option value="" className="bg-slate-900 text-slate-500">
               Select skill
@@ -132,7 +134,7 @@ export const SkillMatrixAssignmentSection = ({
             required
             value={proficiencyId}
             onChange={(e) => setProficiencyId(e.target.value)}
-            className="appearance-none px-3 py-2 text-xs text-slate-300 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
+            className="appearance-none px-3 py-2 text-xs text-slate-500 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
           >
             <option value="" className="bg-slate-900 text-slate-500">
               Select proficiency
@@ -152,7 +154,8 @@ export const SkillMatrixAssignmentSection = ({
         <button
           type="submit"
           disabled={saving}
-          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] tracking-wider text-white border border-emerald-500/30 bg-emerald-500/15 hover:bg-emerald-500/25 transition-all duration-300 active:scale-95 disabled:opacity-50"
+          className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] tracking-wider text-white border border-emerald-500/30 
+                  bg-emerald-500/15 hover:bg-emerald-500/25 transition-all duration-300 active:scale-95 disabled:opacity-50"
         >
           <Link size={13} />
           Assign
@@ -185,13 +188,19 @@ export const SkillMatrixAssignmentSection = ({
           <tbody>
             {loading ? (
               <tr>
-                <td colSpan={4} className="text-center py-10 text-slate-500 font-semibold text-xs">
+                <td
+                  colSpan={4}
+                  className="text-center py-10 text-slate-500 font-semibold text-xs"
+                >
                   Loading...
                 </td>
               </tr>
             ) : assignments.length === 0 ? (
               <tr>
-                <td colSpan={4} className="text-center py-10 text-slate-500 font-semibold text-xs">
+                <td
+                  colSpan={4}
+                  className="text-center py-10 text-slate-500 font-semibold text-xs"
+                >
                   No employee skills found.
                 </td>
               </tr>
@@ -208,18 +217,27 @@ export const SkillMatrixAssignmentSection = ({
                         <select
                           value={editValues.empId}
                           onChange={(e) =>
-                            setEditValues((prev) => ({ ...prev, empId: e.target.value }))
+                            setEditValues((prev) => ({
+                              ...prev,
+                              empId: e.target.value,
+                            }))
                           }
                           className="appearance-none w-full rounded-lg bg-[#EFE9E9]/10 border border-white/10 text-xs text-slate-200 px-2 py-1 outline-none cursor-pointer focus:ring-1 focus:ring-blue-500/50"
                         >
                           {employees.map((emp) => (
-                            <option key={emp._id} value={emp._id} className="bg-slate-900 text-slate-500 text-xs">
+                            <option
+                              key={emp._id}
+                              value={emp._id}
+                              className="bg-slate-900 text-slate-500 text-xs"
+                            >
                               {emp.fullName}
                             </option>
                           ))}
                         </select>
                       ) : (
-                        <span className="text-xs text-slate-300">{row.employeeName}</span>
+                        <span className="text-xs text-slate-300">
+                          {row.employeeName}
+                        </span>
                       )}
                     </td>
                     <td className="px-5 py-3">
@@ -227,18 +245,27 @@ export const SkillMatrixAssignmentSection = ({
                         <select
                           value={editValues.skill}
                           onChange={(e) =>
-                            setEditValues((prev) => ({ ...prev, skill: e.target.value }))
+                            setEditValues((prev) => ({
+                              ...prev,
+                              skill: e.target.value,
+                            }))
                           }
                           className="appearance-none w-full rounded-lg bg-[#EFE9E9]/10 border border-white/10 text-xs text-slate-200 px-2 py-1 outline-none cursor-pointer focus:ring-1 focus:ring-blue-500/50"
                         >
                           {skills.map((skill) => (
-                            <option key={skill._id} value={skill._id} className="bg-slate-900 text-slate-500 text-xs">
+                            <option
+                              key={skill._id}
+                              value={skill._id}
+                              className="bg-slate-900 text-slate-500 text-xs"
+                            >
                               {skill.skillName}
                             </option>
                           ))}
                         </select>
                       ) : (
-                        <span className="text-xs text-slate-300">{row.skillName}</span>
+                        <span className="text-xs text-slate-300">
+                          {row.skillName}
+                        </span>
                       )}
                     </td>
                     <td className="px-5 py-3">
@@ -246,18 +273,27 @@ export const SkillMatrixAssignmentSection = ({
                         <select
                           value={editValues.proficiency}
                           onChange={(e) =>
-                            setEditValues((prev) => ({ ...prev, proficiency: e.target.value }))
+                            setEditValues((prev) => ({
+                              ...prev,
+                              proficiency: e.target.value,
+                            }))
                           }
                           className="appearance-none w-full rounded-lg bg-[#EFE9E9]/10 border border-white/10 text-xs text-slate-200 px-2 py-1 outline-none cursor-pointer focus:ring-1 focus:ring-blue-500/50"
                         >
                           {proficiencies.map((level) => (
-                            <option key={level._id} value={level._id} className="bg-slate-900 text-slate-500 text-xs">
+                            <option
+                              key={level._id}
+                              value={level._id}
+                              className="bg-slate-900 text-slate-500 text-xs"
+                            >
                               {level.sequence} - {level.level}
                             </option>
                           ))}
                         </select>
                       ) : (
-                        <span className="text-xs text-slate-400">{row.proficiencyLevel}</span>
+                        <span className="text-xs text-slate-400">
+                          {row.proficiencyLevel}
+                        </span>
                       )}
                     </td>
                     <td className="px-5 py-3 text-right whitespace-nowrap">

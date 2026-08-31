@@ -84,7 +84,7 @@ export const SkillCompetencySection = ({
             required
             value={skillId}
             onChange={(e) => setSkillId(e.target.value)}
-            className="appearance-none px-3 py-2 text-xs text-slate-300 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
+            className="appearance-none px-3 py-2 text-xs text-slate-500 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
           >
             <option value="" className="bg-slate-900 text-slate-500">
               Select skill
@@ -109,7 +109,7 @@ export const SkillCompetencySection = ({
             required
             value={competencyId}
             onChange={(e) => setCompetencyId(e.target.value)}
-            className="appearance-none px-3 py-2 text-xs text-slate-300 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
+            className="appearance-none px-3 py-2 text-xs text-slate-500 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider min-w-44"
           >
             <option value="" className="bg-slate-900 text-slate-500">
               Select competency

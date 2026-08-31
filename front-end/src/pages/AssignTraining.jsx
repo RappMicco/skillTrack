@@ -4,12 +4,14 @@ import {
   fetchSkills,
   fetchTrainingProviders,
   fetchEmployeeList,
+  fetchStatusTraining,
 } from "../features/maintenance/maintenanceThunk";
+import { Link } from "lucide-react";
 
 export const AssignTraining = () => {
   const dispatch = useDispatch();
 
-  const { employees, trainingProviders } = useSelector(
+  const { employees, trainingProviders, statusTraining, error } = useSelector(
     (state) => state.maintenance,
   );
 
@@ -38,7 +40,10 @@ export const AssignTraining = () => {
       value: t._id,
       label: t.trainingName,
     })),
-    status: [],
+    status: statusTraining.map((item) => ({
+      value: item._id,
+      label: item.status.charAt(0).toUpperCase() + item.status.slice(1),
+    })),
   };
 
   const trainingDetails = [
@@ -58,6 +63,7 @@ export const AssignTraining = () => {
           dispatch(fetchSkills()),
           dispatch(fetchTrainingProviders()),
           dispatch(fetchEmployeeList()),
+          dispatch(fetchStatusTraining()),
         ]);
       } catch (err) {
         console.error(err);
@@ -100,8 +106,11 @@ export const AssignTraining = () => {
 
             return (
               <div className="flex flex-col gap-1" key={item.key}>
-                <label className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
+                <label className="flex gap-1 text-[10px] font-semibold text-slate-500 uppercase tracking-wider">
                   {item.label}
+                  {item.inputType !== "input" && (
+                    <span className="text-red-500/70">*</span>
+                  )}
                 </label>
 
                 {item.inputType === "dropdown" ? (
@@ -109,13 +118,20 @@ export const AssignTraining = () => {
                     required
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
-                    className="appearance-none px-3 py-2 text-xs text-slate-300 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-white/9 tracking-wider w-full"
+                    className="appearance-none px-3 py-2 text-xs text-slate-500 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-[#06B6D4]/13 tracking-wider w-full"
                   >
-                    <option value="" className="bg-slate-900 text-slate-500">
+                    <option
+                      value=""
+                      className="bg-slate-900 text-slate-500 tracking-wider text-xs"
+                    >
                       Select {item.label.toLowerCase()}
                     </option>
                     {options.map((opt) => (
-                      <option key={opt.value} value={opt.value}>
+                      <option
+                        key={opt.value}
+                        value={opt.value}
+                        className="bg-slate-900 text-slate-500 tracking-wider text-xs"
+                      >
                         {opt.label}
                       </option>
                     ))}
@@ -126,14 +142,13 @@ export const AssignTraining = () => {
                     type="date"
                     required
                     value={value}
-                    onChange={(e) => setValue(e.target.vlaue)}
-                    className="px-3 py-2 text-xs text-slate-300 border border-white/9 bg-white/5
+                    onChange={(e) => setValue(e.target.value)}
+                    className="px-3 py-2 text-xs text-slate-500 border border-white/9 bg-white/5
                               rounded-xl outline-none tracking-wider focus:ring-1 focus:ring-blue-500/50"
                   />
                 ) : (
                   <input
                     type="text"
-                    required
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     className="px-3 py-2 text-xs text-slate-300 border border-white/9 bg-white/5
@@ -143,7 +158,21 @@ export const AssignTraining = () => {
               </div>
             );
           })}
+          {/* submit */}
+          <button
+            className="justify-self-start self-end flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] tracking-wider text-white border border-emerald-500/30
+                            bg-emerald-500/15 hover:bg-emerald-500/25 transition-all duration-300 active:scale-95 disabled:opacity-50"
+          >
+            <Link size={13} />
+            Assign
+          </button>
         </form>
+
+        {error && (
+          <div className="px-5 py-2 text-[10px] text-red-400 border-b border-white/5">
+            {error}
+          </div>
+        )}
       </div>
     </div>
   );
