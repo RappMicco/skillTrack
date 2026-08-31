@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  fetchSkills,
   fetchTrainingProviders,
   fetchEmployeeList,
   fetchStatusTraining,
@@ -60,7 +59,6 @@ export const AssignTraining = () => {
     const fetchAll = async () => {
       try {
         await Promise.all([
-          dispatch(fetchSkills()),
           dispatch(fetchTrainingProviders()),
           dispatch(fetchEmployeeList()),
           dispatch(fetchStatusTraining()),
