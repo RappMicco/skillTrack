@@ -4,8 +4,11 @@ import {
   fetchTrainingProviders,
   fetchEmployeeList,
   fetchStatusTraining,
+  assignTraining,
 } from "../features/maintenance/maintenanceThunk";
 import { Link } from "lucide-react";
+import { clearMaintenanceError } from "../features/maintenance/maintenanceSlice";
+import { AssignTrainingList } from "../components/AssignTrainingList";
 
 export const AssignTraining = () => {
   const dispatch = useDispatch();
@@ -56,6 +59,7 @@ export const AssignTraining = () => {
   ];
 
   useEffect(() => {
+    dispatch(clearMaintenanceError());
     const fetchAll = async () => {
       try {
         await Promise.all([
@@ -68,7 +72,19 @@ export const AssignTraining = () => {
       }
     };
     fetchAll();
+
+    return () => {
+      dispatch(clearMaintenanceError());
+    };
   }, [dispatch]);
+
+  const handleAssignTraining = async (values) => {
+    try {
+      await dispatch(assignTraining(values)).unwrap();
+    } catch {
+      return false;
+    }
+  };
   return (
     <div className="space-y-5">
       {/* header */}
@@ -171,6 +187,9 @@ export const AssignTraining = () => {
             {error}
           </div>
         )}
+
+        {/* ====================================================================================== Assign Training List ============================================================================================ */}
+        <AssignTrainingList onAssign={handleAssignTraining} />
       </div>
     </div>
   );
