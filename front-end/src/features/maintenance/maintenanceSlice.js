@@ -23,6 +23,7 @@ import {
   updateSkillCompetency,
   fetchStatusTraining,
   assignTraining,
+  fetchAllAssignedTraining,
 } from "./maintenanceThunk.js";
 
 const initialState = {
@@ -34,6 +35,8 @@ const initialState = {
   skillCompetencies: [],
   skillMatrixAssignments: [],
   statusTraining: [],
+  trainingList: [],
+  message: null,
   loading: false,
   saving: false,
   error: null,
@@ -45,6 +48,9 @@ const maintenanceSlice = createSlice({
   reducers: {
     clearMaintenanceError: (state) => {
       state.error = null;
+    },
+    clearMaintenanceMessage: (state) => {
+      state.message = "";
     },
   },
   extraReducers: (builder) => {
@@ -318,17 +324,34 @@ const maintenanceSlice = createSlice({
       .addCase(assignTraining.pending, (state) => {
         state.saving = true;
         state.error = null;
+        state.message = null;
       })
-      .addCase(assignTraining.fulfilled, (state) => {
+      .addCase(assignTraining.fulfilled, (state, action) => {
         state.saving = false;
+        state.message = action.payload?.message || "";
       })
       .addCase(assignTraining.rejected, (state, action) => {
         state.saving = false;
+        state.error = action.payload;
+        state.message = null;
+      })
+
+      .addCase(fetchAllAssignedTraining.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllAssignedTraining.fulfilled, (state, action) => {
+        state.loading = false;
+        state.trainingList = action.payload?.data || [];
+      })
+      .addCase(fetchAllAssignedTraining.rejected, (state, action) => {
+        state.loading = false;
         state.error = action.payload;
       });
   },
 });
 
-export const { clearMaintenanceError } = maintenanceSlice.actions;
+export const { clearMaintenanceError, clearMaintenanceMessage } =
+  maintenanceSlice.actions;
 
 export default maintenanceSlice.reducer;
