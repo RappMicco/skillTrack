@@ -50,7 +50,11 @@ const maintenanceSlice = createSlice({
       state.error = null;
     },
     clearMaintenanceMessage: (state) => {
+<<<<<<< HEAD
+      state.message = null;
+=======
       state.message = "";
+>>>>>>> e39386fe6dcf2acb5c54b4c0dec66677f614a99c
     },
   },
   extraReducers: (builder) => {
