@@ -5,21 +5,24 @@ import {
   fetchEmployeeList,
   fetchStatusTraining,
   assignTraining,
+  fetchAllAssignedTraining,
 } from "../features/maintenance/maintenanceThunk";
 import { Link } from "lucide-react";
-import { clearMaintenanceError } from "../features/maintenance/maintenanceSlice";
+import {
+  clearMaintenanceError,
+  clearMaintenanceMessage,
+} from "../features/maintenance/maintenanceSlice";
 import { AssignTrainingList } from "../components/AssignTrainingList";
 
 export const AssignTraining = () => {
   const dispatch = useDispatch();
 
-  const { employees, trainingProviders, statusTraining, error } = useSelector(
-    (state) => state.maintenance,
-  );
+  const { employees, trainingProviders, statusTraining, message, error } =
+    useSelector((state) => state.maintenance);
 
   const [empId, setEmpId] = useState("");
-  const [training, setTraining] = useState("");
-  const [status, setStatus] = useState("");
+  const [trainingId, setTraining] = useState("");
+  const [statusId, setStatus] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [progress, setProgress] = useState("");
@@ -27,12 +30,32 @@ export const AssignTraining = () => {
 
   const fieldState = {
     empId: [empId, setEmpId],
-    training: [training, setTraining],
-    status: [status, setStatus],
+    training: [trainingId, setTraining],
+    status: [statusId, setStatus],
     startDate: [startDate, setStartDate],
     endDate: [endDate, setEndDate],
     progress: [progress, setProgress],
     remarks: [remarks, setRemarks],
+  };
+
+  const payload = {
+    empId,
+    trainingId,
+    statusId,
+    startDate,
+    endDate,
+    progress,
+    remarks,
+  };
+
+  const clearFields = () => {
+    setEmpId("");
+    setTraining("");
+    setStatus("");
+    setStartDate("");
+    setEndDate("");
+    setProgress("");
+    setRemarks("");
   };
 
   // options only exist for dropdown fields
@@ -66,6 +89,7 @@ export const AssignTraining = () => {
           dispatch(fetchTrainingProviders()),
           dispatch(fetchEmployeeList()),
           dispatch(fetchStatusTraining()),
+          dispatch(fetchAllAssignedTraining()),
         ]);
       } catch (err) {
         console.error(err);
@@ -78,13 +102,39 @@ export const AssignTraining = () => {
     };
   }, [dispatch]);
 
-  const handleAssignTraining = async (values) => {
+  //assign training
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     try {
-      await dispatch(assignTraining(values)).unwrap();
+      await dispatch(assignTraining(payload)).unwrap();
+      await dispatch(fetchAllAssignedTraining());
+      clearFields();
+      return true;
     } catch {
       return false;
     }
   };
+
+  useEffect(() => {
+    if (!message) return;
+
+    const timer = setTimeout(() => {
+      dispatch(clearMaintenanceMessage());
+    }, 3000);
+
+    return () => clearTimeout(timer);
+  }, [message, dispatch]);
+
+  // Error auto-clear
+  useEffect(() => {
+    if (!error) return;
+    const timer = setTimeout(() => {
+      dispatch(clearMaintenanceError());
+    }, 5000); // mas mahaba para mabasa
+
+    return () => clearTimeout(timer);
+  }, [error, dispatch]);
+
   return (
     <div className="space-y-5">
       {/* header */}
@@ -111,7 +161,7 @@ export const AssignTraining = () => {
 
         {/* ================================================================== training registration form ============================================================================== */}
         <form
-          action=""
+          onSubmit={handleSubmit}
           className="grid grid-cols-2 lg:grid-cols-3 gap-3 px-5 py-4 border-b border-white/5"
         >
           {trainingDetails.map((item) => {
@@ -174,6 +224,7 @@ export const AssignTraining = () => {
           })}
           {/* submit */}
           <button
+            type="submit"
             className="justify-self-start self-end flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] tracking-wider text-white border border-emerald-500/30
                             bg-emerald-500/15 hover:bg-emerald-500/25 transition-all duration-300 active:scale-95 disabled:opacity-50"
           >
@@ -188,8 +239,14 @@ export const AssignTraining = () => {
           </div>
         )}
 
+        {message && (
+          <div className="px-5 py-2 text-[10px] text-green-400 border-b border-white/5">
+            {message}
+          </div>
+        )}
+
         {/* ====================================================================================== Assign Training List ============================================================================================ */}
-        <AssignTrainingList onAssign={handleAssignTraining} />
+        <AssignTrainingList />
       </div>
     </div>
   );

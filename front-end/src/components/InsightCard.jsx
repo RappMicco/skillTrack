@@ -60,7 +60,7 @@ export const InsightCard = () => {
                   <p className="flex items-center text-[10px] text-slate-400 group-hover:text-white">
                     {item?.type === "strength" || item?.type === "risk"
                       ? `${item?.metrics?.employeeCount} Expert`
-                      : `${item?.metrics?.recommendedEmployees} Recommendations`}
+                      : `${item?.metrics?.recommendedEmployees} Recommended`}
                   </p>
                 </div>
               </div>
