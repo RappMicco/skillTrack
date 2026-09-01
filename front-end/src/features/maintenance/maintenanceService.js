@@ -461,13 +461,31 @@ export const getStatusTraining = async () => {
   return data;
 };
 
-export const assignTraining = async ({ training }) => {
+export const assignTrainingEmployee = async (training) => {
   const response = await fetch(`${VITE_API_URL}/admin/assign-training`, {
     method: "POST",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ training }),
+    body: JSON.stringify(training),
   });
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
+
+export const getAllAssignedTraining = async () => {
+  const response = await fetch(
+    `${VITE_API_URL}/dashboard/get-assigned-training`,
+    {
+      method: "GET",
+      credentials: "include",
+    },
+  );
 
   const data = await response.json();
 
