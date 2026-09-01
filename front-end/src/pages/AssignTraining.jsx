@@ -212,7 +212,7 @@ export const AssignTraining = () => {
                   />
                 ) : (
                   <input
-                    type="text"
+                    type={item.key === "progress" ? "number" : "text"}
                     value={value}
                     onChange={(e) => setValue(e.target.value)}
                     className="px-3 py-2 text-xs text-slate-300 border border-white/9 bg-white/5
