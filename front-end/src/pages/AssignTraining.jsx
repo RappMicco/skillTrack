@@ -246,7 +246,11 @@ export const AssignTraining = () => {
         )}
 
         {/* ====================================================================================== Assign Training List ============================================================================================ */}
-        <AssignTrainingList />
+        <div className="px-5 py-4">
+          <div className="flex flex-wrap items-center gap-3">
+            <AssignTrainingList />
+          </div>
+        </div>
       </div>
     </div>
   );
