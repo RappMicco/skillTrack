@@ -6,8 +6,9 @@ import {
   fetchStatusTraining,
   assignTraining,
   fetchAllAssignedTraining,
+  updateAssignedTrainingEntry,
 } from "../features/maintenance/maintenanceThunk";
-import { Link } from "lucide-react";
+import { Link, ChevronDown } from "lucide-react";
 import {
   clearMaintenanceError,
   clearMaintenanceMessage,
@@ -17,8 +18,16 @@ import { AssignTrainingList } from "../components/AssignTrainingList";
 export const AssignTraining = () => {
   const dispatch = useDispatch();
 
-  const { employees, trainingProviders, statusTraining, message, error } =
-    useSelector((state) => state.maintenance);
+  const {
+    employees,
+    trainingProviders,
+    statusTraining,
+    trainingList,
+    message,
+    saving,
+    loading,
+    error,
+  } = useSelector((state) => state.maintenance);
 
   const [empId, setEmpId] = useState("");
   const [trainingId, setTraining] = useState("");
@@ -115,6 +124,16 @@ export const AssignTraining = () => {
     }
   };
 
+  const updateAssignTraining = async (id, values) => {
+    try {
+      await dispatch(updateAssignedTrainingEntry({ id, ...values })).unwrap();
+      await dispatch(fetchAllAssignedTraining());
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   useEffect(() => {
     if (!message) return;
 
@@ -178,28 +197,35 @@ export const AssignTraining = () => {
                 </label>
 
                 {item.inputType === "dropdown" ? (
-                  <select
-                    required
-                    value={value}
-                    onChange={(e) => setValue(e.target.value)}
-                    className="appearance-none px-3 py-2 text-xs text-slate-500 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-[#06B6D4]/13 tracking-wider w-full"
-                  >
-                    <option
-                      value=""
-                      className="bg-slate-900 text-slate-500 tracking-wider text-xs"
+                  <div className="relative">
+                    <select
+                      required
+                      value={value}
+                      onChange={(e) => setValue(e.target.value)}
+                      className="appearance-none px-3 py-2 text-xs text-slate-500 rounded-xl outline-none cursor-pointer transition-all bg-white/5 border border-[#06B6D4]/13 tracking-wider w-full"
                     >
-                      Select {item.label.toLowerCase()}
-                    </option>
-                    {options.map((opt) => (
                       <option
-                        key={opt.value}
-                        value={opt.value}
+                        value=""
                         className="bg-slate-900 text-slate-500 tracking-wider text-xs"
                       >
-                        {opt.label}
+                        Select {item.label.toLowerCase()}
                       </option>
-                    ))}
-                  </select>
+                      {options.map((opt) => (
+                        <option
+                          key={opt.value}
+                          value={opt.value}
+                          className="bg-slate-900 text-slate-500 tracking-wider text-xs"
+                        >
+                          {opt.label}
+                        </option>
+                      ))}
+                    </select>
+
+                    <ChevronDown
+                      className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-500 pointer-events-none"
+                      size={11}
+                    />
+                  </div>
                 ) : // ======================================================= Start Date & End Date ===================================================================
                 item.inputType === "date" ? (
                   <input
@@ -225,11 +251,12 @@ export const AssignTraining = () => {
           {/* submit */}
           <button
             type="submit"
+            disabled={saving}
             className="justify-self-start self-end flex items-center gap-1.5 px-4 py-2 rounded-lg text-[10px] tracking-wider text-white border border-emerald-500/30
                             bg-emerald-500/15 hover:bg-emerald-500/25 transition-all duration-300 active:scale-95 disabled:opacity-50"
           >
             <Link size={13} />
-            Assign
+            {saving ? "Saving.." : "Assign"}
           </button>
         </form>
 
@@ -246,10 +273,16 @@ export const AssignTraining = () => {
         )}
 
         {/* ====================================================================================== Assign Training List ============================================================================================ */}
-        <div className="px-5 py-4">
-          <div className="flex flex-wrap items-center gap-3">
-            <AssignTrainingList />
-          </div>
+        <div className="px-5 py-4 space-y-3">
+          <AssignTrainingList
+            employees={employees}
+            training={trainingList}
+            trainingName={trainingProviders}
+            status={statusTraining}
+            onUpdate={updateAssignTraining}
+            saving={saving}
+            loading={loading}
+          />
         </div>
       </div>
     </div>

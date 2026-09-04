@@ -24,6 +24,7 @@ import {
   getStatusTraining,
   assignTrainingEmployee,
   getAllAssignedTraining,
+  updateAssignedTraining,
 } from "./maintenanceService.js";
 
 const rejectWith = (thunkAPI, error) =>
@@ -297,6 +298,17 @@ export const fetchAllAssignedTraining = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       return await getAllAssignedTraining();
+    } catch (error) {
+      return rejectWith(thunkAPI, error);
+    }
+  },
+);
+// update assign training
+export const updateAssignedTrainingEntry = createAsyncThunk(
+  "maintenance/updateAssignedTrainingEntry",
+  async ({ id, ...training }, thunkAPI) => {
+    try {
+      return await updateAssignedTraining({ id, training });
     } catch (error) {
       return rejectWith(thunkAPI, error);
     }
