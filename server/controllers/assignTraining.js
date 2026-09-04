@@ -84,7 +84,7 @@ export const updateAssignTraining = async (req, res) => {
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return res.status(400).json({
-        success: error,
+        success: false,
         message: "Invalid training ID!",
       });
     }
@@ -92,28 +92,37 @@ export const updateAssignTraining = async (req, res) => {
     const assignTrainingRecord = await EmployeeTraining.findById(id);
 
     if (!assignTrainingRecord) {
-      return res.status(500).json({
+      return res.status(404).json({
         success: false,
         message: "Training record not found!",
       });
     }
-    //check if have changes on records
+
+    // check if have changes on records (compare as strings — Mongoose stores
+    // empId/trainingId/statusId as ObjectId objects, not plain strings)
     const noRecordChanges =
-      assignTrainingRecord.empId === empId &&
-      assignTrainingRecord.trainingId === trainingId &&
-      assignTrainingRecord.statusId === statusId &&
-      assignTrainingRecord.startDate === startDate &&
-      assignTrainingRecord.endDate === endDate &&
-      assignTrainingRecord.progress === progress;
-    //update details
-    assignTrainingRecord.empId = empId || assignTrainingRecord.empId;
+      String(assignTrainingRecord.empId) === String(empId) &&
+      String(assignTrainingRecord.trainingId) === String(trainingId) &&
+      String(assignTrainingRecord.statusId) === String(statusId) &&
+      String(assignTrainingRecord.progress) === String(progress) &&
+      (assignTrainingRecord.remarks ?? "") === (remarks ?? "");
+
+    // update details — "!== undefined" (not "||") so an intentionally-cleared
+    // value (0, "") is respected instead of silently falling back to the old one
+    assignTrainingRecord.empId =
+      empId !== undefined ? empId : assignTrainingRecord.empId;
     assignTrainingRecord.trainingId =
-      trainingId || assignTrainingRecord.trainingId;
-    assignTrainingRecord.statusId = statusId || assignTrainingRecord.statusId;
+      trainingId !== undefined ? trainingId : assignTrainingRecord.trainingId;
+    assignTrainingRecord.statusId =
+      statusId !== undefined ? statusId : assignTrainingRecord.statusId;
     assignTrainingRecord.startDate =
-      startDate || assignTrainingRecord.startDate;
-    assignTrainingRecord.endDate = endDate || assignTrainingRecord.endDate;
-    assignTrainingRecord.progress = progress || assignTrainingRecord.progress;
+      startDate !== undefined ? startDate : assignTrainingRecord.startDate;
+    assignTrainingRecord.endDate =
+      endDate !== undefined ? endDate : assignTrainingRecord.endDate;
+    assignTrainingRecord.progress =
+      progress !== undefined ? progress : assignTrainingRecord.progress;
+    assignTrainingRecord.remarks =
+      remarks !== undefined ? remarks : assignTrainingRecord.remarks;
 
     await assignTrainingRecord.save();
 
@@ -131,18 +140,6 @@ export const updateAssignTraining = async (req, res) => {
         path: "statusId",
         select: "status",
       },
-      {
-        path: "startDate",
-        select: "startDate",
-      },
-      {
-        path: "endDate",
-        select: "endDate",
-      },
-      {
-        path: "progress",
-        select: "progress",
-      },
     ]);
 
     res.status(200).json({
@@ -156,7 +153,7 @@ export const updateAssignTraining = async (req, res) => {
     console.error("Update error: ", error);
     return res.status(500).json({
       success: false,
-      messsage: "Server error during updating of training!",
+      message: "Server error during updating of training!",
       error: error.message,
     });
   }
