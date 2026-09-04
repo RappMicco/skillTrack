@@ -1,17 +1,10 @@
-import {
-  LayoutDashboard,
-  Grid3X3,
-  ChartColumn,
-  ClipboardList,
-  ChevronRight,
-  WrenchOff,
-  LogOut,
-} from "lucide-react";
+import { ChevronRight, LogOut } from "lucide-react";
 import { useSelector, useDispatch } from "react-redux";
 import { useContext, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { PageContext } from "../context/PageContext.js";
 import { logoutUser } from "../features/auth/authThunk.js";
+import { getNavItems } from "../utils/navItems.js";
 
 export const Sidebar = () => {
   const { setActiveDesc } = useContext(PageContext);
@@ -26,52 +19,7 @@ export const Sidebar = () => {
   const Navigate = useNavigate();
   const location = useLocation();
 
-  const sidebarBtn = [
-    {
-      id: 1,
-      title: "Dashboard",
-      description: "Employee Growth and Development",
-      icon: LayoutDashboard,
-      path: "/skill-track/dashboard",
-    },
-    {
-      id: 2,
-      title: "Skill Matrix",
-      description: "Building Competencies for Future Success",
-      icon: Grid3X3,
-      path: "/skill-track/skillMatrix",
-    },
-    {
-      id: 3,
-      title: "Insight",
-      description: "Analyze Skill Trends and Performance Metrics",
-      icon: ChartColumn,
-      path: "/skill-track/insight",
-    },
-    // admin condition
-    ...(admin
-      ? [
-          {
-            id: 4,
-            title: "Assign Training",
-            description: "Empowering Employee Growth",
-            icon: ClipboardList,
-            path: "/skill-track/assign-training",
-          },
-        ]
-      : []),
-    ...(admin
-      ? [
-          {
-            id: 5,
-            title: "Maintenance",
-            description: "Keeping System Data Accurate and Up-to-Date",
-            icon: WrenchOff,
-            path: "/skill-track/maintenance",
-          },
-        ]
-      : []),
-  ];
+  const sidebarBtn = getNavItems(admin);
 
   //logout
   const handleLogOut = async () => {

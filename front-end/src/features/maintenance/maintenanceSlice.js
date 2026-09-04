@@ -24,6 +24,7 @@ import {
   fetchStatusTraining,
   assignTraining,
   fetchAllAssignedTraining,
+  updateAssignedTrainingEntry,
 } from "./maintenanceThunk.js";
 
 const initialState = {
@@ -347,6 +348,22 @@ const maintenanceSlice = createSlice({
       .addCase(fetchAllAssignedTraining.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+
+      // update assign training
+      .addCase(updateAssignedTrainingEntry.pending, (state) => {
+        state.saving = true;
+        state.error = null;
+        state.message = null;
+      })
+      .addCase(updateAssignedTrainingEntry.fulfilled, (state, action) => {
+        state.saving = false;
+        state.message = action.payload?.message || "";
+      })
+      .addCase(updateAssignedTrainingEntry.rejected, (state, action) => {
+        state.saving = false;
+        state.error = action.payload;
+        state.message = null;
       });
   },
 });

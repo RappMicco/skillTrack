@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { Sidebar } from "../components/Sidebar.jsx";
 import { Header } from "../components/Header.jsx";
+import { BottomNav } from "../components/BottomNav.jsx";
 
 export const SkillTrackLayout = () => {
   return (
@@ -18,10 +19,12 @@ export const SkillTrackLayout = () => {
         <Header />
 
         {/* Main */}
-        <main className="flex-1 overflow-y-auto custom-scrollbar px-5 py-6 space-y-6">
+        <main className="flex-1 overflow-y-auto custom-scrollbar px-5 py-6 pb-24 lg:pb-6 space-y-6">
           <Outlet />
         </main>
       </div>
+
+      <BottomNav />
     </div>
   );
 };

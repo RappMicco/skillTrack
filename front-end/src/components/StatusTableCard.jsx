@@ -132,7 +132,7 @@ export const StatusTableCard = () => {
         </div>
       </div>
       {/* status data table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-x-auto custom-scrollbar border ">
         {/* table */}
         <table className="w-full text-sm">
           {/* column header */}
