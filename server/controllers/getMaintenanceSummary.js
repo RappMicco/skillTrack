@@ -125,6 +125,9 @@ export const assignedTrainingSummary = async (req, res) => {
           endDate: 1,
           progress: 1,
           remarks: 1,
+          employeeId: "$employee._id",
+          trainingId: "$training._id",
+          statusId: "$status._id",
         },
       },
     ]);
