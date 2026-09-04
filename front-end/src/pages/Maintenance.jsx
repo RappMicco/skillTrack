@@ -237,7 +237,7 @@ export const Maintenance = () => {
       </div>
 
       {/* tabs */}
-      <div className="flex item-center gap-1 p-1 overflow-x-auto rounded-xl bg-[#0F172A] border border-[#06B6D4]/13 w-fit">
+      <div className="flex item-center gap-1 p-1 overflow-x-auto custom-scrollbar rounded-xl bg-[#0F172A] border border-[#06B6D4]/13 w-fit">
         {tabs.map((tab) => (
           <button
             key={tab}

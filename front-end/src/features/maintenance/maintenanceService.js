@@ -495,3 +495,23 @@ export const getAllAssignedTraining = async () => {
 
   return data;
 };
+
+export const updateAssignedTraining = async ({ id, training }) => {
+  const response = await fetch(
+    `${VITE_API_URL}/admin/update-assigned-training/${id}`,
+    {
+      method: "PUT",
+      credentials: "include",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(training),
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};

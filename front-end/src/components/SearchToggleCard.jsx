@@ -83,7 +83,7 @@ export const SearchToggleCard = () => {
       </div>
 
       {/* toggle button */}
-      <div className="flex items-center gap-1 p-1 overflow-x-auto rounded-xl bg-[#0F172A] border border-[#06B6D4]/13">
+      <div className="flex items-center gap-1 p-1 overflow-x-auto custom-scrollbar rounded-xl bg-[#0F172A] border border-[#06B6D4]/13">
         {competencyToggle.map((label) => (
           <button
             key={label}
