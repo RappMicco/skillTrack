@@ -20,7 +20,7 @@ export const BottomNav = () => {
     try {
       await dispatch(logoutUser());
       setActiveDesc(null);
-      navigate("/");
+      navigate("/login");
     } catch (error) {
       console.log(error);
     }

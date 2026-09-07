@@ -26,7 +26,7 @@ export const Sidebar = () => {
     try {
       await dispatch(logoutUser());
       setActiveDesc(null);
-      Navigate("/");
+      Navigate("/login");
     } catch (error) {
       console.log(error);
     }

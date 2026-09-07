@@ -13,7 +13,6 @@ export const useAuth = () => {
         await dispatch(getCurrentUser()).unwrap();
       } catch (error) {
         console.error(error);
-        navigate("/");
       }
     };
 
