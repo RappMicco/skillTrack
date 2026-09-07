@@ -9,26 +9,26 @@ export const LandingPage = () => {
       </div>
 
       {/* navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-white/3 backdrop-filter backdrop-blur-sm flex items-center justify-between px-6 md:px-12 py-4">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-white/1 backdrop-filter backdrop-blur-sm flex items-center justify-between px-6 md:px-16 py-3">
         {/* ========================================================== HEADER ============================================================= */}
-        <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-full flex items-center justify-center text-xs font-semibold text-white bg-linear-to-r from-[#198395] to-[#296671e5]">
-            ST
-          </div>
-
-          <div className="flex">
-            <span className="bg-linear-to-r from-[#34C8E2] to-[#20525be5] bg-clip-text text-transparent text-lg font-bold tracking-normal">
-              SkillTrack
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
+            <span className="text-white text-sm font-bold tracking-tight">
+              ST
             </span>
           </div>
+
+          <span className="text-lg font-bold bg-linear-to-r from-[#34C8E2] to-[#68C4D4] bg-clip-text text-transparent">
+            SkillTrack
+          </span>
         </div>
         <div className="flex items-center">
           {/* ============================================================ LOGIN =================================================================== */}
           <button
-            className="px-4 py-1.5 rounded-xl text-[11px] font-semibold text-white/80 transition-all duration-500 bg-[linear-gradient(to_right,#001A31_40%,#2A2C8D_100%)] shadow-lg drop-shadow-blue-900
-                       hover:-translate-y-1 hover:shadow-blue-950 hover:text-white active:scale-95 hover:border-purple-600/30 tracking-wider cursor-pointer"
+            className="px-5 py-2 rounded-xl border-none bg-linear-to-br from-[#34C8E2] to-[#1F8FAE] text-white text-xs tracking-wider font-semibold cursor-pointer
+                       shadow-[0_8px_20px_-6px_rgba(52,200,226,0.4)] transition-all duration-500 hover:-translate-y-0.5 active:scale-95"
           >
-            Track Your Growth
+            Sign In
           </button>
         </div>
       </nav>
