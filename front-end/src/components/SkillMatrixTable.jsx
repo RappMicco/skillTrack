@@ -96,6 +96,16 @@ export const SkillMatrixTable = () => {
     [proficiencyLevels],
   );
 
+  const getEmployeeAverage = (empId) => {
+    const values = flatSkills
+      .map((skill) => cellMap[`${empId}_${skill.skillId}`]?.sequence)
+      .filter((sequence) => typeof sequence === "number");
+
+    if (values.length === 0) return null;
+
+    return values.reduce((sum, value) => sum + value, 0) / values.length;
+  };
+
   const handleEdit = () => {
     const initialScores = {};
     filteredEmployees.forEach((emp) => {
@@ -222,10 +232,15 @@ export const SkillMatrixTable = () => {
           {/* table header */}
           <thead>
             <tr className="border-b border-white/5">
-              <th className="px-5 py-3 text-left w-48 sticky left-0 z-20 bg-[linear-gradient(to_right,#001A31_25%,#2A2C8D_100%)]">
+              <th className="px-5 py-3 text-left w-48 sticky left-0 z-20 bg-[linear-gradient(to_right,#001A31_35%,#2A2C8D_100%)]">
                 <span className="flex items-center gap-1.5 text-[10px] font-bold text-slate-500 uppercase tracking-widest">
                   <Users size={12} />
                   Members
+                </span>
+              </th>
+              <th className="px-3 py-3 text-center w-27 sticky left-20 z-20 bg-[#2A2C8D]">
+                <span className="text-[10px] font-bold text-slate-300 uppercase tracking-widest">
+                  Average
                 </span>
               </th>
               {filteredCompetency.map((item) => (
@@ -241,7 +256,8 @@ export const SkillMatrixTable = () => {
             </tr>
 
             <tr className="border-b border-white/5">
-              <th className="px-5 py-2 sticky left-0 z-10 bg-[#0B1524]"></th>
+              <th className="px-5 py-2 sticky left-0 z-10 bg-[#0B1524] border-r-2 border-white/1"></th>
+              <th className="px-3 py-2 sticky left-20 z-10 bg-[#0B1524]"></th>
               {filteredCompetency.flatMap((item) =>
                 item.skills.map((skill, skillIndex) => {
                   const isLastInGroup = skillIndex === item.skills.length - 1;
@@ -263,7 +279,7 @@ export const SkillMatrixTable = () => {
             {filteredEmployees.length === 0 ? (
               <tr>
                 <td
-                  colSpan={flatSkills.length + 1}
+                  colSpan={flatSkills.length + 2}
                   className="text-center py-10 text-slate-500 font-semibold text-xs"
                 >
                   No employees found.
@@ -275,10 +291,25 @@ export const SkillMatrixTable = () => {
                   key={emp._id}
                   className="border-b border-white/5 hover:bg-white/3 transition-colors"
                 >
-                  <td className="px-5 py-3 sticky left-0 z-10 bg-[#0B1524] whitespace-nowrap">
-                    <span className="text-slate-300 font-medium text-xs">
+                  <td className="px-5 py-3 sticky left-0 z-10 bg-[#0B1524] w-55 border-r-2 border-white/1">
+                    <span
+                      className="block truncate max-w-40 text-slate-300 font-medium text-xs"
+                      title={emp.fullName}
+                    >
                       {emp.fullName}
                     </span>
+                  </td>
+                  <td className="px-3 py-3 text-center sticky left-20 z-10 bg-[#0B1524]">
+                    {(() => {
+                      const average = getEmployeeAverage(emp._id);
+                      return (
+                        <span
+                          className={`inline-flex min-w-11 px-2 py-1 rounded-lg items-center justify-center text-[10px] font-bold ${proficiencyColor(average !== null ? Math.round(average) : undefined)}`}
+                        >
+                          {average !== null ? average.toFixed(1) : "—"}
+                        </span>
+                      );
+                    })()}
                   </td>
                   {flatSkills.map((skill) => {
                     const key = `${emp._id}_${skill.skillId}`;
