@@ -8,12 +8,14 @@ import { SkillMatrix } from "./pages/SkillMatrix.jsx";
 import { LoginPage } from "./pages/LoginPage.jsx";
 import { AssignTraining } from "./pages/AssignTraining.jsx";
 import { Maintenance } from "./pages/Maintenance.jsx";
+import { LandingPage } from "./pages/LandingPage.jsx";
 
 export const App = () => {
   useAuth();
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />} />
+      <Route path="/" element={<LandingPage />} />
+      <Route path="/login" element={<LoginPage />} />
       {/* Main */}
       <Route path="/skill-track" element={<SkillTrackLayout />}>
         <Route index element={<Dashboard />} />
