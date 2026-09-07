@@ -334,8 +334,8 @@ export const AssignTrainingList = ({
                         </select>
                       ) : (
                         <span className="text-xs text-slate-300">
-                          {row.status.charAt(0).toUpperCase() +
-                            row.status.slice(1)}
+                          {row.status?.charAt(0).toUpperCase() +
+                            row.status?.slice(1)}
                         </span>
                       )}
                     </td>

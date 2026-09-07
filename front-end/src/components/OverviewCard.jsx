@@ -43,7 +43,7 @@ export const OverviewCard = () => {
         await dispatch(fetchRecentTrainings());
       } catch (error) {
         console.log(error);
-        navigate("/");
+        navigate("/login");
       }
     };
 
