@@ -13,9 +13,18 @@ import { Pagination, Autoplay, EffectCube } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-cube";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchPublicSkillSummary } from "../features/skillMatrix/matrixThunk.js";
 
 export const HeroSection = () => {
+  const dispatch = useDispatch();
+  const { publicSummary } = useSelector((state) => state.skillMatrix);
+
+  useEffect(() => {
+    dispatch(fetchPublicSkillSummary());
+  }, [dispatch]);
+
   const swiperRef = useRef(null);
   // images
   const images = [
@@ -56,7 +65,7 @@ export const HeroSection = () => {
                      bg-indigo-500/12 border border-indigo-500/25 text-indigo-300"
           >
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
-            Trusted by 500+ organizations worldwide
+            Inspiring Growth, Building Excellence
           </div>
           <h1 className="text-4xl md:text-5xl xl:text-6xl text-white/90 font-bold leading-tight mb-6 tracking-wide">
             Grow your team's
@@ -176,9 +185,15 @@ export const HeroSection = () => {
 
             <div>
               <p className="text-[12px] font-semibold text-white tracking-wide">
-                All member experts
+                {publicSummary?.totalEmployees
+                  ? Math.round(
+                      (publicSummary.expert / publicSummary.totalEmployees) *
+                        100,
+                    )
+                  : 0}
+                % Expertise Rate
               </p>
-              <p className="text-[9px] text-slate-500">Average Expertise</p>
+              <p className="text-[9px] text-slate-500">Across the whole team</p>
             </div>
           </div>
 
@@ -189,7 +204,7 @@ export const HeroSection = () => {
           >
             <Award size={15} className="text-yellow-600" />
             <p className="text-[10px] font-semibold text-white tracking-wide">
-              4.9 / 5 rating
+              {publicSummary?.expert ?? 0} Skill Experts
             </p>
           </div>
         </div>
