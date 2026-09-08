@@ -44,3 +44,112 @@ body {
   width: 200%;
   animation: shimmer 2s linear infinite;
 }
+
+/* GRADIENT TEXT */
+@keyframes gradientMove {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.gradient-text {
+  background-size: 200% 200%;
+  animation: gradientMove 5s ease infinite;
+}
+
+/* ARROW RIGHT MOVEMENT */
+@keyframes iconLeft {
+  0% {
+    transform: translateX(0);
+    /* opacity: 1; */
+  }
+  50% {
+    transform: translateX(5px);
+    /* opacity: 0; */
+  }
+}
+
+.icon-left {
+  animation: iconLeft 3s ease-in-out infinite;
+}
+
+@keyframes floatDrop {
+  0% {
+    transform: translateY(-100px) rotate(5deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(-5deg);
+    opacity: 0;
+  }
+}
+
+/* particles up */
+.animate-float {
+  animation: floatDrop 5s linear infinite;
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100vh);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+}
+/* spin particles */
+.animate-up {
+  animation: floatUp linear infinite;
+}
+
+/* bullet swiper */
+.journey-swiper .swiper-pagination {
+  position: absolute;
+  bottom: 20px !important;
+  right: 20px !important;
+  left: auto !important;
+  width: auto !important;
+
+  display: flex;
+  justify-content: flex-end;
+  gap: 2px;
+}
+
+.journey-swiper .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background: rgba(221, 221, 224, 0.956);
+  border-radius: 9999px;
+  transition: all 0.3s ease;
+}
+
+.journey-swiper .swiper-pagination-bullet-active {
+  width: 15px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+}
+
+/* image description effect - move up  */
+.description-content {
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.9s ease;
+}
+
+.swiper-slide-active .description-content {
+  transform: translateY(0);
+  opacity: 1;
+}
