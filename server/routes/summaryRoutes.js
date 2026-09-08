@@ -36,6 +36,7 @@ router.get("/get-skill-category", isAuthenticated, skillCategorySummary);
 router.get("/get-skill-matrix", isAuthenticated, skillMatrixSummary);
 router.get("/get-skill-matrix-cells", isAuthenticated, getSkillMatrixCells);
 router.get("/get-skillMatrix-summary", isAuthenticated, skillSummary);
+router.get("/get-public-skill-summary", skillSummary);
 router.get("/get-skill-proficiency", isAuthenticated, skillProficiencySummary);
 router.get("/get-training-provider", isAuthenticated, trainingProviderSummary);
 // upcoming // pending // ongoing // completed
