@@ -1,4 +1,47 @@
+import { HeroSection } from "../components/HeroSection";
+import { useState } from "react";
+import {
+  BookOpenText,
+  Trophy,
+  Medal,
+  Award,
+  MoonStar,
+  Code,
+  Braces,
+  Terminal,
+  Bug,
+  GitBranch,
+  Rocket,
+} from "lucide-react";
+
 export const LandingPage = () => {
+  const icons = [
+    BookOpenText,
+    Trophy,
+    Medal,
+    Award,
+    MoonStar,
+    Code,
+    Braces,
+    Terminal,
+    Bug,
+    GitBranch,
+    Rocket,
+  ];
+
+  const [particles] = useState(() =>
+    [...Array(15)].map(() => {
+      const Icon = icons[Math.floor(Math.random() * icons.length)];
+
+      return {
+        left: Math.random() * 100,
+        duration: 8 + Math.random() * 20,
+        delay: Math.random() * 5,
+        Icon,
+      };
+    }),
+  );
+
   return (
     <div className="min-h-screen">
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
@@ -9,29 +52,61 @@ export const LandingPage = () => {
       </div>
 
       {/* navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-white/1 backdrop-filter backdrop-blur-sm flex items-center justify-between px-6 md:px-16 py-3">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 bg-white/2 backdrop-filter backdrop-blur-sm flex items-center justify-between px-6 md:px-16 py-3">
         {/* ========================================================== HEADER ============================================================= */}
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
-            <span className="text-white text-sm font-bold tracking-tight">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-md flex items-center justify-center bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
+            <span className="text-white text-[12px] font-bold tracking-tight">
               ST
             </span>
           </div>
 
-          <span className="text-lg font-bold bg-linear-to-r from-[#34C8E2] to-[#68C4D4] bg-clip-text text-transparent">
+          <span className="text-[13px] font-bold bg-linear-to-r from-[#34C8E2] to-[#68C4D4] bg-clip-text text-transparent">
             SkillTrack
           </span>
         </div>
         <div className="flex items-center">
-          {/* ============================================================ LOGIN =================================================================== */}
+          {/* ============================================================ SIGN IN =================================================================== */}
           <button
-            className="px-5 py-2 rounded-xl border-none bg-linear-to-br from-[#34C8E2] to-[#1F8FAE] text-white text-xs tracking-wider font-semibold cursor-pointer
-                       shadow-[0_8px_20px_-6px_rgba(52,200,226,0.4)] transition-all duration-500 hover:-translate-y-0.5 active:scale-95"
+            className="px-3 py-1 rounded-xl border-none bg-linear-to-br from-blue-500 to-violet-500 text-white/90 text-[9px] tracking-wider font-semibold cursor-pointer
+                       shadow-[0_8px_20px_-6px_rgba(52,200,226,0.5)] transition-all duration-500 hover:-translate-y-0.5 active:scale-95 hover:shadow-[0_8px_20px_-6px_rgba(52,200,226,0.8)]"
           >
-            Sign In
+            Keep Growing
           </button>
         </div>
       </nav>
+
+      {/* ======================================================================== HERO SECTION ========================================================== */}
+      <section className="relative pt-28 pb-16 px-6 md:px-12 overflow-hidden">
+        {/*  ============================================================= Floating Icons ========================================================================= */}
+        <div className="absolute inset-0 pointer-events-none z-0">
+          {particles.map((p, i) => {
+            const Icon = p.Icon;
+            const isUp = i % 2 === 0;
+
+            return (
+              <div
+                key={i}
+                className={`absolute opacity-20 ${
+                  isUp ? "animate-up" : "animate-float"
+                }`}
+                style={{
+                  left: `${p.left}%`,
+                  animationDuration: `${p.duration}s`,
+                  animationDelay: `${p.delay}s`,
+                }}
+              >
+                <Icon className="w-3 h-3 text-blue-400/40" />
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Hero Content */}
+        <div className="relative z-10">
+          <HeroSection />
+        </div>
+      </section>
     </div>
   );
 };
