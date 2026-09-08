@@ -7,6 +7,7 @@ import {
   fetchSkillMatrixCells,
   createSkillMatrix,
   updateSkillMatrix,
+  fetchPublicSkillSummary,
 } from "./matrixThunk.js";
 
 const initialState = {
@@ -16,6 +17,7 @@ const initialState = {
   employees: [],
   proficiencyLevels: [],
   cells: [],
+  publicSummary: {},
   loading: false,
   saving: false,
   error: null,
@@ -106,6 +108,17 @@ const matrixSlice = createSlice({
       .addCase(updateSkillMatrix.rejected, (state, action) => {
         state.saving = false;
         state.error = action.payload;
+      })
+      // PUBLIC SUMMARY
+      .addCase(fetchPublicSkillSummary.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchPublicSkillSummary.fulfilled, (state, action) => {
+        state.loading = false;
+        state.publicSummary = action.payload?.data || {};
+      })
+      .addCase(fetchPublicSkillSummary.rejected, (state) => {
+        state.loading = false;
       });
   },
 });

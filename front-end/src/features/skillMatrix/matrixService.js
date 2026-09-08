@@ -125,3 +125,20 @@ export const updateSkillMatrixEntry = async ({
 
   return data;
 };
+
+export const getPublicSkillMatrixSummary = async () => {
+  const response = await fetch(
+    `${VITE_API_URL}/dashboard/get-public-skill-summary`,
+    {
+      method: "GET",
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
