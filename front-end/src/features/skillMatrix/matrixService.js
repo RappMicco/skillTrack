@@ -142,3 +142,37 @@ export const getPublicSkillMatrixSummary = async () => {
 
   return data;
 };
+
+export const getPublicTrainingSummary = async () => {
+  const response = await fetch(
+    `${VITE_API_URL}/dashboard/get-public-training-summary`,
+    {
+      method: "GET",
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};
+
+export const getPublicLearningCourses = async () => {
+  const response = await fetch(
+    `${VITE_API_URL}/dashboard/get-public-training-provider`,
+    {
+      method: "GET",
+    },
+  );
+
+  const data = await response.json();
+
+  if (!response.ok) {
+    throw { response: { data } };
+  }
+
+  return data;
+};

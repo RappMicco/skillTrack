@@ -8,6 +8,8 @@ import {
   createSkillMatrix,
   updateSkillMatrix,
   fetchPublicSkillSummary,
+  fetchPublicTrainingSummary,
+  fetchPublicLearningCourses,
 } from "./matrixThunk.js";
 
 const initialState = {
@@ -18,6 +20,8 @@ const initialState = {
   proficiencyLevels: [],
   cells: [],
   publicSummary: {},
+  publicTrainingSummary: {},
+  learningCourses: {},
   loading: false,
   saving: false,
   error: null,
@@ -118,6 +122,30 @@ const matrixSlice = createSlice({
         state.publicSummary = action.payload?.data || {};
       })
       .addCase(fetchPublicSkillSummary.rejected, (state) => {
+        state.loading = false;
+      })
+
+      //TRAINING PUBLIC SUMMARY
+      .addCase(fetchPublicTrainingSummary.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchPublicTrainingSummary.fulfilled, (state, action) => {
+        state.loading = false;
+        state.publicTrainingSummary = action.payload?.summary || {};
+      })
+      .addCase(fetchPublicTrainingSummary.rejected, (state) => {
+        state.loading = false;
+      })
+
+      // LEARNING COURSES
+      .addCase(fetchPublicLearningCourses.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchPublicLearningCourses.fulfilled, (state, action) => {
+        state.loading = false;
+        state.learningCourses = action.payload?.data || {};
+      })
+      .addCase(fetchPublicLearningCourses.rejected, (state) => {
         state.loading = false;
       });
   },

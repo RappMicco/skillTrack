@@ -8,6 +8,8 @@ import {
   createSkillMatrixEntry,
   updateSkillMatrixEntry,
   getPublicSkillMatrixSummary,
+  getPublicTrainingSummary,
+  getPublicLearningCourses,
 } from "./matrixService.js";
 
 export const fetchSkillMatrixSummary = createAsyncThunk(
@@ -107,6 +109,34 @@ export const fetchPublicSkillSummary = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await getPublicSkillMatrixSummary();
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message,
+      );
+    }
+  },
+);
+
+export const fetchPublicTrainingSummary = createAsyncThunk(
+  "matrix/fetchPublicTrainingSummary",
+  async (_, thunkAPI) => {
+    try {
+      const response = await getPublicTrainingSummary();
+      return response;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || error.message,
+      );
+    }
+  },
+);
+
+export const fetchPublicLearningCourses = createAsyncThunk(
+  "matrix/fetchPublicLearningCourses",
+  async (_, thunkAPI) => {
+    try {
+      const response = await getPublicLearningCourses();
       return response;
     } catch (error) {
       return thunkAPI.rejectWithValue(
