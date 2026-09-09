@@ -13,6 +13,8 @@ import {
   GitBranch,
   Rocket,
 } from "lucide-react";
+import { NumbersSection } from "../components/NumbersSection.jsx";
+import { FeaturesSection } from "../components/FeaturesSection.jsx";
 
 export const LandingPage = () => {
   const icons = [
@@ -43,7 +45,7 @@ export const LandingPage = () => {
   );
 
   return (
-    <div className="min-h-screen">
+    <div className="h-screen overflow-y-auto custom-scrollbar">
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {/* glowing effect */}
         <div className="absolute -top-50 -left-50 w-150 h-150 rounded-full blur-2xl bg-[radial-gradient(circle,rgba(59,130,246,0.1)_60%,transparent_70%)] animate-pulse"></div>
@@ -106,6 +108,18 @@ export const LandingPage = () => {
         <div className="relative z-10">
           <HeroSection />
         </div>
+      </section>
+
+      {/* ============================================= NUMBERS SECTION ==================================== */}
+      <section className="px-6 md:px-12 py-10 border-t border-b border-white/5">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8">
+          <NumbersSection />
+        </div>
+      </section>
+
+      {/* ========================================== EVERYTHING YOU NEED ========================================= */}
+      <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto">
+        <FeaturesSection />
       </section>
     </div>
   );
