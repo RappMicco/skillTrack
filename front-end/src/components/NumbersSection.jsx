@@ -21,9 +21,7 @@ export const NumbersSection = () => {
       id: 1,
       label: (publicSummary?.totalEmployees ?? 0) - 1,
       description: "Active Members",
-      sign: (
-        <Plus className="ml-1 mb-7 h-4 w-4 text-purple-400 gradient-text" />
-      ),
+      sign: <Plus className="mb-7 h-4 w-4 text-purple-400 gradient-text" />,
     },
     {
       id: 2,
