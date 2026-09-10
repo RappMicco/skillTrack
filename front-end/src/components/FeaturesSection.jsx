@@ -66,7 +66,7 @@ export const FeaturesSection = () => {
           </span>
         </h2>
 
-        <span className="text-slate-400 text-xs">
+        <span className="text-slate-400 text-xs tracking-widest font-semibold">
           Plan, track, and manage employee learning from onboarding to skill
           development in one unified platform.
         </span>
