@@ -15,7 +15,11 @@ import "swiper/css/pagination";
 import "swiper/css/effect-cube";
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchPublicSkillSummary } from "../features/skillMatrix/matrixThunk.js";
+import {
+  fetchPublicSkillSummary,
+  fetchPublicTrainingSummary,
+  fetchPublicLearningCourses,
+} from "../features/skillMatrix/matrixThunk.js";
 
 export const HeroSection = () => {
   const dispatch = useDispatch();
@@ -23,6 +27,8 @@ export const HeroSection = () => {
 
   useEffect(() => {
     dispatch(fetchPublicSkillSummary());
+    dispatch(fetchPublicTrainingSummary());
+    dispatch(fetchPublicLearningCourses());
   }, [dispatch]);
 
   const swiperRef = useRef(null);
@@ -67,7 +73,7 @@ export const HeroSection = () => {
             <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse"></span>
             Inspiring Growth, Building Excellence
           </div>
-          <h1 className="text-4xl md:text-5xl xl:text-6xl text-white/90 font-bold leading-tight mb-6 tracking-wide">
+          <h1 className="text-4xl md:text-5xl xl:text-6xl text-white font-bold leading-tight mb-6 tracking-wide">
             Grow your team's
             <span className="block bg-linear-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent gradient-text">
               skills & potential
@@ -147,7 +153,7 @@ export const HeroSection = () => {
                     />
 
                     <div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(7,13,26,0.85)_0%,rgba(7,13,26,0.2)_50%,transparent_100%)]"></div>
-                    <div className="absolute bottom-4 left-0 right-0 px-6 pb-6 transition-all duration-500 description-content">
+                    <div className="absolute bottom-3 left-0 right-0 px-6 pb-6 transition-all duration-500 description-content">
                       <p className="text-white text-base text-[12px] tracking-wider font-semibold leading-snug">
                         {item.description}
                       </p>
@@ -176,7 +182,7 @@ export const HeroSection = () => {
 
           {/* ================================= Average ================================= */}
           <div
-            className="absolute z-20 -bottom-6 -left-4 flex items-center gap-3 px-4 py-3 rounded-2xl
+            className="absolute z-20 -bottom-6 -left-4 flex items-center gap-3 px-4 py-2 rounded-2xl
                         bg-slate-900/60 border border-white/15 backdrop-blur-md shadow-[0px_20px_40px_rgba(0,0,0,0.1)]"
           >
             <div className="w-8 h-8 rounded-lg flex items-center justify-center bg-emerald-500/15">
@@ -184,7 +190,7 @@ export const HeroSection = () => {
             </div>
 
             <div>
-              <p className="text-[12px] font-semibold text-white tracking-wide">
+              <p className="text-[10px] font-semibold text-white tracking-wide">
                 {publicSummary?.totalEmployees
                   ? Math.round(
                       (publicSummary.expert / publicSummary.totalEmployees) *
@@ -193,7 +199,7 @@ export const HeroSection = () => {
                   : 0}
                 % Expertise Rate
               </p>
-              <p className="text-[9px] text-slate-500">Across the whole team</p>
+              <p className="text-[7px] text-slate-500">Across the whole team</p>
             </div>
           </div>
 
