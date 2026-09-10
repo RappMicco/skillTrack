@@ -17,6 +17,7 @@ import { NumbersSection } from "../components/NumbersSection.jsx";
 import { FeaturesSection } from "../components/FeaturesSection.jsx";
 import { MemoriesGallery } from "../components/MemoriesGallery.jsx";
 import { CertifiedExcellence } from "../components/CertifiedExcellence.jsx";
+import { Footer } from "../components/Footer.jsx";
 
 export const LandingPage = () => {
   const icons = [
@@ -135,6 +136,13 @@ export const LandingPage = () => {
       <section className="px-6 md:px-12 py-20 mx-auto">
         <CertifiedExcellence />
       </section>
+
+      {/* ================================================ FOOTER =============================================  */}
+      <footer className="px-6 md:px-12 py-8 border-t border-white/5">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+          <Footer />
+        </div>
+      </footer>
     </div>
   );
 };
