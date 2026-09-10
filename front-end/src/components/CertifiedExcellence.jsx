@@ -1,32 +1,33 @@
 export const CertifiedExcellence = () => {
   const certifications = [
     {
-      img: "/images/certification1.jpg",
-      title: "Best Support",
+      img: "/images/certification2.jpg",
+      title:
+        "Smart Anti-Static Monitoring with AI-Driven Anamoly Alerts and Suggested Actions",
       description:
         "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      recipient: "Rapp Micco Rizo",
+      award: "Visitor's Choice Award",
     },
     {
-      img: "/images/certification1.jpg",
+      img: "/images/certification2.jpg",
       title: "Best Support",
       description:
         "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      recipient: "Rapp Micco Rizo",
+      award: "Rapp Micco Rizo",
     },
     {
-      img: "/images/certification1.jpg",
+      img: "/images/certification2.jpg",
       title: "Best Support",
       description:
         "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      recipient: "Rapp Micco Rizo",
+      award: "Rapp Micco Rizo",
     },
     {
-      img: "/images/certification1.jpg",
+      img: "/images/certification2.jpg",
       title: "Best Support",
       description:
         "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      recipient: "Rapp Micco Rizo",
+      award: "Rapp Micco Rizo",
     },
   ];
   return (
@@ -56,10 +57,7 @@ export const CertifiedExcellence = () => {
                        transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_55px_-15px_rgba(52,200,226,0.25)]"
           >
             {/* BADGE AREA */}
-            <div
-              className="h-[47.5] flex items-center justify-center p-8"
-              style={{ background: cert.badgeBg }}
-            >
+            <div className="flex items-center justify-center p-8">
               <img
                 src={cert.img}
                 alt={cert.title}
@@ -68,17 +66,17 @@ export const CertifiedExcellence = () => {
             </div>
 
             {/* TEXT AREA */}
-            <div className="flex flex-col  gap-1 px-6 py-7 border-t border-white/10 bg-white/5">
-              <h3 className="text-lg font-extrabold text-white mb-2.5 tracking-wider">
+            <div className="flex flex-col h-full gap-1 px-6 py-7 border-t border-white/10 bg-white/5">
+              <h3 className="text-md font-extrabold text-white mb-2.5 tracking-wider">
                 {cert.title}
+                <span className="block text-[10px] text-slate-500 font-normal tracking-normal">
+                  {cert.award}
+                </span>
               </h3>
+
               <p className="text-[13px] leading-relaxed text-slate-500">
                 {cert.description}
               </p>
-
-              <span className="block text-[10px] text-slate-500">
-                {`Presented to: ${cert.recipient}`}
-              </span>
             </div>
           </div>
         ))}
