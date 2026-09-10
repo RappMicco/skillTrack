@@ -30,6 +30,7 @@ import {
 const router = express.Router();
 
 router.get("/get-training-summary", isAuthenticated, getTrainingStatusSummary);
+router.get("/get-public-training-summary", getTrainingStatusSummary);
 router.get("/get-employees", isAuthenticated, employeesSummary);
 router.get("/get-assigned-training", isAuthenticated, assignedTrainingSummary);
 router.get("/get-skill-category", isAuthenticated, skillCategorySummary);
@@ -38,6 +39,7 @@ router.get("/get-skill-matrix-cells", isAuthenticated, getSkillMatrixCells);
 router.get("/get-skillMatrix-summary", isAuthenticated, skillSummary);
 router.get("/get-public-skill-summary", skillSummary);
 router.get("/get-skill-proficiency", isAuthenticated, skillProficiencySummary);
+router.get("/get-public-training-provider", trainingProviderSummary);
 router.get("/get-training-provider", isAuthenticated, trainingProviderSummary);
 // upcoming // pending // ongoing // completed
 router.get("/get-upcoming-training", isAuthenticated, upcomingSummary);
