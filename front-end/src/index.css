@@ -132,7 +132,8 @@ body {
 .journey-swiper .swiper-pagination-bullet {
   width: 6px;
   height: 6px;
-  background: rgba(221, 221, 224, 0.956);
+  background: #94a3b8;
+  opacity: 1;
   border-radius: 9999px;
   transition: all 0.3s ease;
 }
@@ -166,4 +167,22 @@ body {
 
 .animate-gradient {
   animation: gradient-move 4s linear infinite;
+}
+/* IMAGE MOVEMENT */
+/* MARQUEE STRIP - continuous scroll */
+@keyframes marquee-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee-scroll 30s linear infinite;
+}
+
+.marquee-track:hover .animate-marquee {
+  animation-play-state: paused;
 }

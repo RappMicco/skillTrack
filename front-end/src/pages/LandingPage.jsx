@@ -15,6 +15,8 @@ import {
 } from "lucide-react";
 import { NumbersSection } from "../components/NumbersSection.jsx";
 import { FeaturesSection } from "../components/FeaturesSection.jsx";
+import { MemoriesGallery } from "../components/MemoriesGallery.jsx";
+import { CertifiedExcellence } from "../components/CertifiedExcellence.jsx";
 
 export const LandingPage = () => {
   const icons = [
@@ -120,6 +122,18 @@ export const LandingPage = () => {
       {/* ========================================== EVERYTHING YOU NEED ========================================= */}
       <section className="px-6 md:px-12 py-20 max-w-7xl mx-auto">
         <FeaturesSection />
+      </section>
+
+      {/* =========================================== MEMORIES TO KEEP ================================== */}
+      <section className="px-6 md:px-12 py-16 bg-white/[0.016]">
+        <div className="max-w-7xl mx-auto">
+          <MemoriesGallery />
+        </div>
+      </section>
+
+      {/* ====================================== CERTIFIED EXCELLENCE ================================== */}
+      <section className="px-6 md:px-12 py-20 mx-auto">
+        <CertifiedExcellence />
       </section>
     </div>
   );
