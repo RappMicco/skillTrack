@@ -17,8 +17,9 @@ export const Footer = () => {
         © 2026 SkilTrack. All rights reserved.
       </p>
       <div>
-        <p className="text-xs text-slate-600">
-          "Let the wise listen and add to their learning." - Proverbs: 1:5
+        <p className="text-xs text-slate-600 italic">
+          "Let the wise listen and add to their learning."
+          <span className="block text-right">- Proverbs: 1:5</span>
         </p>
       </div>
     </>
