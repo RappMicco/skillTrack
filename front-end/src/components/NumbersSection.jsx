@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { BookText, BookOpenText, Percent, Plus } from "lucide-react";
+import { ScrambleNumber } from "./ScrambleNumber.jsx";
 
 export const NumbersSection = () => {
   const { publicSummary, publicTrainingSummary, learningCourses } = useSelector(
@@ -14,7 +15,8 @@ export const NumbersSection = () => {
 
   const completed = publicTrainingSummary?.completed ?? 0;
 
-  const completionRate = total > 0 ? ((completed / total) * 100).toFixed(0) : 0;
+  const completionRate =
+    total > 0 ? Math.round((completed / total) * 100) : 0;
 
   const summarySection = [
     {
@@ -57,7 +59,7 @@ export const NumbersSection = () => {
       {summarySection.map((item) => (
         <div key={item.id} className="text-center">
           <p className="flex  items-center justify-center text-5xl font-bold bg-linear-to-r from-blue-400 via-purple-400 to-pink-400  bg-clip-text text-transparent gradient-text">
-            {item.label}
+            <ScrambleNumber value={Number(item.label) || 0} digits={2} />
             <span>{item.sign}</span>
           </p>
           <p className="text-[11px] text-slate-500 tracking-wide">

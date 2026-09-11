@@ -13,15 +13,20 @@ import { Pagination, Autoplay, EffectCube } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/effect-cube";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   fetchPublicSkillSummary,
   fetchPublicTrainingSummary,
   fetchPublicLearningCourses,
 } from "../features/skillMatrix/matrixThunk.js";
+import { PageContext } from "../context/PageContext.js";
+import { useNavigate } from "react-router";
+import { ScrambleNumber } from "./ScrambleNumber.jsx";
 
 export const HeroSection = () => {
+  const { setWatchVideo } = useContext(PageContext);
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { publicSummary } = useSelector((state) => state.skillMatrix);
 
@@ -61,6 +66,15 @@ export const HeroSection = () => {
     { id: 2, title: "Manage Training", icon: GraduationCap },
     { id: 3, title: "Gain Insights", icon: ChartColumn },
   ];
+
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
+  const handleWatchVideo = () => {
+    setWatchVideo(true);
+  };
+
   return (
     <>
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -87,6 +101,7 @@ export const HeroSection = () => {
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-7">
             <button
+              onClick={handleLogin}
               className="flex items-center gap-2 px-5 py-2 rounded-lg text-[10px] text-white font-semibold tracking-wider active:scale-95
                             transition-all duration-500 hover:opacity-80 hover:-translate-y-0.5 group bg-linear-to-br from-blue-500 to-violet-500 shadow-[0px_8px_28px_rgba(99,102,241,0.4)]"
             >
@@ -96,6 +111,7 @@ export const HeroSection = () => {
               </div>
             </button>
             <button
+              onClick={() => handleWatchVideo()}
               className="flex items-center gap-1.5 px-2 py-2.5 rounded-xl text-[9px] text-slate-300 hover:text-white hover:-translate-y-0.5
                               transition-all bg-white/5 border border-white/10 tracking-wider active:scale-95 duration-500"
             >
@@ -191,13 +207,19 @@ export const HeroSection = () => {
 
             <div>
               <p className="text-[10px] font-semibold text-white tracking-wide">
-                {publicSummary?.totalEmployees
-                  ? Math.round(
-                      (publicSummary.expert / publicSummary.totalEmployees) *
-                        100,
-                    )
-                  : 0}
-                % Expertise Rate
+                <ScrambleNumber
+                  value={
+                    publicSummary?.totalEmployees
+                      ? Math.round(
+                          (publicSummary.expert /
+                            publicSummary.totalEmployees) *
+                            100,
+                        )
+                      : 0
+                  }
+                  suffix="% Expertise Rate"
+                  digits={1}
+                />
               </p>
               <p className="text-[7px] text-slate-500">Across the whole team</p>
             </div>
@@ -210,7 +232,11 @@ export const HeroSection = () => {
           >
             <Award size={15} className="text-yellow-600" />
             <p className="text-[10px] font-semibold text-white tracking-wide">
-              {publicSummary?.expert ?? 0} Skill Experts
+              <ScrambleNumber
+                value={publicSummary?.expert ?? 0}
+                suffix=" Skill Experts"
+                digits={1}
+              />
             </p>
           </div>
         </div>
