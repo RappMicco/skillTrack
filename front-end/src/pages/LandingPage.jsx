@@ -1,5 +1,6 @@
 import { HeroSection } from "../components/HeroSection";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { PageContext } from "../context/PageContext.js";
 import {
   BookOpenText,
   Trophy,
@@ -18,8 +19,13 @@ import { FeaturesSection } from "../components/FeaturesSection.jsx";
 import { MemoriesGallery } from "../components/MemoriesGallery.jsx";
 import { CertifiedExcellence } from "../components/CertifiedExcellence.jsx";
 import { Footer } from "../components/Footer.jsx";
+import { SubFooter } from "../components/SubFooter.jsx";
+import { WatchVideo } from "../components/WatchVideo.jsx";
+import { useNavigate } from "react-router";
 
 export const LandingPage = () => {
+  const { watchVideo } = useContext(PageContext);
+  const navigate = useNavigate();
   const icons = [
     BookOpenText,
     Trophy,
@@ -47,8 +53,23 @@ export const LandingPage = () => {
     }),
   );
 
+  const handleLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <div className="h-screen overflow-y-auto custom-scrollbar">
+      {watchVideo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-colors duration-250">
+          <div
+            className="relative w-full max-w-4xl rounded-3xl overflow-hidden
+                      scale-100 translate-y-0 opacity-100 bg-[rgb(10,18,32)] border border-white/10 shadow-[0_60px_120px_rgba(0,0,0,0.7),0_0_0_1px_rgba(255,255,255,0.04)]
+                      transition-[transform,opacity] duration-250 ease-[cubic-bezier(0.34,1.56,0.64,1)]"
+          >
+            <WatchVideo />
+          </div>
+        </div>
+      )}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {/* glowing effect */}
         <div className="absolute -top-50 -left-50 w-150 h-150 rounded-full blur-2xl bg-[radial-gradient(circle,rgba(59,130,246,0.1)_60%,transparent_70%)] animate-pulse"></div>
@@ -73,6 +94,7 @@ export const LandingPage = () => {
         <div className="flex items-center">
           {/* ============================================================ SIGN IN =================================================================== */}
           <button
+            onClick={handleLogin}
             className="px-3 py-1 rounded-xl border-none bg-linear-to-br from-blue-500 to-violet-500 text-white/90 text-[9px] tracking-wider font-semibold cursor-pointer
                        shadow-[0_8px_20px_-6px_rgba(52,200,226,0.5)] transition-all duration-500 hover:-translate-y-0.5 active:scale-95 hover:shadow-[0_8px_20px_-6px_rgba(52,200,226,0.8)]"
           >
@@ -135,6 +157,13 @@ export const LandingPage = () => {
       {/* ====================================== CERTIFIED EXCELLENCE ================================== */}
       <section className="px-6 md:px-12 py-20 mx-auto">
         <CertifiedExcellence />
+      </section>
+
+      {/* ==========================================  YOUR GROW START HERE ====================================*/}
+      <section className="px-6 md:px-12 py-20">
+        <div className="max-w-3xl mx-auto text-center rounded-3xl px-8 py-14 relative overflow-hidden bg-linear-to-br from-blue-500/3 to-violet-500/5 border border-indigo-500/20">
+          <SubFooter />
+        </div>
       </section>
 
       {/* ================================================ FOOTER =============================================  */}

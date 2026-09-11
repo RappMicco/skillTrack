@@ -13,6 +13,7 @@ export const PageProvider = ({ children }) => {
   const [insightTypeFilter, setInsightTypeFilter] = useState("All");
   const [maintenanceToggle, setMaintenanceToggle] =
     useState("Register Employee");
+  const [watchVideo, setWatchVideo] = useState(false);
 
   const valueObj = {
     activeDesc,
@@ -33,6 +34,8 @@ export const PageProvider = ({ children }) => {
     setInsightTypeFilter,
     maintenanceToggle,
     setMaintenanceToggle,
+    watchVideo,
+    setWatchVideo,
   };
   return (
     <PageContext.Provider value={valueObj}>{children}</PageContext.Provider>

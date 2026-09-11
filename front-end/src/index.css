@@ -186,3 +186,8 @@ body {
 .marquee-track:hover .animate-marquee {
   animation-play-state: paused;
 }
+
+.marquee-fade-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}

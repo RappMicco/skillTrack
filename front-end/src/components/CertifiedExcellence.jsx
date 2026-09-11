@@ -67,7 +67,7 @@ export const CertifiedExcellence = () => {
 
             {/* TEXT AREA */}
             <div className="flex flex-col h-full gap-1 px-6 py-7 border-t border-white/10 bg-white/5">
-              <h3 className="text-md font-extrabold text-white mb-2.5 tracking-wider">
+              <h3 className="text-sm font-extrabold text-white mb-2.5 tracking-wider">
                 {cert.title}
                 <span className="block text-[10px] text-slate-500 font-normal tracking-normal">
                   {cert.award}
