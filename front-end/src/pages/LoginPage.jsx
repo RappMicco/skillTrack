@@ -9,6 +9,21 @@ const marqueeItems = [
   { type: "photo", img: "/images/memories2.jpg" },
   { type: "photo", img: "/images/memories3.jpg" },
   { type: "photo", img: "/images/memories4.jpg" },
+  { type: "photo", img: "/images/memories5.jpg" },
+  { type: "photo", img: "/images/memories6.jpg" },
+  { type: "photo", img: "/images/memories7.jpg" },
+  { type: "photo", img: "/images/memories8.jpg" },
+  { type: "photo", img: "/images/memories9.jpg" },
+  { type: "photo", img: "/images/memories10.jpg" },
+  { type: "photo", img: "/images/memories11.jpg" },
+  { type: "photo", img: "/images/memories12.jpg" },
+  { type: "photo", img: "/images/memories13.jpg" },
+  { type: "photo", img: "/images/memories14.jpg" },
+  { type: "photo", img: "/images/memories15.jpg" },
+  { type: "photo", img: "/images/memories16.jpg" },
+  { type: "photo", img: "/images/memories17.jpg" },
+  { type: "photo", img: "/images/memories18.jpg" },
+  { type: "photo", img: "/images/memories19.jpg" },
 ];
 
 export const LoginPage = () => {
@@ -88,7 +103,7 @@ export const LoginPage = () => {
           </p>
         </div>
 
-        {/* marquee: certifications + team photos */}
+        {/* marquee: team photos */}
         <div className="relative z-10">
           <p className="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-3.5">
             Captured Moments
@@ -98,7 +113,7 @@ export const LoginPage = () => {
               {[...marqueeItems, ...marqueeItems].map((item, index) => (
                 <div
                   key={item.img + "-" + index}
-                  className="w-40 h-40 shrink-0 rounded-2xl overflow-hidden shadow-[0_12px_25px_-8px_rgba(0,0,0,0.4)]"
+                  className="w-30 h-30 shrink-0 rounded-2xl overflow-hidden shadow-[0_12px_25px_-8px_rgba(0,0,0,0.4)]"
                 >
                   <img
                     src={item.img}

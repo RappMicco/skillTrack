@@ -14,6 +14,7 @@ export const PageProvider = ({ children }) => {
   const [maintenanceToggle, setMaintenanceToggle] =
     useState("Register Employee");
   const [watchVideo, setWatchVideo] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
 
   const valueObj = {
     activeDesc,
@@ -36,6 +37,8 @@ export const PageProvider = ({ children }) => {
     setMaintenanceToggle,
     watchVideo,
     setWatchVideo,
+    openMenu,
+    setOpenMenu,
   };
   return (
     <PageContext.Provider value={valueObj}>{children}</PageContext.Provider>
