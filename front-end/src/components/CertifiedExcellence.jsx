@@ -1,4 +1,9 @@
+import gsap from "gsap";
+import { useRef, useEffect } from "react";
+
 export const CertifiedExcellence = () => {
+  const headerRef = useRef([]);
+  const certificationRef = useRef([]);
   const certifications = [
     {
       img: "/images/certification2.jpg",
@@ -9,34 +14,91 @@ export const CertifiedExcellence = () => {
       award: "Visitor's Choice Award",
     },
     {
-      img: "/images/certification2.jpg",
-      title: "Best Support",
+      img: "/images/certification1.jpg",
+      title: "Batch Deletion of CI ISN",
       description:
         "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      award: "Rapp Micco Rizo",
+      award: "Top 3 People's Choice Award",
     },
     {
-      img: "/images/certification2.jpg",
-      title: "Best Support",
+      img: "/images/certification3.jpg",
+      title: "Automation of Software Installation to Client PC",
       description:
         "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      award: "Rapp Micco Rizo",
+      award: "Manager's Choice FY23 Productivity Exhibit",
     },
     {
-      img: "/images/certification2.jpg",
-      title: "Best Support",
+      img: "/images/certification4.jpg",
+      title: "Quality Forward: Driving Innovation with Defect Log Insights",
       description:
         "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      award: "Rapp Micco Rizo",
+      award: "FY24 Quality Exhibit President's Choice Award",
     },
   ];
+
+  useEffect(() => {
+    if (!headerRef.current || !certificationRef.current) return;
+
+    gsap.fromTo(
+      headerRef.current,
+      {
+        y: 20,
+        opacity: 0,
+        filter: "blur(8px)",
+      },
+      {
+        y: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 0.6,
+        stagger: 0.04,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headerRef.current[0],
+          start: "top 80%",
+        },
+      },
+    );
+
+    gsap.fromTo(
+      certificationRef.current,
+      {
+        y: 80,
+        opacity: 0,
+        scale: 0.9,
+        filter: "blur(10px)",
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 1,
+        stagger: {
+          each: 0.15,
+          from: "start", // try "center" for cooler effect
+        },
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: certificationRef.current[0],
+          start: "top 85%",
+        },
+      },
+    );
+  }, []);
   return (
     <>
       <div className="text-center mb-12">
-        <p className="text-xs font-semibold text-indigo-400 uppercase tracking-widest mb-3">
+        <p
+          ref={(el) => (headerRef.current[0] = el)}
+          className="text-xs font-semibold text-indigo-400 uppercase tracking-widest mb-3"
+        >
           Certified Excellence
         </p>
-        <h2 className="text-white text-2xl md:text-3xl font-bold mb-3">
+        <h2
+          ref={(el) => (headerRef.current[1] = el)}
+          className="text-white text-2xl md:text-3xl font-bold mb-3"
+        >
           Certifications
           <span className="bg-linear-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent gradient-text">
             {" "}
@@ -44,14 +106,18 @@ export const CertifiedExcellence = () => {
           </span>
           by our section
         </h2>
-        <p className="text-xs font-semibold text-slate-400 tracking-widest mb-3">
+        <p
+          ref={(el) => (headerRef.current[2] = el)}
+          className="text-xs font-semibold text-slate-400 tracking-widest mb-3"
+        >
           Recognition built on quality, discipline, and continuous growth.
         </p>
       </div>
       {/* ============================================================== CERTIFICATION ======================================================== */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-7">
-        {certifications.map((cert) => (
+        {certifications.map((cert, index) => (
           <div
+            ref={(el) => (certificationRef.current[index] = el)}
             key={cert.title}
             className="cursor-default bg-white/1 backdrop-blur-xl border border-white/10 rounded-3xl overflow-hidden shadow-[0_20px_45px_-15px_rgba(0,0,0,0.45)]
                        transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_28px_55px_-15px_rgba(52,200,226,0.25)]"

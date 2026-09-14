@@ -79,7 +79,7 @@ export const WatchVideo = () => {
             <span className="text-[13px] font-bold bg-linear-to-r from-[#34C8E2] to-[#68C4D4] bg-clip-text text-transparent">
               SkillTrack
             </span>
-            <p className="text-[9px] text-slate-500">See OSS Teams in Action</p>
+            <p className="text-[9px] text-slate-500">See ISD Teams in Action</p>
           </div>
         </div>
 
@@ -125,7 +125,7 @@ export const WatchVideo = () => {
           className="absolute top-4 left-4 px-3 py-1.5 rounded-xl text-[10px]
         bg-black/60 backdrop-blur-sm text-indigo-300 border border-indigo-500/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         >
-          OSS Action.mp4
+          ISD_Action.mp4
         </div>
       </div>
 

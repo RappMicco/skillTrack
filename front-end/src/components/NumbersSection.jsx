@@ -15,8 +15,7 @@ export const NumbersSection = () => {
 
   const completed = publicTrainingSummary?.completed ?? 0;
 
-  const completionRate =
-    total > 0 ? Math.round((completed / total) * 100) : 0;
+  const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
 
   const summarySection = [
     {

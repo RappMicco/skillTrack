@@ -1,38 +1,149 @@
+import gsap from "gsap";
+import { useRef, useEffect } from "react";
+
 export const MemoriesGallery = () => {
+  const headerRef = useRef([]);
+  const memoriesRef = useRef([]);
   const memories = [
     {
       img: "/images/memories1.jpg",
-      description: "Collaborate, learn, and grow together",
+      description: "Turning ideas into impact through teamwork",
     },
     {
       img: "/images/memories2.jpg",
-      description: "Modern tools for modern teams",
+      description: "Every milestone starts with a shared vision",
     },
     {
       img: "/images/memories3.jpg",
-      description: "Build skills that drive real results",
+      description: "Creating connections that inspire success",
     },
     {
       img: "/images/memories4.jpg",
-      description: "Celebrate team achievement together",
+      description: "Learning from challenges and growing stronge",
     },
     {
       img: "/images/memories5.jpg",
-      description: "Track progress across your entire organization",
+      description: "Empowering people to achieve more together",
     },
     {
-      img: "/images/memories1.jpg",
-      description: "Track progress across your entire organization",
+      img: "/images/memories6.jpg",
+      description: "Making memories with amazing people",
+    },
+    {
+      img: "/images/memories7.jpg",
+      description: "Innovation thrives when teams collaborate",
+    },
+    {
+      img: "/images/memories8.jpg",
+      description: "Small moments that build lasting memories",
+    },
+    {
+      img: "/images/memories9.jpg",
+      description: "Celebrating wins, big and small",
+    },
+    {
+      img: "/images/memories10.jpg",
+      description: "Growing careers through continuous learning",
+    },
+    {
+      img: "/images/memories11.jpg",
+      description: "Stronger teams, brighter futures",
+    },
+    {
+      img: "/images/memories12.jpg",
+      description: "Capturing moments that define our journey",
+    },
+    {
+      img: "/images/memories13.jpg",
+      description: "Building trust through shared experiences",
+    },
+    {
+      img: "/images/memories14.jpg",
+      description: "Transforming knowledge into meaningful action",
+    },
+    {
+      img: "/images/memories15.jpg",
+      description: "Together we achieve extraordinary results",
+    },
+    {
+      img: "/images/memories16.jpg",
+      description: "Moments worth remembering",
+    },
+    {
+      img: "/images/memories17.jpg",
+      description: "Laughter, learning, and lasting friendships",
+    },
+    {
+      img: "/images/memories18.jpg",
+      description: "Connecting people through meaningful experiences",
+    },
+    {
+      img: "/images/memories19.jpg",
+      description: "Work smarter, achieve together",
     },
   ];
+
+  useEffect(() => {
+    if (!headerRef.current || !memoriesRef.current) return;
+
+    gsap.fromTo(
+      headerRef.current,
+      {
+        y: 20,
+        opacity: 0,
+        filter: "blur(8px)",
+      },
+      {
+        y: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 0.6,
+        stagger: 0.04,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headerRef.current[0],
+          start: "top 85%",
+        },
+      },
+    );
+
+    gsap.fromTo(
+      memoriesRef.current,
+      {
+        opacity: 0,
+        y: 50,
+        scale: 0.9,
+        rotation: -3,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        rotation: 0,
+        duration: 1,
+        stagger: 0.12,
+        ease: "back.out(1.4)",
+        scrollTrigger: {
+          trigger: memoriesRef.current[0],
+          start: "top 80%",
+        },
+      },
+    );
+  }, []);
   return (
     <>
       <div className="text-center mb-10">
-        <p className="text-xs font-semibold text-indigo-400 uppercase tracking-widest mb-3">
+        <p
+          ref={(el) => (headerRef.current[0] = el)}
+          className="text-xs font-semibold text-indigo-400 uppercase tracking-widest mb-3"
+        >
           Real People, Real Growth
         </p>
 
-        <h2 className="text-2xl md:text-3xl font-bold tracking-wide text-white mb-3">
+        <h2
+          ref={(el) => (headerRef.current[1] = el)}
+          className="text-2xl md:text-3xl font-bold tracking-wide text-white mb-3"
+        >
           Teams that
           <span className="bg-linear-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent gradient-text">
             {" "}
@@ -41,7 +152,10 @@ export const MemoriesGallery = () => {
           , grow together
         </h2>
 
-        <p className="text-xs font-semibold text-slate-400 tracking-widest mb-3">
+        <p
+          ref={(el) => (headerRef.current[2] = el)}
+          className="text-xs font-semibold text-slate-400 tracking-widest mb-3"
+        >
           Moments of learning, teamwork, and growth worth remembering.
         </p>
       </div>
@@ -51,6 +165,7 @@ export const MemoriesGallery = () => {
         <div className="flex gap-3 w-max animate-marquee">
           {[...memories, ...memories].map((item, index) => (
             <div
+              ref={(el) => (memoriesRef.current[index] = el)}
               key={item.img + "-" + index}
               className="relative w-40 sm:w-48 md:w-56 aspect-square shrink-0 rounded-2xl overflow-hidden group cursor-default"
             >
