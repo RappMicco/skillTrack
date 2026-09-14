@@ -36,7 +36,7 @@ export const ScrambleNumber = ({ value, suffix = "", digits = 2 }) => {
 
           tl.to(counter, {
             val: value,
-            duration: 1.1,
+            duration: 2.5,
             ease: "power2.out",
             onUpdate: () => {
               setDisplay(String(Math.floor(counter.val)).padStart(digits, "0"));

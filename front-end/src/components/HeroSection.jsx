@@ -116,7 +116,7 @@ export const HeroSection = () => {
                               transition-all bg-white/5 border border-white/10 tracking-wider active:scale-95 duration-500"
             >
               <Play size={9} />
-              Watch OSS in Action
+              Watch ISD in Action
             </button>
           </div>
 

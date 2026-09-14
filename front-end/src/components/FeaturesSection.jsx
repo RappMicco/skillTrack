@@ -6,8 +6,12 @@ import {
   NotepadText,
   Blocks,
 } from "lucide-react";
+import { useEffect, useRef } from "react";
+import gsap from "../lib/gsap.js";
 
 export const FeaturesSection = () => {
+  const headerRef = useRef([]);
+  const featuresRef = useRef([]);
   const features = [
     {
       title: "Structured Training Plan",
@@ -52,30 +56,91 @@ export const FeaturesSection = () => {
       bgColor: "bg-teal-500/10 border border-teal-500/15",
     },
   ];
+
+  useEffect(() => {
+    if (!headerRef.current || !featuresRef.current) return;
+
+    gsap.fromTo(
+      headerRef.current,
+      {
+        y: 20,
+        opacity: 0,
+        filter: "blur(8px)",
+      },
+      {
+        y: 0,
+        opacity: 1,
+        filter: "blur(0px)",
+        duration: 0.6,
+        stagger: 0.04,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: headerRef.current[0],
+          start: "top 85%",
+        },
+      },
+    );
+
+    gsap.fromTo(
+      featuresRef.current,
+      {
+        y: 80,
+        opacity: 0,
+        scale: 0.9,
+        filter: "blur(10px)",
+      },
+      {
+        y: 0,
+        opacity: 1,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 1,
+        stagger: {
+          each: 0.15,
+          from: "start", // try "center" for cooler effect
+        },
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: featuresRef.current[0],
+          start: "top 85%",
+        },
+      },
+    );
+  }, []);
   return (
     <>
       <div className="text-center mb-14">
-        <p className="text-xs font-semibold uppercase tracking-widest mb-3 bg-linear-to-r from-blue-400 via-purple-400 to-pink-400  bg-clip-text text-transparent">
+        <p
+          ref={(el) => (headerRef.current[0] = el)}
+          className="text-xs font-semibold uppercase tracking-widest mb-3 bg-linear-to-r from-blue-400 via-purple-400 to-pink-400  bg-clip-text text-transparent"
+        >
           Everything you need
         </p>
 
-        <h2 className="text-3xl md:text-4xl font-bold mb-2 tracking-wider text-white">
+        <h2
+          ref={(el) => (headerRef.current[1] = el)}
+          className="text-3xl md:text-4xl font-bold mb-2 tracking-wider text-white"
+        >
           {`Support Every `}
           <span className="bg-linear-to-r from-blue-400 via-purple-400 to-pink-400  bg-clip-text text-transparent gradient-text">
             Learning Journey
           </span>
         </h2>
 
-        <span className="text-slate-400 text-xs tracking-widest font-semibold">
+        <span
+          ref={(el) => (headerRef.current[2] = el)}
+          className="text-slate-400 text-xs tracking-widest font-semibold"
+        >
           Plan, track, and manage employee learning from onboarding to skill
           development in one unified platform.
         </span>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {features.map((item) => (
+        {features.map((item, index) => (
           <div
-            key={item.id}
+            ref={(el) => (featuresRef.current[index] = el)}
+            key={index}
             className="rounded-2xl p-6 group transition-all duration-300 hover:-translate-y-1 cursor-default bg-white/5 border border-white/8"
           >
             {/* =================== ICON =================== */}
