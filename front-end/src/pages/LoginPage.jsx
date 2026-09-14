@@ -11,19 +11,6 @@ const marqueeItems = [
   { type: "photo", img: "/images/memories4.jpg" },
   { type: "photo", img: "/images/memories5.jpg" },
   { type: "photo", img: "/images/memories6.jpg" },
-  { type: "photo", img: "/images/memories7.jpg" },
-  { type: "photo", img: "/images/memories8.jpg" },
-  { type: "photo", img: "/images/memories9.jpg" },
-  { type: "photo", img: "/images/memories10.jpg" },
-  { type: "photo", img: "/images/memories11.jpg" },
-  { type: "photo", img: "/images/memories12.jpg" },
-  { type: "photo", img: "/images/memories13.jpg" },
-  { type: "photo", img: "/images/memories14.jpg" },
-  { type: "photo", img: "/images/memories15.jpg" },
-  { type: "photo", img: "/images/memories16.jpg" },
-  { type: "photo", img: "/images/memories17.jpg" },
-  { type: "photo", img: "/images/memories18.jpg" },
-  { type: "photo", img: "/images/memories19.jpg" },
 ];
 
 export const LoginPage = () => {

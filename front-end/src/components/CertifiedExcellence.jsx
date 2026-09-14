@@ -7,32 +7,34 @@ export const CertifiedExcellence = () => {
   const certifications = [
     {
       img: "/images/certification2.jpg",
-      title:
-        "Smart Anti-Static Monitoring with AI-Driven Anamoly Alerts and Suggested Actions",
+      title: "Intelligent Skill Gap Detection & Development Insights",
       description:
-        "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      award: "Visitor's Choice Award",
+        "Recognized for identifying skill gaps and providing actionable insights to support targeted employee development.",
+      award: "Innovation Excellence Award",
     },
+
     {
       img: "/images/certification1.jpg",
-      title: "Batch Deletion of CI ISN",
+      title: "Centralized Employee Skills & Training Management",
       description:
-        "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      award: "Top 3 People's Choice Award",
+        "Recognized for streamlining employee training and skills management through a centralized and accessible digital platform.",
+      award: "Digital Excellence Award",
     },
+
     {
       img: "/images/certification3.jpg",
-      title: "Automation of Software Installation to Client PC",
+      title: "Data-Driven Workforce Development Dashboard",
       description:
-        "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      award: "Manager's Choice FY23 Productivity Exhibit",
+        "Recognized for transforming employee skills and training data into clear insights that support better development decisions.",
+      award: "Productivity Excellence Award",
     },
+
     {
       img: "/images/certification4.jpg",
-      title: "Quality Forward: Driving Innovation with Defect Log Insights",
+      title: "Continuous Learning & Employee Growth Platform",
       description:
-        "Awarded for consistently meeting international quality management standards across our training and development processes.",
-      award: "FY24 Quality Exhibit President's Choice Award",
+        "Recognized for encouraging continuous learning and empowering employees to track their progress and professional growth.",
+      award: "People Development Award",
     },
   ];
 

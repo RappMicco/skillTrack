@@ -8,6 +8,8 @@ export const Header = () => {
   const group = user?.group;
   // concat name
   const userName = (user?.firstName || "") + " " + (user?.lastName || "");
+  const initials =
+    (user?.firstName?.charAt(0) || "") + (user?.lastName?.charAt(0) || "");
 
   return (
     <header className="flex items-center justify-between px-6 py-4 border-b border-[#FFFFFF]/7 shrink-0">
@@ -27,13 +29,13 @@ export const Header = () => {
               : group === "smart_local" ||
                   group === "smart_outsource" ||
                   group === "development"
-                ? "OSS-Member"
-                : "IIS-Member"}
+                ? "Smart Team"
+                : "Network Team"}
           </p>
         </div>
         {/* OSS */}
         <div className="w-8 h-8 shrink-0 rounded-full flex items-center justify-center text-[10px] font-bold text-white bg-linear-to-br from-[#34C8E2] to-[#68C4D4]/20">
-          OSS
+          {initials}
         </div>
       </div>
     </header>

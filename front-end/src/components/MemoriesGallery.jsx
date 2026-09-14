@@ -29,58 +29,6 @@ export const MemoriesGallery = () => {
       img: "/images/memories6.jpg",
       description: "Making memories with amazing people",
     },
-    {
-      img: "/images/memories7.jpg",
-      description: "Innovation thrives when teams collaborate",
-    },
-    {
-      img: "/images/memories8.jpg",
-      description: "Small moments that build lasting memories",
-    },
-    {
-      img: "/images/memories9.jpg",
-      description: "Celebrating wins, big and small",
-    },
-    {
-      img: "/images/memories10.jpg",
-      description: "Growing careers through continuous learning",
-    },
-    {
-      img: "/images/memories11.jpg",
-      description: "Stronger teams, brighter futures",
-    },
-    {
-      img: "/images/memories12.jpg",
-      description: "Capturing moments that define our journey",
-    },
-    {
-      img: "/images/memories13.jpg",
-      description: "Building trust through shared experiences",
-    },
-    {
-      img: "/images/memories14.jpg",
-      description: "Transforming knowledge into meaningful action",
-    },
-    {
-      img: "/images/memories15.jpg",
-      description: "Together we achieve extraordinary results",
-    },
-    {
-      img: "/images/memories16.jpg",
-      description: "Moments worth remembering",
-    },
-    {
-      img: "/images/memories17.jpg",
-      description: "Laughter, learning, and lasting friendships",
-    },
-    {
-      img: "/images/memories18.jpg",
-      description: "Connecting people through meaningful experiences",
-    },
-    {
-      img: "/images/memories19.jpg",
-      description: "Work smarter, achieve together",
-    },
   ];
 
   useEffect(() => {

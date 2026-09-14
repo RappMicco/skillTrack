@@ -94,7 +94,7 @@ export const HeroSection = () => {
             </span>
           </h1>
           <p className="text-slate-400 text-sm leading-relaxed mb-8 max-w-lg">
-            SkillTrack empowers the OSS team to manage employee skills, assign
+            SkillTrack empowers the team to manage employee skills, assign
             training programs, monitor progress, and foster continuous growth
             through a single, unified platform. 🚀
           </p>
@@ -116,7 +116,7 @@ export const HeroSection = () => {
                               transition-all bg-white/5 border border-white/10 tracking-wider active:scale-95 duration-500"
             >
               <Play size={9} />
-              Watch ISD in Action
+              Watch Video
             </button>
           </div>
 
